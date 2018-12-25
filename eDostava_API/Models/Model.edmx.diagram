@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2cc9e9b886434c8ab0902d50ef6b9e92" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="eRestoraniModel.Administratori" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Blokovi" Width="1.5" PointX="3" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Gradovi" Width="1.5" PointX="0.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Hrana" Width="1.5" PointX="7.5" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Korisnik" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.LoginStats" Width="1.5" PointX="3" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Narucioci" Width="1.5" PointX="6" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.NarudzbaStatusi" Width="1.5" PointX="8.25" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Narudzbe" Width="1.5" PointX="8.25" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Recenzije" Width="1.5" PointX="8.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Restorani" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.RestoranStatusi" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.StavkeNarudzbe" Width="1.5" PointX="13.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.TipoviKuhinje" Width="1.5" PointX="5.25" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Vlasnici" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Zalbe" Width="1.5" PointX="11.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="eRestoraniModel.Zaposlenici" Width="1.5" PointX="10.5" PointY="22.75" IsExpanded="true" />
+        <AssociationConnector Association="eRestoraniModel.FK_Administratori_Korisnik_KorisnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK__Narucioci__BlokI__6166761E" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK__Restorani__BlokI__607251E5" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Blokovi_Gradovi_GradID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Hrana_Restorani_RestoranID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Hrana_TipoviKuhinje_TipKuhinjeID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_StavkeNarudzbe_Hrana_HranaID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_LoginStats_Korisnik_KorisnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Narucioci_Korisnik_KorisnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Vlasnici_Korisnik_KorisnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Zaposlenici_Korisnik_KorisnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK__Zalbe__Narucilac__65370702" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Narudzbe_Narucioci_NarucilacID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Recenzije_Narucioci_NarucilacID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_StavkeNarudzbe_Narudzbe_NarudzbaID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Recenzije_Restorani_RestoranID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK__Zalbe__RestoranI__6442E2C9" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Restorani_Vlasnici_VlasnikID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK_Zaposlenici_Restorani_RestoranID" ManuallyRouted="false" />
+        <AssociationConnector Association="eRestoraniModel.FK__Restorani__Admin__0D44F85C" />
+        <AssociationConnector Association="eRestoraniModel.FK__Narudzbe__Narudz__09746778" />
+        <AssociationConnector Association="eRestoraniModel.FK__Narudzbe__Zaposl__0B5CAFEA" />
+        <AssociationConnector Association="eRestoraniModel.FK__Restorani__Resto__0C50D423" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

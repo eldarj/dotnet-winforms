@@ -1,0 +1,1796 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="eRestoraniModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Administratori">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Blokovi">
+          <Key>
+            <PropertyRef Name="BlokID" />
+          </Key>
+          <Property Name="BlokID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="GradID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gradovi">
+          <Key>
+            <PropertyRef Name="GradID" />
+          </Key>
+          <Property Name="GradID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="PostanskiBroj" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hrana">
+          <Key>
+            <PropertyRef Name="HranaID" />
+          </Key>
+          <Property Name="HranaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="Cijena" Type="float" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar(max)" />
+          <Property Name="TipKuhinjeID" Type="int" Nullable="false" />
+          <Property Name="RestoranID" Type="int" />
+          <Property Name="Slika" Type="varbinary(max)" />
+          <Property Name="SlikaThumb" Type="varbinary(max)" />
+          <Property Name="Sifra" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar(max)" />
+          <Property Name="LozinkaHash" Type="nvarchar(max)" />
+          <Property Name="LozinkaSalt" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="DatumRegistracije" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginStats">
+          <Key>
+            <PropertyRef Name="LoginStatID" />
+          </Key>
+          <Property Name="LoginStatID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+          <Property Name="DatumLogiranja" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="TrajanjeSesije" Type="time" Precision="7" Nullable="false" />
+          <Property Name="Ip" Type="nvarchar(max)" />
+          <Property Name="UserAgent" Type="nvarchar(max)" />
+          <Property Name="FirstAction" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Narucioci">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="nvarchar(max)" />
+          <Property Name="Prezime" Type="nvarchar(max)" />
+          <Property Name="Telefon" Type="nvarchar(max)" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="100" />
+          <Property Name="BlokID" Type="int" />
+        </EntityType>
+        <EntityType Name="NarudzbaStatusi">
+          <Key>
+            <PropertyRef Name="NarudzbaStatusID" />
+          </Key>
+          <Property Name="NarudzbaStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Narudzbe">
+          <Key>
+            <PropertyRef Name="NarudzbaID" />
+          </Key>
+          <Property Name="NarudzbaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sifra" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DatumVrijeme" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="UkupnaCijena" Type="float" Nullable="false" />
+          <Property Name="NarucilacID" Type="int" />
+          <Property Name="NarudzbaStatusID" Type="int" />
+          <Property Name="ZaposlenikStatusID" Type="int" />
+        </EntityType>
+        <EntityType Name="Recenzije">
+          <Key>
+            <PropertyRef Name="RestoranRecenzijaID" />
+          </Key>
+          <Property Name="RestoranRecenzijaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NarucilacID" Type="int" />
+          <Property Name="RestoranID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Komentar" Type="nvarchar(max)" />
+          <Property Name="Ocjena" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restorani">
+          <Key>
+            <PropertyRef Name="RestoranID" />
+          </Key>
+          <Property Name="RestoranID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sifra" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="40" />
+          <Property Name="Opis" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="WebUrl" Type="nvarchar(max)" />
+          <Property Name="Telefon" Type="nvarchar(max)" />
+          <Property Name="MinimalnaCijenaNarudzbe" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="VlasnikID" Type="int" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="100" />
+          <Property Name="BlokID" Type="int" />
+          <Property Name="Slika" Type="varbinary(max)" />
+          <Property Name="RestoranStatusID" Type="int" />
+          <Property Name="AdministratorStatusID" Type="int" />
+        </EntityType>
+        <EntityType Name="RestoranStatusi">
+          <Key>
+            <PropertyRef Name="RestoranStatusID" />
+          </Key>
+          <Property Name="RestoranStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="StavkeNarudzbe">
+          <Key>
+            <PropertyRef Name="StavkaNarudzbeID" />
+          </Key>
+          <Property Name="StavkaNarudzbeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NarudzbaID" Type="int" Nullable="false" />
+          <Property Name="HranaID" Type="int" Nullable="false" />
+          <Property Name="Kolicina" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoviKuhinje">
+          <Key>
+            <PropertyRef Name="TipKuhinjeID" />
+          </Key>
+          <Property Name="TipKuhinjeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="Opis" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Vlasnici">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="nvarchar(max)" />
+          <Property Name="Prezime" Type="nvarchar(max)" />
+          <Property Name="Telefon" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Zalbe">
+          <Key>
+            <PropertyRef Name="ZalbaID" />
+          </Key>
+          <Property Name="ZalbaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Razlog" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Opis" Type="nvarchar(max)" />
+          <Property Name="RestoranID" Type="int" Nullable="false" />
+          <Property Name="NarucilacID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Zaposlenici">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+          <Property Name="Sifra" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="RestoranID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Narucioci__BlokI__6166761E">
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="0..1" />
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Narucioci">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Narudzbe__Narudz__09746778">
+          <End Role="NarudzbaStatusi" Type="Self.NarudzbaStatusi" Multiplicity="0..1" />
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NarudzbaStatusi">
+              <PropertyRef Name="NarudzbaStatusID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="NarudzbaStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Narudzbe__Zaposl__0B5CAFEA">
+          <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="0..1" />
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposlenici">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="ZaposlenikStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restorani__Admin__0D44F85C">
+          <End Role="Administratori" Type="Self.Administratori" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administratori">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="AdministratorStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restorani__BlokI__607251E5">
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restorani__Resto__0C50D423">
+          <End Role="RestoranStatusi" Type="Self.RestoranStatusi" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestoranStatusi">
+              <PropertyRef Name="RestoranStatusID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="RestoranStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zalbe__Narucilac__65370702">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="1" />
+          <End Role="Zalbe" Type="Self.Zalbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Zalbe">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zalbe__RestoranI__6442E2C9">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1" />
+          <End Role="Zalbe" Type="Self.Zalbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Zalbe">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Administratori_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Administratori" Type="Self.Administratori" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Administratori">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blokovi_Gradovi_GradID">
+          <End Role="Gradovi" Type="Self.Gradovi" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gradovi">
+              <PropertyRef Name="GradID" />
+            </Principal>
+            <Dependent Role="Blokovi">
+              <PropertyRef Name="GradID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hrana_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="0..1" />
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Hrana">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hrana_TipoviKuhinje_TipKuhinjeID">
+          <End Role="TipoviKuhinje" Type="Self.TipoviKuhinje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoviKuhinje">
+              <PropertyRef Name="TipKuhinjeID" />
+            </Principal>
+            <Dependent Role="Hrana">
+              <PropertyRef Name="TipKuhinjeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginStats_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LoginStats" Type="Self.LoginStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="LoginStats">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Narucioci_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Narudzbe_Narucioci_NarucilacID">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recenzije_Narucioci_NarucilacID">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <End Role="Recenzije" Type="Self.Recenzije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Recenzije">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recenzije_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Recenzije" Type="Self.Recenzije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Recenzije">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restorani_Vlasnici_VlasnikID">
+          <End Role="Vlasnici" Type="Self.Vlasnici" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vlasnici">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="VlasnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeNarudzbe_Hrana_HranaID">
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StavkeNarudzbe" Type="Self.StavkeNarudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hrana">
+              <PropertyRef Name="HranaID" />
+            </Principal>
+            <Dependent Role="StavkeNarudzbe">
+              <PropertyRef Name="HranaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeNarudzbe_Narudzbe_NarudzbaID">
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StavkeNarudzbe" Type="Self.StavkeNarudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narudzbe">
+              <PropertyRef Name="NarudzbaID" />
+            </Principal>
+            <Dependent Role="StavkeNarudzbe">
+              <PropertyRef Name="NarudzbaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vlasnici_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vlasnici" Type="Self.Vlasnici" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Vlasnici">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenici_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Zaposlenici">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenici_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Zaposlenici">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="esp_Blokovi_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="gradId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_Gradovi_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_Hrana_Pretraga" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="restoranId" Type="int" Mode="In" />
+          <Parameter Name="param" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="esp_Hrana_SelectByRestoran" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="restoranId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_NarudzbeStatusi_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_Recenzije_SelectByRestoranOrNarucilac" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="filterRestoranID" Type="int" Mode="In" />
+          <Parameter Name="filterNarucilacID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_RestoranStatusi_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_Restorani_FilterBlokGradVlasnikStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="blokId" Type="int" Mode="In" />
+          <Parameter Name="gradId" Type="int" Mode="In" />
+          <Parameter Name="vlasnikId" Type="int" Mode="In" />
+          <Parameter Name="statusId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_Restorani_FilterString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="filterString" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="esp_Restorani_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_TipoviKuhinje_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_Zalbe_SelectByRestoranOrNarucilac" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="filterRestoranID" Type="int" Mode="In" />
+          <Parameter Name="filterNarucilacID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_Zaposlenici_SelectByRestoran" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="filterRestoranID" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="eRestoraniModelStoreContainer">
+          <EntitySet Name="Administratori" EntityType="Self.Administratori" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Blokovi" EntityType="Self.Blokovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gradovi" EntityType="Self.Gradovi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hrana" EntityType="Self.Hrana" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginStats" EntityType="Self.LoginStats" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Narucioci" EntityType="Self.Narucioci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NarudzbaStatusi" EntityType="Self.NarudzbaStatusi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Narudzbe" EntityType="Self.Narudzbe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recenzije" EntityType="Self.Recenzije" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restorani" EntityType="Self.Restorani" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RestoranStatusi" EntityType="Self.RestoranStatusi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StavkeNarudzbe" EntityType="Self.StavkeNarudzbe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoviKuhinje" EntityType="Self.TipoviKuhinje" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vlasnici" EntityType="Self.Vlasnici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zalbe" EntityType="Self.Zalbe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Zaposlenici" EntityType="Self.Zaposlenici" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Narucioci__BlokI__6166761E" Association="Self.FK__Narucioci__BlokI__6166761E">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Narucioci" EntitySet="Narucioci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Narudzbe__Narudz__09746778" Association="Self.FK__Narudzbe__Narudz__09746778">
+            <End Role="NarudzbaStatusi" EntitySet="NarudzbaStatusi" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Narudzbe__Zaposl__0B5CAFEA" Association="Self.FK__Narudzbe__Zaposl__0B5CAFEA">
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restorani__Admin__0D44F85C" Association="Self.FK__Restorani__Admin__0D44F85C">
+            <End Role="Administratori" EntitySet="Administratori" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restorani__BlokI__607251E5" Association="Self.FK__Restorani__BlokI__607251E5">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restorani__Resto__0C50D423" Association="Self.FK__Restorani__Resto__0C50D423">
+            <End Role="RestoranStatusi" EntitySet="RestoranStatusi" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zalbe__Narucilac__65370702" Association="Self.FK__Zalbe__Narucilac__65370702">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Zalbe" EntitySet="Zalbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zalbe__RestoranI__6442E2C9" Association="Self.FK__Zalbe__RestoranI__6442E2C9">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Zalbe" EntitySet="Zalbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Administratori_Korisnik_KorisnikID" Association="Self.FK_Administratori_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Administratori" EntitySet="Administratori" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blokovi_Gradovi_GradID" Association="Self.FK_Blokovi_Gradovi_GradID">
+            <End Role="Gradovi" EntitySet="Gradovi" />
+            <End Role="Blokovi" EntitySet="Blokovi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hrana_Restorani_RestoranID" Association="Self.FK_Hrana_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Hrana" EntitySet="Hrana" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hrana_TipoviKuhinje_TipKuhinjeID" Association="Self.FK_Hrana_TipoviKuhinje_TipKuhinjeID">
+            <End Role="TipoviKuhinje" EntitySet="TipoviKuhinje" />
+            <End Role="Hrana" EntitySet="Hrana" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginStats_Korisnik_KorisnikID" Association="Self.FK_LoginStats_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="LoginStats" EntitySet="LoginStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Narucioci_Korisnik_KorisnikID" Association="Self.FK_Narucioci_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Narucioci" EntitySet="Narucioci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Narudzbe_Narucioci_NarucilacID" Association="Self.FK_Narudzbe_Narucioci_NarucilacID">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recenzije_Narucioci_NarucilacID" Association="Self.FK_Recenzije_Narucioci_NarucilacID">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Recenzije" EntitySet="Recenzije" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recenzije_Restorani_RestoranID" Association="Self.FK_Recenzije_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Recenzije" EntitySet="Recenzije" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restorani_Vlasnici_VlasnikID" Association="Self.FK_Restorani_Vlasnici_VlasnikID">
+            <End Role="Vlasnici" EntitySet="Vlasnici" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeNarudzbe_Hrana_HranaID" Association="Self.FK_StavkeNarudzbe_Hrana_HranaID">
+            <End Role="Hrana" EntitySet="Hrana" />
+            <End Role="StavkeNarudzbe" EntitySet="StavkeNarudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeNarudzbe_Narudzbe_NarudzbaID" Association="Self.FK_StavkeNarudzbe_Narudzbe_NarudzbaID">
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+            <End Role="StavkeNarudzbe" EntitySet="StavkeNarudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vlasnici_Korisnik_KorisnikID" Association="Self.FK_Vlasnici_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Vlasnici" EntitySet="Vlasnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenici_Korisnik_KorisnikID" Association="Self.FK_Zaposlenici_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenici_Restorani_RestoranID" Association="Self.FK_Zaposlenici_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eRestoraniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Administratori">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Administratori_Korisnik_KorisnikID" FromRole="Administratori" ToRole="Korisnik" />
+          <NavigationProperty Name="Restorani" Relationship="eRestoraniModel.FK__Restorani__Admin__0D44F85C" FromRole="Administratori" ToRole="Restorani" />
+        </EntityType>
+        <EntityType Name="Blokovi">
+          <Key>
+            <PropertyRef Name="BlokID" />
+          </Key>
+          <Property Name="BlokID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GradID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Narucioci" Relationship="Self.FK__Narucioci__BlokI__6166761E" FromRole="Blokovi" ToRole="Narucioci" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK__Restorani__BlokI__607251E5" FromRole="Blokovi" ToRole="Restorani" />
+          <NavigationProperty Name="Gradovi" Relationship="Self.FK_Blokovi_Gradovi_GradID" FromRole="Blokovi" ToRole="Gradovi" />
+        </EntityType>
+        <EntityType Name="Gradovi">
+          <Key>
+            <PropertyRef Name="GradID" />
+          </Key>
+          <Property Name="GradID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostanskiBroj" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Blokovi" Relationship="Self.FK_Blokovi_Gradovi_GradID" FromRole="Gradovi" ToRole="Blokovi" />
+        </EntityType>
+        <EntityType Name="Hrana">
+          <Key>
+            <PropertyRef Name="HranaID" />
+          </Key>
+          <Property Name="HranaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sifra" Type="Guid" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cijena" Type="Double" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TipKuhinjeID" Type="Int32" Nullable="false" />
+          <Property Name="RestoranID" Type="Int32" />
+          <Property Name="Slika" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="SlikaThumb" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK_Hrana_Restorani_RestoranID" FromRole="Hrana" ToRole="Restorani" />
+          <NavigationProperty Name="TipoviKuhinje" Relationship="Self.FK_Hrana_TipoviKuhinje_TipKuhinjeID" FromRole="Hrana" ToRole="TipoviKuhinje" />
+          <NavigationProperty Name="StavkeNarudzbe" Relationship="Self.FK_StavkeNarudzbe_Hrana_HranaID" FromRole="Hrana" ToRole="StavkeNarudzbe" />
+        </EntityType>
+        <EntityType Name="Korisnik">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LozinkaHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LozinkaSalt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DatumRegistracije" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Administratori" Relationship="Self.FK_Administratori_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="Administratori" />
+          <NavigationProperty Name="LoginStats" Relationship="Self.FK_LoginStats_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="LoginStats" />
+          <NavigationProperty Name="Narucioci" Relationship="Self.FK_Narucioci_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="Narucioci" />
+          <NavigationProperty Name="Vlasnici" Relationship="Self.FK_Vlasnici_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="Vlasnici" />
+          <NavigationProperty Name="Zaposlenici" Relationship="Self.FK_Zaposlenici_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="Zaposlenici" />
+        </EntityType>
+        <EntityType Name="LoginStats">
+          <Key>
+            <PropertyRef Name="LoginStatID" />
+          </Key>
+          <Property Name="LoginStatID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <Property Name="DatumLogiranja" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="TrajanjeSesije" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="Ip" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserAgent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_LoginStats_Korisnik_KorisnikID" FromRole="LoginStats" ToRole="Korisnik" />
+        </EntityType>
+        <EntityType Name="Narucioci">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Prezime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BlokID" Type="Int32" />
+          <NavigationProperty Name="Blokovi" Relationship="Self.FK__Narucioci__BlokI__6166761E" FromRole="Narucioci" ToRole="Blokovi" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Narucioci_Korisnik_KorisnikID" FromRole="Narucioci" ToRole="Korisnik" />
+          <NavigationProperty Name="Zalbe" Relationship="Self.FK__Zalbe__Narucilac__65370702" FromRole="Narucioci" ToRole="Zalbe" />
+          <NavigationProperty Name="Narudzbe" Relationship="Self.FK_Narudzbe_Narucioci_NarucilacID" FromRole="Narucioci" ToRole="Narudzbe" />
+          <NavigationProperty Name="Recenzije" Relationship="Self.FK_Recenzije_Narucioci_NarucilacID" FromRole="Narucioci" ToRole="Recenzije" />
+        </EntityType>
+        <EntityType Name="NarudzbaStatusi">
+          <Key>
+            <PropertyRef Name="NarudzbaStatusID" />
+          </Key>
+          <Property Name="NarudzbaStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Narudzbe" Relationship="eRestoraniModel.FK__Narudzbe__Narudz__09746778" FromRole="NarudzbaStatusi" ToRole="Narudzbe" />
+        </EntityType>
+        <EntityType Name="Narudzbe">
+          <Key>
+            <PropertyRef Name="NarudzbaID" />
+          </Key>
+          <Property Name="NarudzbaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sifra" Type="Guid" Nullable="false" />
+          <Property Name="DatumVrijeme" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="UkupnaCijena" Type="Double" Nullable="false" />
+          <Property Name="NarucilacID" Type="Int32" />
+          <NavigationProperty Name="Narucioci" Relationship="Self.FK_Narudzbe_Narucioci_NarucilacID" FromRole="Narudzbe" ToRole="Narucioci" />
+          <NavigationProperty Name="StavkeNarudzbe" Relationship="Self.FK_StavkeNarudzbe_Narudzbe_NarudzbaID" FromRole="Narudzbe" ToRole="StavkeNarudzbe" />
+          <Property Name="NarudzbaStatusID" Type="Int32" />
+          <Property Name="ZaposlenikStatusID" Type="Int32" />
+          <NavigationProperty Name="NarudzbaStatusi" Relationship="eRestoraniModel.FK__Narudzbe__Narudz__09746778" FromRole="Narudzbe" ToRole="NarudzbaStatusi" />
+          <NavigationProperty Name="Zaposlenici" Relationship="eRestoraniModel.FK__Narudzbe__Zaposl__0B5CAFEA" FromRole="Narudzbe" ToRole="Zaposlenici" />
+        </EntityType>
+        <EntityType Name="Recenzije">
+          <Key>
+            <PropertyRef Name="RestoranRecenzijaID" />
+          </Key>
+          <Property Name="RestoranRecenzijaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NarucilacID" Type="Int32" />
+          <Property Name="RestoranID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Komentar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ocjena" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Narucioci" Relationship="Self.FK_Recenzije_Narucioci_NarucilacID" FromRole="Recenzije" ToRole="Narucioci" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK_Recenzije_Restorani_RestoranID" FromRole="Recenzije" ToRole="Restorani" />
+        </EntityType>
+        <EntityType Name="Restorani">
+          <Key>
+            <PropertyRef Name="RestoranID" />
+          </Key>
+          <Property Name="RestoranID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sifra" Type="Guid" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WebUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MinimalnaCijenaNarudzbe" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="VlasnikID" Type="Int32" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BlokID" Type="Int32" />
+          <Property Name="Slika" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Blokovi" Relationship="Self.FK__Restorani__BlokI__607251E5" FromRole="Restorani" ToRole="Blokovi" />
+          <NavigationProperty Name="Hrana" Relationship="Self.FK_Hrana_Restorani_RestoranID" FromRole="Restorani" ToRole="Hrana" />
+          <NavigationProperty Name="Recenzije" Relationship="Self.FK_Recenzije_Restorani_RestoranID" FromRole="Restorani" ToRole="Recenzije" />
+          <NavigationProperty Name="Zalbe" Relationship="Self.FK__Zalbe__RestoranI__6442E2C9" FromRole="Restorani" ToRole="Zalbe" />
+          <NavigationProperty Name="Vlasnici" Relationship="Self.FK_Restorani_Vlasnici_VlasnikID" FromRole="Restorani" ToRole="Vlasnici" />
+          <NavigationProperty Name="Zaposlenici" Relationship="Self.FK_Zaposlenici_Restorani_RestoranID" FromRole="Restorani" ToRole="Zaposlenici" />
+          <Property Name="RestoranStatusID" Type="Int32" />
+          <Property Name="AdministratorStatusID" Type="Int32" />
+          <NavigationProperty Name="Administratori" Relationship="eRestoraniModel.FK__Restorani__Admin__0D44F85C" FromRole="Restorani" ToRole="Administratori" />
+          <NavigationProperty Name="RestoranStatusi" Relationship="eRestoraniModel.FK__Restorani__Resto__0C50D423" FromRole="Restorani" ToRole="RestoranStatusi" />
+        </EntityType>
+        <EntityType Name="RestoranStatusi">
+          <Key>
+            <PropertyRef Name="RestoranStatusID" />
+          </Key>
+          <Property Name="RestoranStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Restorani" Relationship="eRestoraniModel.FK__Restorani__Resto__0C50D423" FromRole="RestoranStatusi" ToRole="Restorani" />
+        </EntityType>
+        <EntityType Name="StavkeNarudzbe">
+          <Key>
+            <PropertyRef Name="StavkaNarudzbeID" />
+          </Key>
+          <Property Name="StavkaNarudzbeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NarudzbaID" Type="Int32" Nullable="false" />
+          <Property Name="HranaID" Type="Int32" Nullable="false" />
+          <Property Name="Kolicina" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hrana" Relationship="Self.FK_StavkeNarudzbe_Hrana_HranaID" FromRole="StavkeNarudzbe" ToRole="Hrana" />
+          <NavigationProperty Name="Narudzbe" Relationship="Self.FK_StavkeNarudzbe_Narudzbe_NarudzbaID" FromRole="StavkeNarudzbe" ToRole="Narudzbe" />
+        </EntityType>
+        <EntityType Name="TipoviKuhinje">
+          <Key>
+            <PropertyRef Name="TipKuhinjeID" />
+          </Key>
+          <Property Name="TipKuhinjeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Hrana" Relationship="Self.FK_Hrana_TipoviKuhinje_TipKuhinjeID" FromRole="TipoviKuhinje" ToRole="Hrana" />
+        </EntityType>
+        <EntityType Name="Vlasnici">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Prezime" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Vlasnici_Korisnik_KorisnikID" FromRole="Vlasnici" ToRole="Korisnik" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK_Restorani_Vlasnici_VlasnikID" FromRole="Vlasnici" ToRole="Restorani" />
+        </EntityType>
+        <EntityType Name="Zalbe">
+          <Key>
+            <PropertyRef Name="ZalbaID" />
+          </Key>
+          <Property Name="ZalbaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Razlog" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RestoranID" Type="Int32" Nullable="false" />
+          <Property Name="NarucilacID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Narucioci" Relationship="Self.FK__Zalbe__Narucilac__65370702" FromRole="Zalbe" ToRole="Narucioci" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK__Zalbe__RestoranI__6442E2C9" FromRole="Zalbe" ToRole="Restorani" />
+        </EntityType>
+        <EntityType Name="Zaposlenici">
+          <Key>
+            <PropertyRef Name="KorisnikID" />
+          </Key>
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <Property Name="Sifra" Type="Guid" Nullable="false" />
+          <Property Name="RestoranID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Korisnik" Relationship="Self.FK_Zaposlenici_Korisnik_KorisnikID" FromRole="Zaposlenici" ToRole="Korisnik" />
+          <NavigationProperty Name="Restorani" Relationship="Self.FK_Zaposlenici_Restorani_RestoranID" FromRole="Zaposlenici" ToRole="Restorani" />
+          <NavigationProperty Name="Narudzbe" Relationship="eRestoraniModel.FK__Narudzbe__Zaposl__0B5CAFEA" FromRole="Zaposlenici" ToRole="Narudzbe" />
+        </EntityType>
+        <Association Name="FK_Administratori_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Administratori" Type="Self.Administratori" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Administratori">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Narucioci__BlokI__6166761E">
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="0..1" />
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Narucioci">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restorani__BlokI__607251E5">
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Blokovi_Gradovi_GradID">
+          <End Role="Gradovi" Type="Self.Gradovi" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gradovi">
+              <PropertyRef Name="GradID" />
+            </Principal>
+            <Dependent Role="Blokovi">
+              <PropertyRef Name="GradID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hrana_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="0..1" />
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Hrana">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hrana_TipoviKuhinje_TipKuhinjeID">
+          <End Role="TipoviKuhinje" Type="Self.TipoviKuhinje" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoviKuhinje">
+              <PropertyRef Name="TipKuhinjeID" />
+            </Principal>
+            <Dependent Role="Hrana">
+              <PropertyRef Name="TipKuhinjeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeNarudzbe_Hrana_HranaID">
+          <End Role="Hrana" Type="Self.Hrana" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StavkeNarudzbe" Type="Self.StavkeNarudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hrana">
+              <PropertyRef Name="HranaID" />
+            </Principal>
+            <Dependent Role="StavkeNarudzbe">
+              <PropertyRef Name="HranaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LoginStats_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LoginStats" Type="Self.LoginStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="LoginStats">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Narucioci_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Vlasnici_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vlasnici" Type="Self.Vlasnici" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Vlasnici">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenici_Korisnik_KorisnikID">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Zaposlenici">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zalbe__Narucilac__65370702">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="1" />
+          <End Role="Zalbe" Type="Self.Zalbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Zalbe">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Narudzbe_Narucioci_NarucilacID">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recenzije_Narucioci_NarucilacID">
+          <End Role="Narucioci" Type="Self.Narucioci" Multiplicity="0..1" />
+          <End Role="Recenzije" Type="Self.Recenzije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narucioci">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Recenzije">
+              <PropertyRef Name="NarucilacID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StavkeNarudzbe_Narudzbe_NarudzbaID">
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="StavkeNarudzbe" Type="Self.StavkeNarudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Narudzbe">
+              <PropertyRef Name="NarudzbaID" />
+            </Principal>
+            <Dependent Role="StavkeNarudzbe">
+              <PropertyRef Name="NarudzbaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Recenzije_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Recenzije" Type="Self.Recenzije" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Recenzije">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Zalbe__RestoranI__6442E2C9">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1" />
+          <End Role="Zalbe" Type="Self.Zalbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Zalbe">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restorani_Vlasnici_VlasnikID">
+          <End Role="Vlasnici" Type="Self.Vlasnici" Multiplicity="0..1" />
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vlasnici">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="VlasnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zaposlenici_Restorani_RestoranID">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Zaposlenici">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eRestoraniEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Administratori" EntityType="Self.Administratori" />
+          <EntitySet Name="Blokovi" EntityType="Self.Blokovi" />
+          <EntitySet Name="Gradovi" EntityType="Self.Gradovi" />
+          <EntitySet Name="Hrana" EntityType="Self.Hrana" />
+          <EntitySet Name="Korisnik" EntityType="Self.Korisnik" />
+          <EntitySet Name="LoginStats" EntityType="Self.LoginStats" />
+          <EntitySet Name="Narucioci" EntityType="Self.Narucioci" />
+          <EntitySet Name="NarudzbaStatusi" EntityType="Self.NarudzbaStatusi" />
+          <EntitySet Name="Narudzbe" EntityType="Self.Narudzbe" />
+          <EntitySet Name="Recenzije" EntityType="Self.Recenzije" />
+          <EntitySet Name="Restorani" EntityType="Self.Restorani" />
+          <EntitySet Name="RestoranStatusi" EntityType="Self.RestoranStatusi" />
+          <EntitySet Name="StavkeNarudzbe" EntityType="Self.StavkeNarudzbe" />
+          <EntitySet Name="TipoviKuhinje" EntityType="Self.TipoviKuhinje" />
+          <EntitySet Name="Vlasnici" EntityType="Self.Vlasnici" />
+          <EntitySet Name="Zalbe" EntityType="Self.Zalbe" />
+          <EntitySet Name="Zaposlenici" EntityType="Self.Zaposlenici" />
+          <AssociationSet Name="FK_Administratori_Korisnik_KorisnikID" Association="Self.FK_Administratori_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Administratori" EntitySet="Administratori" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Narucioci__BlokI__6166761E" Association="Self.FK__Narucioci__BlokI__6166761E">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Narucioci" EntitySet="Narucioci" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restorani__BlokI__607251E5" Association="Self.FK__Restorani__BlokI__607251E5">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Blokovi_Gradovi_GradID" Association="Self.FK_Blokovi_Gradovi_GradID">
+            <End Role="Gradovi" EntitySet="Gradovi" />
+            <End Role="Blokovi" EntitySet="Blokovi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hrana_Restorani_RestoranID" Association="Self.FK_Hrana_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Hrana" EntitySet="Hrana" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hrana_TipoviKuhinje_TipKuhinjeID" Association="Self.FK_Hrana_TipoviKuhinje_TipKuhinjeID">
+            <End Role="TipoviKuhinje" EntitySet="TipoviKuhinje" />
+            <End Role="Hrana" EntitySet="Hrana" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeNarudzbe_Hrana_HranaID" Association="Self.FK_StavkeNarudzbe_Hrana_HranaID">
+            <End Role="Hrana" EntitySet="Hrana" />
+            <End Role="StavkeNarudzbe" EntitySet="StavkeNarudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LoginStats_Korisnik_KorisnikID" Association="Self.FK_LoginStats_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="LoginStats" EntitySet="LoginStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Narucioci_Korisnik_KorisnikID" Association="Self.FK_Narucioci_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Narucioci" EntitySet="Narucioci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Vlasnici_Korisnik_KorisnikID" Association="Self.FK_Vlasnici_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Vlasnici" EntitySet="Vlasnici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenici_Korisnik_KorisnikID" Association="Self.FK_Zaposlenici_Korisnik_KorisnikID">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zalbe__Narucilac__65370702" Association="Self.FK__Zalbe__Narucilac__65370702">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Zalbe" EntitySet="Zalbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Narudzbe_Narucioci_NarucilacID" Association="Self.FK_Narudzbe_Narucioci_NarucilacID">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recenzije_Narucioci_NarucilacID" Association="Self.FK_Recenzije_Narucioci_NarucilacID">
+            <End Role="Narucioci" EntitySet="Narucioci" />
+            <End Role="Recenzije" EntitySet="Recenzije" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StavkeNarudzbe_Narudzbe_NarudzbaID" Association="Self.FK_StavkeNarudzbe_Narudzbe_NarudzbaID">
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+            <End Role="StavkeNarudzbe" EntitySet="StavkeNarudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Recenzije_Restorani_RestoranID" Association="Self.FK_Recenzije_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Recenzije" EntitySet="Recenzije" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Zalbe__RestoranI__6442E2C9" Association="Self.FK__Zalbe__RestoranI__6442E2C9">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Zalbe" EntitySet="Zalbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restorani_Vlasnici_VlasnikID" Association="Self.FK_Restorani_Vlasnici_VlasnikID">
+            <End Role="Vlasnici" EntitySet="Vlasnici" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zaposlenici_Restorani_RestoranID" Association="Self.FK_Zaposlenici_Restorani_RestoranID">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+          </AssociationSet>
+          <FunctionImport Name="esp_Blokovi_SelectAll" ReturnType="Collection(eRestoraniModel.Blokovi_Result)" >
+          <Parameter Name="gradId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="esp_Gradovi_SelectAll" ReturnType="Collection(eRestoraniModel.Gradovi_Result)" />
+          <FunctionImport Name="esp_Hrana_Pretraga" ReturnType="Collection(eRestoraniModel.Hrana_Result)">
+            <Parameter Name="restoranId" Mode="In" Type="Int32" />
+            <Parameter Name="param" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="esp_Hrana_SelectByRestoran" ReturnType="Collection(eRestoraniModel.Hrana_Result)">
+          <Parameter Name="restoranId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="esp_TipoviKuhinje_SelectAll" ReturnType="Collection(eRestoraniModel.TipoviKuhinje_Result)" />
+          <FunctionImport Name="esp_Restorani_SelectAll" ReturnType="Collection(eRestoraniModel.Restorani_Result)" />
+          <AssociationSet Name="FK__Restorani__Admin__0D44F85C" Association="eRestoraniModel.FK__Restorani__Admin__0D44F85C">
+            <End Role="Administratori" EntitySet="Administratori" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Narudzbe__Narudz__09746778" Association="eRestoraniModel.FK__Narudzbe__Narudz__09746778">
+            <End Role="NarudzbaStatusi" EntitySet="NarudzbaStatusi" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Narudzbe__Zaposl__0B5CAFEA" Association="eRestoraniModel.FK__Narudzbe__Zaposl__0B5CAFEA">
+            <End Role="Zaposlenici" EntitySet="Zaposlenici" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Restorani__Resto__0C50D423" Association="eRestoraniModel.FK__Restorani__Resto__0C50D423">
+            <End Role="RestoranStatusi" EntitySet="RestoranStatusi" />
+            <End Role="Restorani" EntitySet="Restorani" />
+          </AssociationSet>
+          <FunctionImport Name="esp_NarudzbeStatusi_SelectAll" ReturnType="Collection(eRestoraniModel.NarudzbaStatusi_Result)" />
+          <FunctionImport Name="esp_Recenzije_SelectByRestoranOrNarucilac" ReturnType="Collection(eRestoraniModel.Recenzije_Result)">
+            <Parameter Name="filterRestoranID" Mode="In" Type="Int32" />
+            <Parameter Name="filterNarucilacID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="esp_RestoranStatusi_SelectAll" ReturnType="Collection(eRestoraniModel.RestoranStatusi_Result)" />
+          <FunctionImport Name="esp_Restorani_FilterBlokGradVlasnikStatus" ReturnType="Collection(eRestoraniModel.Restorani_Result)">
+            <Parameter Name="blokId" Mode="In" Type="Int32" />
+            <Parameter Name="gradId" Mode="In" Type="Int32" />
+            <Parameter Name="vlasnikId" Mode="In" Type="Int32" />
+            <Parameter Name="statusId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="esp_Restorani_FilterString" ReturnType="Collection(eRestoraniModel.Restorani_Result)">
+          <Parameter Name="filterString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="esp_Zalbe_SelectByRestoranOrNarucilac" ReturnType="Collection(eRestoraniModel.Zalbe_Result)">
+            <Parameter Name="filterRestoranID" Mode="In" Type="Int32" />
+            <Parameter Name="filterNarucilacID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="esp_Zaposlenici_SelectByRestoran" ReturnType="Collection(eRestoraniModel.Zaposlenici_Result)">
+          <Parameter Name="filterRestoranID" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Blokovi_Result">
+          <Property Type="Int32" Name="BlokID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="Int32" Name="GradID" Nullable="false" />
+          <Property Type="String" Name="NazivGrada" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Gradovi_Result">
+          <Property Type="Int32" Name="GradID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="Int32" Name="PostanskiBroj" Nullable="false" />
+          <Property Type="Int32" Name="BrojBlokova" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TipoviKuhinje_Result">
+          <Property Type="Int32" Name="TipKuhinjeID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="String" Name="Opis" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Hrana_Result">
+          <Property Type="Int32" Name="HranaID" Nullable="false" />
+          <Property Type="Guid" Name="Sifra" Nullable="true" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="Double" Name="Cijena" Nullable="false" />
+          <Property Type="String" Name="Opis" Nullable="true" />
+          <Property Type="Binary" Name="Slika" Nullable="true" />
+          <Property Type="Binary" Name="SlikaThumb" Nullable="true" />
+          <Property Type="Int32" Name="TipKuhinjeID" Nullable="false" />
+          <Property Type="String" Name="TipKuhinjeNaziv" Nullable="true" />
+          <Property Type="Int32" Name="RestoranID" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK__Restorani__Admin__0D44F85C">
+          <End Type="eRestoraniModel.Administratori" Role="Administratori" Multiplicity="0..1" />
+          <End Type="eRestoraniModel.Restorani" Role="Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Administratori">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="AdministratorStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Narudzbe__Narudz__09746778">
+          <End Type="eRestoraniModel.NarudzbaStatusi" Role="NarudzbaStatusi" Multiplicity="0..1" />
+          <End Type="eRestoraniModel.Narudzbe" Role="Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NarudzbaStatusi">
+              <PropertyRef Name="NarudzbaStatusID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="NarudzbaStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Narudzbe__Zaposl__0B5CAFEA">
+          <End Type="eRestoraniModel.Zaposlenici" Role="Zaposlenici" Multiplicity="0..1" />
+          <End Type="eRestoraniModel.Narudzbe" Role="Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Zaposlenici">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="ZaposlenikStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Restorani__Resto__0C50D423">
+          <End Type="eRestoraniModel.RestoranStatusi" Role="RestoranStatusi" Multiplicity="0..1" />
+          <End Type="eRestoraniModel.Restorani" Role="Restorani" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RestoranStatusi">
+              <PropertyRef Name="RestoranStatusID" />
+            </Principal>
+            <Dependent Role="Restorani">
+              <PropertyRef Name="RestoranStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="NarudzbaStatusi_Result">
+          <Property Type="Int32" Name="NarudzbaStatusID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Recenzije_Result">
+          <Property Type="Int32" Name="RestoranRecenzijaID" Nullable="false" />
+          <Property Type="DateTime" Name="Datum" Nullable="false" />
+          <Property Type="String" Name="Komentar" Nullable="true" />
+          <Property Type="Int32" Name="Ocjena" Nullable="false" />
+          <Property Type="Int32" Name="NarucilacID" Nullable="true" />
+          <Property Type="String" Name="Ime" Nullable="true" />
+          <Property Type="String" Name="Prezime" Nullable="true" />
+          <Property Type="Int32" Name="RestoranID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="RestoranStatusi_Result">
+          <Property Type="Int32" Name="RestoranStatusID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Restorani_Result">
+          <Property Type="Int32" Name="RestoranID" Nullable="false" />
+          <Property Type="Guid" Name="Sifra" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" MaxLength="40" />
+          <Property Type="Binary" Name="Slika" Nullable="true" />
+          <Property Type="String" Name="Opis" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="WebUrl" Nullable="true" />
+          <Property Type="String" Name="Telefon" Nullable="true" />
+          <Property Type="Decimal" Name="MinimalnaCijenaNarudzbe" Nullable="true" Precision="5" Scale="2" />
+          <Property Type="Int32" Name="VlasnikID" Nullable="true" />
+          <Property Type="String" Name="VlasnikUsername" Nullable="true" />
+          <Property Type="String" Name="VlasnikImePrezime" Nullable="true" />
+          <Property Type="String" Name="VlasnikTelefon" Nullable="true" />
+          <Property Type="String" Name="VlasnikEmail" Nullable="true" />
+          <Property Type="DateTime" Name="VlasnikDatumRegistracije" Nullable="true" />
+          <Property Type="String" Name="Adresa" Nullable="true" />
+          <Property Type="Int32" Name="BlokID" Nullable="true" />
+          <Property Type="Int32" Name="GradID" Nullable="true" />
+          <Property Type="Int32" Name="RestoranStatusID" Nullable="true" />
+          <Property Type="String" Name="StatusNaziv" Nullable="true" />
+          <Property Type="Int32" Name="AdministratorStatusID" Nullable="true" />
+          <Property Type="String" Name="AdminUsername" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Zalbe_Result">
+          <Property Type="Int32" Name="ZalbaID" Nullable="false" />
+          <Property Type="String" Name="Razlog" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Opis" Nullable="true" />
+          <Property Type="Int32" Name="NarucilacID" Nullable="false" />
+          <Property Type="String" Name="Ime" Nullable="true" />
+          <Property Type="String" Name="Prezime" Nullable="true" />
+          <Property Type="Int32" Name="RestoranID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" MaxLength="40" />
+        </ComplexType>
+        <ComplexType Name="Zaposlenici_Result">
+          <Property Type="Int32" Name="KorisnikID" Nullable="false" />
+          <Property Type="Guid" Name="Sifra" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="DateTime" Name="DatumRegistracije" Nullable="false" />
+          <Property Type="Int32" Name="RestoranID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" MaxLength="40" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eRestoraniModelStoreContainer" CdmEntityContainer="eRestoraniEntities">
+          <EntitySetMapping Name="Administratori">
+            <EntityTypeMapping TypeName="eRestoraniModel.Administratori">
+              <MappingFragment StoreEntitySet="Administratori">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Blokovi">
+            <EntityTypeMapping TypeName="eRestoraniModel.Blokovi">
+              <MappingFragment StoreEntitySet="Blokovi">
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gradovi">
+            <EntityTypeMapping TypeName="eRestoraniModel.Gradovi">
+              <MappingFragment StoreEntitySet="Gradovi">
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="PostanskiBroj" ColumnName="PostanskiBroj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hrana">
+            <EntityTypeMapping TypeName="eRestoraniModel.Hrana">
+              <MappingFragment StoreEntitySet="Hrana">
+                <ScalarProperty Name="HranaID" ColumnName="HranaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="SlikaThumb" ColumnName="SlikaThumb" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Korisnik">
+            <EntityTypeMapping TypeName="eRestoraniModel.Korisnik">
+              <MappingFragment StoreEntitySet="Korisnik">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="LozinkaHash" ColumnName="LozinkaHash" />
+                <ScalarProperty Name="LozinkaSalt" ColumnName="LozinkaSalt" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DatumRegistracije" ColumnName="DatumRegistracije" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginStats">
+            <EntityTypeMapping TypeName="eRestoraniModel.LoginStats">
+              <MappingFragment StoreEntitySet="LoginStats">
+                <ScalarProperty Name="LoginStatID" ColumnName="LoginStatID" />
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="DatumLogiranja" ColumnName="DatumLogiranja" />
+                <ScalarProperty Name="TrajanjeSesije" ColumnName="TrajanjeSesije" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
+                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
+                <ScalarProperty Name="FirstAction" ColumnName="FirstAction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Narucioci">
+            <EntityTypeMapping TypeName="eRestoraniModel.Narucioci">
+              <MappingFragment StoreEntitySet="Narucioci">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NarudzbaStatusi">
+            <EntityTypeMapping TypeName="eRestoraniModel.NarudzbaStatusi">
+              <MappingFragment StoreEntitySet="NarudzbaStatusi">
+                <ScalarProperty Name="NarudzbaStatusID" ColumnName="NarudzbaStatusID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Narudzbe">
+            <EntityTypeMapping TypeName="eRestoraniModel.Narudzbe">
+              <MappingFragment StoreEntitySet="Narudzbe">
+                <ScalarProperty Name="ZaposlenikStatusID" ColumnName="ZaposlenikStatusID" />
+                <ScalarProperty Name="NarudzbaStatusID" ColumnName="NarudzbaStatusID" />
+                <ScalarProperty Name="NarudzbaID" ColumnName="NarudzbaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="DatumVrijeme" ColumnName="DatumVrijeme" />
+                <ScalarProperty Name="UkupnaCijena" ColumnName="UkupnaCijena" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recenzije">
+            <EntityTypeMapping TypeName="eRestoraniModel.Recenzije">
+              <MappingFragment StoreEntitySet="Recenzije">
+                <ScalarProperty Name="RestoranRecenzijaID" ColumnName="RestoranRecenzijaID" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Komentar" ColumnName="Komentar" />
+                <ScalarProperty Name="Ocjena" ColumnName="Ocjena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restorani">
+            <EntityTypeMapping TypeName="eRestoraniModel.Restorani">
+              <MappingFragment StoreEntitySet="Restorani">
+                <ScalarProperty Name="AdministratorStatusID" ColumnName="AdministratorStatusID" />
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RestoranStatusi">
+            <EntityTypeMapping TypeName="eRestoraniModel.RestoranStatusi">
+              <MappingFragment StoreEntitySet="RestoranStatusi">
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StavkeNarudzbe">
+            <EntityTypeMapping TypeName="eRestoraniModel.StavkeNarudzbe">
+              <MappingFragment StoreEntitySet="StavkeNarudzbe">
+                <ScalarProperty Name="StavkaNarudzbeID" ColumnName="StavkaNarudzbeID" />
+                <ScalarProperty Name="NarudzbaID" ColumnName="NarudzbaID" />
+                <ScalarProperty Name="HranaID" ColumnName="HranaID" />
+                <ScalarProperty Name="Kolicina" ColumnName="Kolicina" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoviKuhinje">
+            <EntityTypeMapping TypeName="eRestoraniModel.TipoviKuhinje">
+              <MappingFragment StoreEntitySet="TipoviKuhinje">
+                <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vlasnici">
+            <EntityTypeMapping TypeName="eRestoraniModel.Vlasnici">
+              <MappingFragment StoreEntitySet="Vlasnici">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zalbe">
+            <EntityTypeMapping TypeName="eRestoraniModel.Zalbe">
+              <MappingFragment StoreEntitySet="Zalbe">
+                <ScalarProperty Name="ZalbaID" ColumnName="ZalbaID" />
+                <ScalarProperty Name="Razlog" ColumnName="Razlog" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Zaposlenici">
+            <EntityTypeMapping TypeName="eRestoraniModel.Zaposlenici">
+              <MappingFragment StoreEntitySet="Zaposlenici">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="esp_Blokovi_SelectAll" FunctionName="eRestoraniModel.Store.esp_Blokovi_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Blokovi_Result">
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="NazivGrada" ColumnName="NazivGrada" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Gradovi_SelectAll" FunctionName="eRestoraniModel.Store.esp_Gradovi_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Gradovi_Result">
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="PostanskiBroj" ColumnName="PostanskiBroj" />
+                <ScalarProperty Name="BrojBlokova" ColumnName="BrojBlokova" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Hrana_Pretraga" FunctionName="eRestoraniModel.Store.esp_Hrana_Pretraga">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Hrana_Result">
+                <ScalarProperty Name="HranaID" ColumnName="HranaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="SlikaThumb" ColumnName="SlikaThumb" />
+                <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
+                <ScalarProperty Name="TipKuhinjeNaziv" ColumnName="TipKuhinjeNaziv" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Hrana_SelectByRestoran" FunctionName="eRestoraniModel.Store.esp_Hrana_SelectByRestoran">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Hrana_Result">
+                <ScalarProperty Name="HranaID" ColumnName="HranaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Cijena" ColumnName="Cijena" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="SlikaThumb" ColumnName="SlikaThumb" />
+                <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
+                <ScalarProperty Name="TipKuhinjeNaziv" ColumnName="TipKuhinjeNaziv" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_TipoviKuhinje_SelectAll" FunctionName="eRestoraniModel.Store.esp_TipoviKuhinje_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.TipoviKuhinje_Result">
+                <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Restorani_SelectAll" FunctionName="eRestoraniModel.Store.esp_Restorani_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Restorani_Result">
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
+                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
+                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
+                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
+                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdministratorStatusID" ColumnName="AdministratorStatusID" />
+                <ScalarProperty Name="AdminUsername" ColumnName="AdminUsername" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_NarudzbeStatusi_SelectAll" FunctionName="eRestoraniModel.Store.esp_NarudzbeStatusi_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.NarudzbaStatusi_Result">
+                <ScalarProperty Name="NarudzbaStatusID" ColumnName="NarudzbaStatusID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Recenzije_SelectByRestoranOrNarucilac" FunctionName="eRestoraniModel.Store.esp_Recenzije_SelectByRestoranOrNarucilac">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Recenzije_Result">
+                <ScalarProperty Name="RestoranRecenzijaID" ColumnName="RestoranRecenzijaID" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="Komentar" ColumnName="Komentar" />
+                <ScalarProperty Name="Ocjena" ColumnName="Ocjena" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_RestoranStatusi_SelectAll" FunctionName="eRestoraniModel.Store.esp_RestoranStatusi_SelectAll">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.RestoranStatusi_Result">
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Restorani_FilterBlokGradVlasnikStatus" FunctionName="eRestoraniModel.Store.esp_Restorani_FilterBlokGradVlasnikStatus">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Restorani_Result">
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
+                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
+                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
+                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
+                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdministratorStatusID" ColumnName="AdministratorStatusID" />
+                <ScalarProperty Name="AdminUsername" ColumnName="AdminUsername" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Restorani_FilterString" FunctionName="eRestoraniModel.Store.esp_Restorani_FilterString">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Restorani_Result">
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
+                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
+                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
+                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
+                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdministratorStatusID" ColumnName="AdministratorStatusID" />
+                <ScalarProperty Name="AdminUsername" ColumnName="AdminUsername" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Zalbe_SelectByRestoranOrNarucilac" FunctionName="eRestoraniModel.Store.esp_Zalbe_SelectByRestoranOrNarucilac">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Zalbe_Result">
+                <ScalarProperty Name="ZalbaID" ColumnName="ZalbaID" />
+                <ScalarProperty Name="Razlog" ColumnName="Razlog" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Zaposlenici_SelectByRestoran" FunctionName="eRestoraniModel.Store.esp_Zaposlenici_SelectByRestoran">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="eRestoraniModel.Zaposlenici_Result">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DatumRegistracije" ColumnName="DatumRegistracije" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eDostava_API", "eDostava_API\eDostava_API.csproj", "{42378E5B-B959-4C5B-813B-3B6F7B43877F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eRestoraniUI", "eRestoraniUI\eRestoraniUI.csproj", "{03D3A02F-11F4-4F97-9539-405E821C7873}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42378E5B-B959-4C5B-813B-3B6F7B43877F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42378E5B-B959-4C5B-813B-3B6F7B43877F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42378E5B-B959-4C5B-813B-3B6F7B43877F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42378E5B-B959-4C5B-813B-3B6F7B43877F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03D3A02F-11F4-4F97-9539-405E821C7873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D3A02F-11F4-4F97-9539-405E821C7873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D3A02F-11F4-4F97-9539-405E821C7873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D3A02F-11F4-4F97-9539-405E821C7873}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4F2622C1-AD7F-4421-A277-9E354ACC8F3D}
+	EndGlobalSection
+EndGlobal
