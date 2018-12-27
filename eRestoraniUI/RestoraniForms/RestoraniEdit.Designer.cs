@@ -210,6 +210,7 @@
             this.Controls.Add(this.txtNaziv);
             this.Controls.Add(this.inputNaziv);
             this.Name = "RestoraniEdit";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RestoraniAddNew";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();

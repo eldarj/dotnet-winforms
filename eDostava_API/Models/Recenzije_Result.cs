@@ -17,7 +17,7 @@ namespace eDostava_API.Models
         public System.DateTime Datum { get; set; }
         public string Komentar { get; set; }
         public int Ocjena { get; set; }
-        public Nullable<int> NarucilacID { get; set; }
+        public Nullable<int> KorisnikID { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public int RestoranID { get; set; }

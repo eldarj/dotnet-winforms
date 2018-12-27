@@ -18,9 +18,9 @@ namespace eDostava_API.Models
         public string Razlog { get; set; }
         public string Opis { get; set; }
         public int RestoranID { get; set; }
-        public int NarucilacID { get; set; }
+        public int KorisnikID { get; set; }
     
-        public virtual Narucioci Narucioci { get; set; }
+        public virtual Korisnik Korisnik { get; set; }
         public virtual Restorani Restorani { get; set; }
     }
 }

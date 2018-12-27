@@ -29,75 +29,47 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KorisniciList));
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cmbUloge = new System.Windows.Forms.ComboBox();
             this.txtPretraga = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.imgLoader = new System.Windows.Forms.PictureBox();
             this.btnIzbrisi = new System.Windows.Forms.Button();
             this.lblUkupno = new System.Windows.Forms.Label();
-            this.dgvBlokovi = new System.Windows.Forms.DataGridView();
-            this.BlokID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.GradID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NazivGrada = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.dgvKorisnici = new System.Windows.Forms.DataGridView();
+            this.KorisnikID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ImePrezime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Grad = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Uloga = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmbGradovi = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBlokovi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // cmbUloge
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(-3, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(654, 686);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.tabPage1.Controls.Add(this.txtPretraga);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.imgLoader);
-            this.tabPage1.Controls.Add(this.btnIzbrisi);
-            this.tabPage1.Controls.Add(this.lblUkupno);
-            this.tabPage1.Controls.Add(this.dgvBlokovi);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(646, 657);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1149, 725);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.cmbUloge.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbUloge.FormattingEnabled = true;
+            this.cmbUloge.Location = new System.Drawing.Point(309, 6);
+            this.cmbUloge.Name = "cmbUloge";
+            this.cmbUloge.Size = new System.Drawing.Size(121, 24);
+            this.cmbUloge.TabIndex = 61;
+            this.cmbUloge.SelectedIndexChanged += new System.EventHandler(this.cmbFilterUlogeGradovi_SelectedIndexChanged);
             // 
             // txtPretraga
             // 
-            this.txtPretraga.Location = new System.Drawing.Point(82, 7);
+            this.txtPretraga.Location = new System.Drawing.Point(78, 7);
             this.txtPretraga.Name = "txtPretraga";
             this.txtPretraga.Size = new System.Drawing.Size(225, 22);
             this.txtPretraga.TabIndex = 58;
+            this.txtPretraga.TextChanged += new System.EventHandler(this.txtPretraga_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 9);
+            this.label1.Location = new System.Drawing.Point(5, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 57;
@@ -106,7 +78,7 @@
             // imgLoader
             // 
             this.imgLoader.Image = ((System.Drawing.Image)(resources.GetObject("imgLoader.Image")));
-            this.imgLoader.Location = new System.Drawing.Point(310, 3);
+            this.imgLoader.Location = new System.Drawing.Point(563, 2);
             this.imgLoader.Name = "imgLoader";
             this.imgLoader.Size = new System.Drawing.Size(31, 30);
             this.imgLoader.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -117,99 +89,138 @@
             // btnIzbrisi
             // 
             this.btnIzbrisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnIzbrisi.Location = new System.Drawing.Point(563, 7);
+            this.btnIzbrisi.Location = new System.Drawing.Point(848, 7);
             this.btnIzbrisi.Name = "btnIzbrisi";
             this.btnIzbrisi.Size = new System.Drawing.Size(75, 23);
             this.btnIzbrisi.TabIndex = 59;
             this.btnIzbrisi.Text = "Izbriši";
             this.btnIzbrisi.UseVisualStyleBackColor = true;
+            this.btnIzbrisi.Click += new System.EventHandler(this.btnIzbrisi_Click);
             // 
             // lblUkupno
             // 
             this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupno.AutoSize = true;
-            this.lblUkupno.Location = new System.Drawing.Point(507, 637);
+            this.lblUkupno.Location = new System.Drawing.Point(780, 628);
             this.lblUkupno.Name = "lblUkupno";
             this.lblUkupno.Size = new System.Drawing.Size(143, 17);
             this.lblUkupno.TabIndex = 56;
             this.lblUkupno.Text = "Ukupno korisnika: {0}";
             // 
-            // dgvBlokovi
+            // dgvKorisnici
             // 
-            this.dgvBlokovi.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvKorisnici.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvBlokovi.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.dgvBlokovi.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBlokovi.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.BlokID,
-            this.Naziv,
-            this.GradID,
-            this.NazivGrada});
-            this.dgvBlokovi.Location = new System.Drawing.Point(12, 36);
-            this.dgvBlokovi.Name = "dgvBlokovi";
-            this.dgvBlokovi.RowTemplate.Height = 24;
-            this.dgvBlokovi.Size = new System.Drawing.Size(626, 596);
-            this.dgvBlokovi.TabIndex = 55;
+            this.dgvKorisnici.BackgroundColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.dgvKorisnici.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvKorisnici.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.KorisnikID,
+            this.Username,
+            this.ImePrezime,
+            this.Email,
+            this.Adresa,
+            this.Grad,
+            this.Uloga});
+            this.dgvKorisnici.Location = new System.Drawing.Point(8, 36);
+            this.dgvKorisnici.Name = "dgvKorisnici";
+            this.dgvKorisnici.RowTemplate.Height = 24;
+            this.dgvKorisnici.Size = new System.Drawing.Size(915, 589);
+            this.dgvKorisnici.TabIndex = 55;
             // 
-            // BlokID
+            // KorisnikID
             // 
-            this.BlokID.DataPropertyName = "BlokID";
-            this.BlokID.HeaderText = "BlokID";
-            this.BlokID.Name = "BlokID";
-            this.BlokID.Visible = false;
+            this.KorisnikID.DataPropertyName = "KorisnikID";
+            this.KorisnikID.HeaderText = "KorisnikID";
+            this.KorisnikID.Name = "KorisnikID";
+            this.KorisnikID.Visible = false;
             // 
-            // Naziv
+            // Username
             // 
-            this.Naziv.DataPropertyName = "Naziv";
-            this.Naziv.HeaderText = "Blok";
-            this.Naziv.Name = "Naziv";
+            this.Username.DataPropertyName = "Username";
+            this.Username.HeaderText = "Username";
+            this.Username.Name = "Username";
             // 
-            // GradID
+            // ImePrezime
             // 
-            this.GradID.DataPropertyName = "GradID";
-            this.GradID.HeaderText = "GradID";
-            this.GradID.Name = "GradID";
-            this.GradID.Visible = false;
+            this.ImePrezime.DataPropertyName = "ImePrezime";
+            this.ImePrezime.HeaderText = "Ime i prezime";
+            this.ImePrezime.Name = "ImePrezime";
             // 
-            // NazivGrada
+            // Email
             // 
-            this.NazivGrada.DataPropertyName = "NazivGrada";
-            this.NazivGrada.HeaderText = "Grad";
-            this.NazivGrada.Name = "NazivGrada";
+            this.Email.DataPropertyName = "Email";
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            // 
+            // Adresa
+            // 
+            this.Adresa.DataPropertyName = "Adresa";
+            this.Adresa.HeaderText = "Adresa";
+            this.Adresa.Name = "Adresa";
+            // 
+            // Grad
+            // 
+            this.Grad.DataPropertyName = "Grad";
+            this.Grad.HeaderText = "Grad";
+            this.Grad.Name = "Grad";
+            // 
+            // Uloga
+            // 
+            this.Uloga.DataPropertyName = "Uloga";
+            this.Uloga.HeaderText = "Uloga";
+            this.Uloga.Name = "Uloga";
+            // 
+            // cmbGradovi
+            // 
+            this.cmbGradovi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbGradovi.FormattingEnabled = true;
+            this.cmbGradovi.Location = new System.Drawing.Point(436, 6);
+            this.cmbGradovi.Name = "cmbGradovi";
+            this.cmbGradovi.Size = new System.Drawing.Size(121, 24);
+            this.cmbGradovi.TabIndex = 62;
+            this.cmbGradovi.SelectedIndexChanged += new System.EventHandler(this.cmbFilterUlogeGradovi_SelectedIndexChanged);
             // 
             // KorisniciList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 685);
-            this.Controls.Add(this.tabControl1);
+            this.ClientSize = new System.Drawing.Size(931, 647);
+            this.Controls.Add(this.cmbGradovi);
+            this.Controls.Add(this.cmbUloge);
+            this.Controls.Add(this.txtPretraga);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.dgvKorisnici);
+            this.Controls.Add(this.imgLoader);
+            this.Controls.Add(this.lblUkupno);
+            this.Controls.Add(this.btnIzbrisi);
             this.Name = "KorisniciList";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "KorisniciList";
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
+            this.Load += new System.EventHandler(this.KorisniciList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBlokovi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvKorisnici)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox txtPretraga;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox imgLoader;
         private System.Windows.Forms.Button btnIzbrisi;
         private System.Windows.Forms.Label lblUkupno;
-        private System.Windows.Forms.DataGridView dgvBlokovi;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BlokID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
-        private System.Windows.Forms.DataGridViewTextBoxColumn GradID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NazivGrada;
+        private System.Windows.Forms.DataGridView dgvKorisnici;
+        private System.Windows.Forms.DataGridViewTextBoxColumn KorisnikID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Username;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ImePrezime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adresa;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Grad;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Uloga;
+        private System.Windows.Forms.ComboBox cmbUloge;
+        private System.Windows.Forms.ComboBox cmbGradovi;
     }
 }

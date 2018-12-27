@@ -22,18 +22,16 @@ namespace eDostava_API.Models
         public string WebUrl { get; set; }
         public string Telefon { get; set; }
         public Nullable<decimal> MinimalnaCijenaNarudzbe { get; set; }
-        public Nullable<int> VlasnikID { get; set; }
+        public int KorisnikID { get; set; }
         public string VlasnikUsername { get; set; }
         public string VlasnikImePrezime { get; set; }
         public string VlasnikTelefon { get; set; }
         public string VlasnikEmail { get; set; }
         public Nullable<System.DateTime> VlasnikDatumRegistracije { get; set; }
         public string Adresa { get; set; }
-        public Nullable<int> BlokID { get; set; }
+        public int BlokID { get; set; }
         public Nullable<int> GradID { get; set; }
         public Nullable<int> RestoranStatusID { get; set; }
         public string StatusNaziv { get; set; }
-        public Nullable<int> AdministratorStatusID { get; set; }
-        public string AdminUsername { get; set; }
     }
 }

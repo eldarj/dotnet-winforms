@@ -137,7 +137,7 @@ namespace eRestoraniUI.HranaUI
                 servis.PostResponse(hranaStavka);
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.UspjesnoKreiranObj, "stavku hrane"),
+                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "stavku hrane"),
                     ValidationMessages.UspjenoKreiranTitle,
                     MessageBoxButtons.OK);
 
@@ -221,16 +221,16 @@ namespace eRestoraniUI.HranaUI
         {
             imgLoader.Visible = true;
             var h = (Hrana_Result)dgvHranaList.CurrentRow.DataBoundItem;
-            var potvrda = MessageBox.Show(String.Format(ValidationMessages.IzbrisiStavkuPotvrda, h.Naziv),
-                String.Format(ValidationMessages.IzbrisiStavkuTitle, h.Naziv),
+            var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, h.Naziv),
+                String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, h.Naziv),
                 MessageBoxButtons.YesNo);
             if (potvrda == DialogResult.Yes)
             {
                 HttpResponseMessage response = await servis.DeleteResponse(h.HranaID);
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(String.Format(ValidationMessages.UspjesnoIzbrisanObj, h.Naziv), 
-                        ValidationMessages.IzbrisiStavkuTitle);
+                    MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, h.Naziv), 
+                        ValidationMessages.izbrisi_stavku_potvrda_title);
                     await BindHranaGrid();
                 }
                 else
@@ -336,7 +336,7 @@ namespace eRestoraniUI.HranaUI
                     });
                     if (apiresponse.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.UspjesnoKreiranObj, "tip kuhinje"), 
+                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "tip kuhinje"), 
                             ValidationMessages.UspjenoKreiranTitle, 
                             MessageBoxButtons.OK);
 

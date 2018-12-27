@@ -14,19 +14,11 @@ namespace eDostava_API.Models
     
     public partial class Vlasnici
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Vlasnici()
-        {
-            this.Restorani = new HashSet<Restorani>();
-        }
-    
+        public int VlasnikID { get; set; }
         public int KorisnikID { get; set; }
-        public string Ime { get; set; }
-        public string Prezime { get; set; }
-        public string Telefon { get; set; }
+        public int RestoranID { get; set; }
     
         public virtual Korisnik Korisnik { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Restorani> Restorani { get; set; }
+        public virtual Restorani Restorani { get; set; }
     }
 }

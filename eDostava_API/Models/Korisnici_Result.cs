@@ -11,14 +11,20 @@ namespace eDostava_API.Models
 {
     using System;
     
-    public partial class Zaposlenici_Result
+    public partial class Korisnici_Result
     {
         public int KorisnikID { get; set; }
-        public System.Guid Sifra { get; set; }
         public string Username { get; set; }
+        public string ImePrezime { get; set; }
         public string Email { get; set; }
+        public string Telefon { get; set; }
         public System.DateTime DatumRegistracije { get; set; }
-        public int RestoranID { get; set; }
-        public string Naziv { get; set; }
+        public string Adresa { get; set; }
+        public Nullable<int> BlokID { get; set; }
+        public string Blok { get; set; }
+        public Nullable<int> GradID { get; set; }
+        public string Grad { get; set; }
+        public int UlogaKorisnikaID { get; set; }
+        public string Uloga { get; set; }
     }
 }

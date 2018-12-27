@@ -88,11 +88,56 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ukupno {0}: {1}.
+        /// </summary>
+        internal static string grid_ukupno_stavki {
+            get {
+                return ResourceManager.GetString("grid_ukupno_stavki", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unijeli ste pogrešno korisničko ime ili lozinku.
         /// </summary>
         internal static string login_user_fail {
             get {
                 return ResourceManager.GetString("login_user_fail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ukupno {0}.
+        /// </summary>
+        internal static string ukupno_general {
+            get {
+                return ResourceManager.GetString("ukupno_general", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ukupno {0}: {1}.
+        /// </summary>
+        internal static string ukupno_sta_koliko {
+            get {
+                return ResourceManager.GetString("ukupno_sta_koliko", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Za korisnika &quot;{0}&quot;, nakon prebacivanja u grupu &quot;{1}&quot;, moraćete definisati restoran!.
+        /// </summary>
+        internal static string uloge_izmjene_napomene_def_restoran {
+            get {
+                return ResourceManager.GetString("uloge_izmjene_napomene_def_restoran", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Korisnik &quot;{0}&quot; prebačen u ulogu/grupu &quot;{1}&quot;.
+        /// </summary>
+        internal static string uloge_izmjene_pregled {
+            get {
+                return ResourceManager.GetString("uloge_izmjene_pregled", resourceCulture);
             }
         }
     }

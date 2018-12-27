@@ -90,18 +90,18 @@ namespace eRestoraniUI.ResourceMessages {
         /// <summary>
         ///   Looks up a localized string similar to Jeste li sigurni da želite izbrisati &quot;{0}&quot;?.
         /// </summary>
-        internal static string IzbrisiStavkuPotvrda {
+        internal static string izbrisi_stavku_potvrda {
             get {
-                return ResourceManager.GetString("IzbrisiStavkuPotvrda", resourceCulture);
+                return ResourceManager.GetString("izbrisi_stavku_potvrda", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Izbriši {0}.
         /// </summary>
-        internal static string IzbrisiStavkuTitle {
+        internal static string izbrisi_stavku_potvrda_title {
             get {
-                return ResourceManager.GetString("IzbrisiStavkuTitle", resourceCulture);
+                return ResourceManager.GetString("izbrisi_stavku_potvrda_title", resourceCulture);
             }
         }
         
@@ -162,27 +162,45 @@ namespace eRestoraniUI.ResourceMessages {
         /// <summary>
         ///   Looks up a localized string similar to Uspješno ste izbrisali {0}!.
         /// </summary>
-        internal static string UspjesnoIzbrisanObj {
+        internal static string uspjesno_izbrisan_obj {
             get {
-                return ResourceManager.GetString("UspjesnoIzbrisanObj", resourceCulture);
+                return ResourceManager.GetString("uspjesno_izbrisan_obj", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Zapis izbrisan.
         /// </summary>
-        internal static string UspjesnoIzbrisanTitle {
+        internal static string uspjesno_izbrisan_title {
             get {
-                return ResourceManager.GetString("UspjesnoIzbrisanTitle", resourceCulture);
+                return ResourceManager.GetString("uspjesno_izbrisan_title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Uspješno ste snimili {0}!.
         /// </summary>
-        internal static string UspjesnoKreiranObj {
+        internal static string uspjesno_kreiran_obj {
             get {
-                return ResourceManager.GetString("UspjesnoKreiranObj", resourceCulture);
+                return ResourceManager.GetString("uspjesno_kreiran_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspješno ste sačuvali izmjene!.
+        /// </summary>
+        internal static string uspjesno_napravljene_izmjene_body {
+            get {
+                return ResourceManager.GetString("uspjesno_napravljene_izmjene_body", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspjeh.
+        /// </summary>
+        internal static string uspjesno_napravljene_izmjene_title {
+            get {
+                return ResourceManager.GetString("uspjesno_napravljene_izmjene_title", resourceCulture);
             }
         }
     }

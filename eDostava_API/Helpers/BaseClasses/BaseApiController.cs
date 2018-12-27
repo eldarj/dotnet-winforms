@@ -10,6 +10,6 @@ namespace eDostava_API.Helpers.BaseClasses
 {
     public class BaseApiController : ApiController
     {
-        public eRestoraniEntities db = new eRestoraniEntities();
+        public EasyFoodEntities db = new EasyFoodEntities();
     }
 }

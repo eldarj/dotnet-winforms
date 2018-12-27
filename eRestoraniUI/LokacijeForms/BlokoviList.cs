@@ -17,6 +17,8 @@ namespace eRestoraniUI.LokacijeForms
         private WebApiHelper servis = new WebApiHelper("locations/blokovi");
         private WebApiHelper servisGradovi = new WebApiHelper("locations/gradovi");
 
+        private Stack<bool> imgLoaderStack = new Stack<bool>();
+
         private Blokovi_Result blok;
 
         private BindingList<Blokovi_Result> blokoviBindingList, originalBlokoviBindingList;
@@ -41,7 +43,7 @@ namespace eRestoraniUI.LokacijeForms
 
         private async void BindBlokoviGrid(bool recheckPretraga = false)
         {
-            imgLoader.Visible = true;
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref imgLoaderStack);
             HttpResponseMessage response = await servis.GetResponse();
             if (response.IsSuccessStatusCode)
             {
@@ -64,7 +66,7 @@ namespace eRestoraniUI.LokacijeForms
                     response.ReasonPhrase);
             }
 
-            imgLoader.Visible = false;
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
 
         private async void BindGradoviCmb()
@@ -95,30 +97,34 @@ namespace eRestoraniUI.LokacijeForms
         #region GridEventHandlers
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
-            imgLoader.Visible = true;
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref imgLoaderStack);
             Blokovi_Result b = (Blokovi_Result) dgvBlokovi.CurrentRow.DataBoundItem;
-            var potvrda = MessageBox.Show(String.Format(ValidationMessages.IzbrisiStavkuPotvrda, b.Naziv),
-                String.Format(ValidationMessages.IzbrisiStavkuTitle, b.Naziv),
-                MessageBoxButtons.YesNo);
-            if (potvrda == DialogResult.Yes)
+            if (b != null)
             {
-                HttpResponseMessage response = await servis.DeleteResponse(b.BlokID);
+                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, b.Naziv),
+                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, b.Naziv),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+                if (potvrda == DialogResult.Yes)
+                {
+                    HttpResponseMessage response = await servis.DeleteResponse(b.BlokID);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show(String.Format(ValidationMessages.UspjesnoIzbrisanObj, b.Naziv), 
-                        ValidationMessages.IzbrisiStavkuTitle);
-                    BindBlokoviGrid(recheckPretraga: true);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, b.Naziv),
+                            ValidationMessages.izbrisi_stavku_potvrda_title);
+                        BindBlokoviGrid(recheckPretraga: true);
+                    }
+                    else
+                    {
+                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
-                }
-            }
-            else
+            } else
             {
-                imgLoader.Visible = false;
+                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "blok");
             }
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
 
         private void btnNoviBlok_Click(object sender, EventArgs e)
@@ -178,7 +184,7 @@ namespace eRestoraniUI.LokacijeForms
                     });
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.UspjesnoKreiranObj, "grad"),
+                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "grad"),
                             ValidationMessages.UspjenoKreiranTitle,
                             MessageBoxButtons.OK);
 
@@ -236,7 +242,7 @@ namespace eRestoraniUI.LokacijeForms
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.UspjesnoKreiranObj, "blok"),
+                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "blok"),
                     ValidationMessages.UspjenoKreiranTitle,
                     MessageBoxButtons.OK);
                 blok = response.Content.ReadAsAsync<Blokovi_Result>().Result;

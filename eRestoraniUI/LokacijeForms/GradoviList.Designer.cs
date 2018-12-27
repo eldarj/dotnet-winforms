@@ -292,6 +292,7 @@
             this.ClientSize = new System.Drawing.Size(673, 627);
             this.Controls.Add(this.splitContainer1);
             this.Name = "GradoviList";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GradoviList";
             this.Load += new System.EventHandler(this.GradoviList_Load);

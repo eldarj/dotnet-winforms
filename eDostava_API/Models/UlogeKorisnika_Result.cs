@@ -11,9 +11,10 @@ namespace eDostava_API.Models
 {
     using System;
     
-    public partial class NarudzbaStatusi_Result
+    public partial class UlogeKorisnika_Result
     {
-        public int NarudzbaStatusID { get; set; }
-        public string Naziv { get; set; }
+        public int UlogaKorisnikaID { get; set; }
+        public string Uloga { get; set; }
+        public Nullable<int> UkupnoKorisnika { get; set; }
     }
 }

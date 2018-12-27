@@ -21,7 +21,6 @@ namespace eDostava_API.Models
         }
     
         public int HranaID { get; set; }
-        public Nullable<System.Guid> Sifra { get; set; }
         public string Naziv { get; set; }
         public double Cijena { get; set; }
         public string Opis { get; set; }
@@ -29,6 +28,7 @@ namespace eDostava_API.Models
         public Nullable<int> RestoranID { get; set; }
         public byte[] Slika { get; set; }
         public byte[] SlikaThumb { get; set; }
+        public Nullable<System.Guid> Sifra { get; set; }
     
         public virtual Restorani Restorani { get; set; }
         public virtual TipoviKuhinje TipoviKuhinje { get; set; }

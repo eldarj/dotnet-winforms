@@ -107,14 +107,18 @@ namespace eDostava_API.Controllers
         public async Task<IHttpActionResult> DeleteBlok([FromUri] int id)
         {
             Blokovi b = await db.Blokovi.FindAsync(id);
-            if (b != null)
+
+            try
             {
                 db.Blokovi.Remove(b);
                 await db.SaveChangesAsync();
 
                 return Ok("Uspješno ste izbrisali blok!");
             }
-            return BadRequest("Blok ne postoji u bazi podataka!");
+            catch (Exception e)
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         #endregion

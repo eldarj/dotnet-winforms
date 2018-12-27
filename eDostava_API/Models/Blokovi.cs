@@ -17,7 +17,7 @@ namespace eDostava_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Blokovi()
         {
-            this.Narucioci = new HashSet<Narucioci>();
+            this.Korisnik = new HashSet<Korisnik>();
             this.Restorani = new HashSet<Restorani>();
         }
     
@@ -26,7 +26,7 @@ namespace eDostava_API.Models
         public int GradID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Narucioci> Narucioci { get; set; }
+        public virtual ICollection<Korisnik> Korisnik { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restorani> Restorani { get; set; }
         public virtual Gradovi Gradovi { get; set; }

@@ -26,12 +26,11 @@ namespace eDostava_API.Models
         public double UkupnaCijena { get; set; }
         public Nullable<int> NarucilacID { get; set; }
         public Nullable<int> NarudzbaStatusID { get; set; }
-        public Nullable<int> ZaposlenikStatusID { get; set; }
+        public Nullable<int> KorisnikID { get; set; }
     
-        public virtual Narucioci Narucioci { get; set; }
+        public virtual Korisnik Korisnik { get; set; }
+        public virtual NarudzbaStatusi NarudzbaStatusi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<StavkeNarudzbe> StavkeNarudzbe { get; set; }
-        public virtual NarudzbaStatusi NarudzbaStatusi { get; set; }
-        public virtual Zaposlenici Zaposlenici { get; set; }
     }
 }

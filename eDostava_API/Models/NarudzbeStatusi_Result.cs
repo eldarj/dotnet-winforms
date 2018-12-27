@@ -10,18 +10,10 @@
 namespace eDostava_API.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class LoginStats
+    public partial class NarudzbeStatusi_Result
     {
-        public int LoginStatID { get; set; }
-        public int KorisnikID { get; set; }
-        public System.DateTime DatumLogiranja { get; set; }
-        public System.TimeSpan TrajanjeSesije { get; set; }
-        public string Ip { get; set; }
-        public string UserAgent { get; set; }
-        public string FirstAction { get; set; }
-    
-        public virtual Korisnik Korisnik { get; set; }
+        public int NarudzbaStatusID { get; set; }
+        public string Naziv { get; set; }
     }
 }

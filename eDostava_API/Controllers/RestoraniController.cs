@@ -10,6 +10,7 @@ using eDostava_API.Helpers.BaseClasses;
 using System.Data.Entity.Core;
 using eDostava_API.Helpers;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace eDostava_API.Controllers
 {
@@ -124,6 +125,37 @@ namespace eDostava_API.Controllers
             }
 
             return Ok("Izmjene uspješno sačuvane!");
+        }
+
+        //api/restorani/{id}/zaposlenici
+        [HttpGet]
+        [Route("{id}/zaposlenici")]
+        public IHttpActionResult GetZaposlenikeRestorana([FromUri] int id)
+        {
+            Thread.Sleep(250);
+            List<Korisnik> zaposlenici = db.Korisnik
+                .Where(x => db.Zaposlenici
+                    .Select(z => new { z.KorisnikID, z.RestoranID })
+                    .ToList()
+                    .Contains(new { KorisnikID = x.KorisnikID, RestoranID = id }))
+                .ToList();
+
+            return Ok(zaposlenici.Select(z => Korisnici_Result.GetKorisnikResultInstance(z)));
+        }
+
+        //api/restorani/{id}/vlasnici
+        [HttpGet]
+        [Route("{id}/vlasnici")]
+        public IHttpActionResult GetVlasnikeRestorana([FromUri] int id)
+        {
+            List<Korisnik> vlasnici = db.Korisnik
+                .Where(x => db.Vlasnici
+                    .Select(v => new { v.KorisnikID, v.RestoranID })
+                    .ToList()
+                    .Contains(new { x.KorisnikID, RestoranID = id }))
+                .ToList();
+
+            return Ok(vlasnici.Select(v => Korisnici_Result.GetKorisnikResultInstance(v)));
         }
 
         protected override void Dispose(bool disposing)

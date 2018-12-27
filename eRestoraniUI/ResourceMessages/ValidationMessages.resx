@@ -126,10 +126,10 @@
   <data name="GreskaPokusajPonovo" xml:space="preserve">
     <value>Došlo je do greške, pokušajte ponovo.</value>
   </data>
-  <data name="IzbrisiStavkuPotvrda" xml:space="preserve">
+  <data name="izbrisi_stavku_potvrda" xml:space="preserve">
     <value>Jeste li sigurni da želite izbrisati "{0}"?</value>
   </data>
-  <data name="IzbrisiStavkuTitle" xml:space="preserve">
+  <data name="izbrisi_stavku_potvrda_title" xml:space="preserve">
     <value>Izbriši {0}</value>
   </data>
   <data name="ObjNePostojiKreirajNovi" xml:space="preserve">
@@ -150,13 +150,19 @@
   <data name="UspjenoKreiranTitle" xml:space="preserve">
     <value>Uspjeh</value>
   </data>
-  <data name="UspjesnoIzbrisanObj" xml:space="preserve">
+  <data name="uspjesno_izbrisan_obj" xml:space="preserve">
     <value>Uspješno ste izbrisali {0}!</value>
   </data>
-  <data name="UspjesnoIzbrisanTitle" xml:space="preserve">
+  <data name="uspjesno_izbrisan_title" xml:space="preserve">
     <value>Zapis izbrisan</value>
   </data>
-  <data name="UspjesnoKreiranObj" xml:space="preserve">
+  <data name="uspjesno_kreiran_obj" xml:space="preserve">
     <value>Uspješno ste snimili {0}!</value>
+  </data>
+  <data name="uspjesno_napravljene_izmjene_body" xml:space="preserve">
+    <value>Uspješno ste sačuvali izmjene!</value>
+  </data>
+  <data name="uspjesno_napravljene_izmjene_title" xml:space="preserve">
+    <value>Uspjeh</value>
   </data>
 </root>

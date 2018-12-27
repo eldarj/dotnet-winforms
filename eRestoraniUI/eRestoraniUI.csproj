@@ -59,6 +59,30 @@
     <Compile Include="KorisniciForms\KorisniciList.Designer.cs">
       <DependentUpon>KorisniciList.cs</DependentUpon>
     </Compile>
+    <Compile Include="KorisniciForms\UlogeManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KorisniciForms\UlogeManagement.Designer.cs">
+      <DependentUpon>UlogeManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KorisniciForms\UlogeManagementChanges.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KorisniciForms\UlogeManagementChanges.Designer.cs">
+      <DependentUpon>UlogeManagementChanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KorisniciForms\VlasniciList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KorisniciForms\VlasniciList.Designer.cs">
+      <DependentUpon>VlasniciList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KorisniciForms\ZaposleniciList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KorisniciForms\ZaposleniciList.Designer.cs">
+      <DependentUpon>ZaposleniciList.cs</DependentUpon>
+    </Compile>
     <Compile Include="LokacijeForms\BlokoviList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +134,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DataTransformationHelper.cs" />
+    <Compile Include="Utils\KorisnikManagementHelper.cs" />
     <Compile Include="Utils\PanelValidator.cs" />
     <Compile Include="Utils\UIHelper.cs" />
     <Compile Include="Utils\WebApiHelper.cs" />
@@ -120,6 +145,18 @@
     </Compile>
     <EmbeddedResource Include="KorisniciForms\KorisniciList.resx">
       <DependentUpon>KorisniciList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KorisniciForms\UlogeManagement.resx">
+      <DependentUpon>UlogeManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KorisniciForms\UlogeManagementChanges.resx">
+      <DependentUpon>UlogeManagementChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KorisniciForms\VlasniciList.resx">
+      <DependentUpon>VlasniciList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KorisniciForms\ZaposleniciList.resx">
+      <DependentUpon>ZaposleniciList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LokacijeForms\BlokoviList.resx">
       <DependentUpon>BlokoviList.cs</DependentUpon>

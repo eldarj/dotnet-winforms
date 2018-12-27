@@ -14,19 +14,11 @@ namespace eDostava_API.Models
     
     public partial class Zaposlenici
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Zaposlenici()
-        {
-            this.Narudzbe = new HashSet<Narudzbe>();
-        }
-    
+        public int ZaposlenikID { get; set; }
         public int KorisnikID { get; set; }
-        public System.Guid Sifra { get; set; }
         public int RestoranID { get; set; }
     
         public virtual Korisnik Korisnik { get; set; }
         public virtual Restorani Restorani { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Narudzbe> Narudzbe { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace eRestoraniUI.Utils
@@ -11,8 +12,18 @@ namespace eRestoraniUI.Utils
     {
         public HttpClient Client { get; set; }
         public string Route { get; set; }
-        public readonly String DEFAULT_API_URI = "http://localhost:58299";
-        public readonly String DEFAULT_API_PREFIX = "api";
+
+        public static String DEFAULT_API_URI = "http://localhost:58299";
+        public static String DEFAULT_API_PREFIX = "api";
+
+        #region Constructors
+        public WebApiHelper()
+        {
+            Client = new HttpClient();
+            Client.BaseAddress = new Uri(DEFAULT_API_URI);
+
+            this.Route = DEFAULT_API_PREFIX;
+        }
 
         public WebApiHelper(string route)
         {
@@ -28,19 +39,40 @@ namespace eRestoraniUI.Utils
 
             this.Route = DEFAULT_API_PREFIX + "/" + route;
         }
+        #endregion
 
+        #region PostMethods
         // api/Endpoint
         public HttpResponseMessage PostResponse(object obj)
         {
             return Client.PostAsJsonAsync(Route, obj).Result;
         }
-
         // api/Endpoint/{param}
-        public HttpResponseMessage PutResponse(int id, Object existingObj)
+        public async Task<HttpResponseMessage> PostResponse(string param, object obj)
         {
-            return Client.PutAsJsonAsync(Route + "/" + id + "/", existingObj).Result;
+            HttpResponseMessage result = await Client.PostAsJsonAsync(Route + "/" + param + "/", obj);
+            return result;
         }
+        #endregion
 
+        #region PutMethods
+        // api/Endpoint/{param}/
+        // ili api/Endpoint/{param}/segment1/segment2/.../segmentN/
+        public HttpResponseMessage PutResponse(int id, Object existingObj, List<string> dodatniUrlSegmenti = null)
+        {
+            string endRoute = Route + "/" + id + "/";
+            if (dodatniUrlSegmenti != null && dodatniUrlSegmenti.Count() > 0)
+            {
+                foreach (string segment in dodatniUrlSegmenti)
+                {
+                    endRoute += segment + "/";
+                }
+            }
+            return Client.PutAsJsonAsync(endRoute, existingObj).Result;
+        }
+        #endregion
+
+        #region GetMethods
         // api/Endpoint
         public async Task<HttpResponseMessage> GetResponse()
         {
@@ -55,10 +87,37 @@ namespace eRestoraniUI.Utils
             return result;
         }
 
+        // api/Endoint/?param1=value1&param2=value2....paramN=valueN
+        public async Task<HttpResponseMessage> GetResponse<T>(Dictionary<string, T> queryParams)
+        {
+            //redirektaj na GetResponse ako je Dict. kojim slučajem prazan
+            if (queryParams.Count == 0)
+            {
+                return await GetResponse();
+            }
+
+            //build query
+            string query = "?";
+            foreach (KeyValuePair<string, T> item in queryParams)
+            {
+                if (!item.Equals(queryParams.First()))
+                    query += "&";
+
+                query += item.Key + "=" + item.Value.ToString();
+            }
+
+            //execute
+            HttpResponseMessage result = await Client.GetAsync(Route + query);
+            return result;
+        }
+        #endregion
+
+        #region DeleteMethods
         internal async Task<HttpResponseMessage> DeleteResponse(int resourceId)
         {
             HttpResponseMessage result = await Client.DeleteAsync(Route + "/" + resourceId + "/");
             return result;
         }
+        #endregion
     }
 }

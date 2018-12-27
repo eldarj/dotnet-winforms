@@ -19,6 +19,7 @@ namespace eRestoraniUI.LokacijeForms
     {
         WebApiHelper servis = new WebApiHelper("locations/gradovi");
 
+        private Stack<bool> imgLoaderStack = new Stack<bool>();
         private Gradovi_Result grad;
 
         BindingList<Gradovi_Result> gradoviBindingList, originalGradoviBindingList;
@@ -50,7 +51,7 @@ namespace eRestoraniUI.LokacijeForms
 
         private async void BindGradoviGrid(bool recheckPretraga = false)
         {
-            imgLoader.Visible = true;
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref imgLoaderStack);
 
             HttpResponseMessage response = await servis.GetResponse();
             if (response.IsSuccessStatusCode)
@@ -72,7 +73,7 @@ namespace eRestoraniUI.LokacijeForms
                 MessageBox.Show("Error code: " + response.StatusCode + " Message: " +
                     response.ReasonPhrase);
             }
-            imgLoader.Visible = false;
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
 
 
@@ -94,14 +95,14 @@ namespace eRestoraniUI.LokacijeForms
             grad.Naziv = txtNaziv.Text;
             grad.PostanskiBroj = Convert.ToInt32(txtPostanskiBroj.Text);
 
-            imgLoader.Visible = true;
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref imgLoaderStack);
             HttpResponseMessage response = grad.GradID != 0 ? 
                 servis.PutResponse(grad.GradID, grad) :
                 servis.PostResponse(grad);
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.UspjesnoKreiranObj, "grad"),
+                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "grad"),
                     ValidationMessages.UspjenoKreiranTitle,
                     MessageBoxButtons.OK);
 
@@ -111,6 +112,7 @@ namespace eRestoraniUI.LokacijeForms
             {
                 MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
             }
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
 
         }
         #endregion
@@ -126,20 +128,21 @@ namespace eRestoraniUI.LokacijeForms
 
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
-            imgLoader.Visible = true;
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref imgLoaderStack);
             Gradovi_Result grad = (Gradovi_Result)dgvGradovi.CurrentRow.DataBoundItem;
             if (grad != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.IzbrisiStavkuPotvrda, grad.Naziv),
-                    ValidationMessages.IzbrisiStavkuTitle,
-                    MessageBoxButtons.YesNo);
+                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, grad.Naziv),
+                    ValidationMessages.izbrisi_stavku_potvrda_title,
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
                 {
                     HttpResponseMessage response = await servis.DeleteResponse(grad.GradID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.UspjesnoIzbrisanObj, grad.Naziv),
-                            ValidationMessages.UspjesnoIzbrisanTitle);
+                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, grad.Naziv),
+                            ValidationMessages.uspjesno_izbrisan_title);
 
                         BindGradoviGrid(recheckPretraga: true);
                     } else
@@ -147,15 +150,11 @@ namespace eRestoraniUI.LokacijeForms
                         MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
                     }
                 }
-                else
-                {
-                    imgLoader.Visible = false;
-                }
-
             } else
             {
                 MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "grad");
             }
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
 
         private void btnUredi_Click(object sender, EventArgs e)

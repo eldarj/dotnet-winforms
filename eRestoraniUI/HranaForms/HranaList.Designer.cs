@@ -577,6 +577,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.Name = "HranaList";
+            this.ShowIcon = false;
             this.Text = "Restoran {0}";
             this.Load += new System.EventHandler(this.HranaList_Load);
             this.panel1.ResumeLayout(false);

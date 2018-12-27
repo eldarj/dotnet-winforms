@@ -12,18 +12,18 @@ namespace eDostava_API.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Administratori
+    public partial class UlogaKorisnika
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Administratori()
+        public UlogaKorisnika()
         {
-            this.Restorani = new HashSet<Restorani>();
+            this.Korisnik = new HashSet<Korisnik>();
         }
     
-        public int KorisnikID { get; set; }
+        public int UlogaKorisnikaID { get; set; }
+        public string Uloga { get; set; }
     
-        public virtual Korisnik Korisnik { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Restorani> Restorani { get; set; }
+        public virtual ICollection<Korisnik> Korisnik { get; set; }
     }
 }

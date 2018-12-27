@@ -72,6 +72,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
@@ -209,7 +210,7 @@
             // 
             this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupno.AutoSize = true;
-            this.lblUkupno.Location = new System.Drawing.Point(532, 477);
+            this.lblUkupno.Location = new System.Drawing.Point(532, 598);
             this.lblUkupno.Name = "lblUkupno";
             this.lblUkupno.Size = new System.Drawing.Size(136, 17);
             this.lblUkupno.TabIndex = 1;
@@ -241,7 +242,7 @@
             this.dgvBlokovi.Location = new System.Drawing.Point(12, 40);
             this.dgvBlokovi.Name = "dgvBlokovi";
             this.dgvBlokovi.RowTemplate.Height = 24;
-            this.dgvBlokovi.Size = new System.Drawing.Size(656, 436);
+            this.dgvBlokovi.Size = new System.Drawing.Size(656, 557);
             this.dgvBlokovi.TabIndex = 0;
             // 
             // BlokID
@@ -293,6 +294,7 @@
             this.ClientSize = new System.Drawing.Size(677, 618);
             this.Controls.Add(this.splitContainer1);
             this.Name = "BlokoviList";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BlokoviList";
             this.Load += new System.EventHandler(this.BlokoviList_Load);

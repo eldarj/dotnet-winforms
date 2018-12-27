@@ -108,22 +108,21 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HranaController.cs" />
+    <Compile Include="Controllers\KorisniciController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\RestoraniController.cs" />
     <Compile Include="Controllers\TipoviKuhinjeController.cs" />
-    <Compile Include="Controllers\ZaposleniciController.cs" />
     <Compile Include="ExtendedModels\Blokovi_Result.cs" />
     <Compile Include="ExtendedModels\Gradovi_Result.cs" />
     <Compile Include="ExtendedModels\Hrana_Result.cs" />
+    <Compile Include="ExtendedModels\Korisnici_Result.cs" />
+    <Compile Include="ExtendedModels\Restorani_Result.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BaseClasses\BaseApiController.cs" />
     <Compile Include="Helpers\MyExceptionFilter.cs" />
     <Compile Include="Helpers\ExceptionHandler.cs" />
-    <Compile Include="Models\Administratori.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Blokovi.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -142,10 +141,10 @@
     <Compile Include="Models\Hrana_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Korisnik.cs">
+    <Compile Include="Models\Korisnici_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LoginStats.cs">
+    <Compile Include="Models\Korisnik.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model.Context.cs">
@@ -163,16 +162,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\Narucioci.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\NarudzbaStatusi.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\NarudzbaStatusi_Result.cs">
+    <Compile Include="Models\Narudzbe.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Narudzbe.cs">
+    <Compile Include="Models\NarudzbeStatusi_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Recenzije.cs">
@@ -202,6 +198,12 @@
     <Compile Include="Models\TipoviKuhinje_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UlogaKorisnika.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UlogeKorisnika_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Vlasnici.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -212,9 +214,6 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Zaposlenici.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Zaposlenici_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

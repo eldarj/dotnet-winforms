@@ -20,6 +20,7 @@ namespace eDostava_API.Models
             this.Hrana = new HashSet<Hrana>();
             this.Recenzije = new HashSet<Recenzije>();
             this.Zalbe = new HashSet<Zalbe>();
+            this.Vlasnici = new HashSet<Vlasnici>();
             this.Zaposlenici = new HashSet<Zaposlenici>();
         }
     
@@ -31,24 +32,24 @@ namespace eDostava_API.Models
         public string WebUrl { get; set; }
         public string Telefon { get; set; }
         public Nullable<decimal> MinimalnaCijenaNarudzbe { get; set; }
-        public Nullable<int> VlasnikID { get; set; }
+        public int KorisnikID { get; set; }
         public string Adresa { get; set; }
-        public Nullable<int> BlokID { get; set; }
+        public int BlokID { get; set; }
         public byte[] Slika { get; set; }
         public Nullable<int> RestoranStatusID { get; set; }
-        public Nullable<int> AdministratorStatusID { get; set; }
     
         public virtual Blokovi Blokovi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Hrana> Hrana { get; set; }
+        public virtual Korisnik Korisnik { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recenzije> Recenzije { get; set; }
+        public virtual RestoranStatusi RestoranStatusi { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zalbe> Zalbe { get; set; }
-        public virtual Vlasnici Vlasnici { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vlasnici> Vlasnici { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zaposlenici> Zaposlenici { get; set; }
-        public virtual Administratori Administratori { get; set; }
-        public virtual RestoranStatusi RestoranStatusi { get; set; }
     }
 }

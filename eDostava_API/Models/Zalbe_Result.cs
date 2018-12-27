@@ -16,7 +16,7 @@ namespace eDostava_API.Models
         public int ZalbaID { get; set; }
         public string Razlog { get; set; }
         public string Opis { get; set; }
-        public int NarucilacID { get; set; }
+        public int KorisnikID { get; set; }
         public string Ime { get; set; }
         public string Prezime { get; set; }
         public int RestoranID { get; set; }

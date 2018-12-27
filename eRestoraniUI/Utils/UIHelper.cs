@@ -21,6 +21,18 @@ namespace eRestoraniUI.Utils
         public static string DECIMAL_REGEX = @"[1-9]?[0-9]?\.\d+";
         #endregion
 
+        #region Strings
+        public static string ListToString<T>(List<T> list, string delimiter, string defaultIfEmpty = "-")
+        {
+            string temp = "";
+            foreach (T item in list)
+            {
+                temp += list.Last().Equals(item) ? item.ToString() : item.ToString() + ", ";
+            }
+            return String.IsNullOrEmpty(temp) ? defaultIfEmpty : temp;
+        }
+        #endregion
+
         #region Calculations
         public static string ExtractDecimalCijena(string str)
         {
@@ -167,6 +179,26 @@ namespace eRestoraniUI.Utils
 
             g.Dispose();
             return (Image)b;
+        }
+        #endregion
+
+        #region SpinnerLoader
+        public static void LoaderImgStackDisplay(ref PictureBox imgLoader, ref Stack<bool> loaderImgStack)
+        {
+            if (loaderImgStack.Count < 1)
+            {
+                imgLoader.Visible = true;
+            }
+            loaderImgStack.Push(true);
+        }
+
+        public static void LoaderImgStackHide(ref PictureBox imgLoader, ref Stack<bool> loaderImgStack)
+        {
+            if (loaderImgStack.Count <= 1)
+            {
+                imgLoader.Visible = false;
+            }
+            loaderImgStack.Pop();
         }
         #endregion
     }

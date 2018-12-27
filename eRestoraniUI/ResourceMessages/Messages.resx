@@ -126,7 +126,22 @@
   <data name="edit_restoran_obavezno_polje_naziv" xml:space="preserve">
     <value>Polje Naziv ne smije biti prazno</value>
   </data>
+  <data name="grid_ukupno_stavki" xml:space="preserve">
+    <value>Ukupno {0}: {1}</value>
+  </data>
   <data name="login_user_fail" xml:space="preserve">
     <value>Unijeli ste pogrešno korisničko ime ili lozinku</value>
+  </data>
+  <data name="ukupno_general" xml:space="preserve">
+    <value>Ukupno {0}</value>
+  </data>
+  <data name="ukupno_sta_koliko" xml:space="preserve">
+    <value>Ukupno {0}: {1}</value>
+  </data>
+  <data name="uloge_izmjene_napomene_def_restoran" xml:space="preserve">
+    <value>Za korisnika "{0}", nakon prebacivanja u grupu "{1}", moraćete definisati restoran!</value>
+  </data>
+  <data name="uloge_izmjene_pregled" xml:space="preserve">
+    <value>Korisnik "{0}" prebačen u ulogu/grupu "{1}"</value>
   </data>
 </root>

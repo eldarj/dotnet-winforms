@@ -17,21 +17,40 @@ namespace eDostava_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Korisnik()
         {
-            this.LoginStats = new HashSet<LoginStats>();
+            this.Zalbe = new HashSet<Zalbe>();
+            this.Narudzbe = new HashSet<Narudzbe>();
+            this.Recenzije = new HashSet<Recenzije>();
+            this.Restorani = new HashSet<Restorani>();
+            this.Vlasnici = new HashSet<Vlasnici>();
+            this.Zaposlenici = new HashSet<Zaposlenici>();
         }
     
         public int KorisnikID { get; set; }
         public string Username { get; set; }
         public string LozinkaHash { get; set; }
         public string LozinkaSalt { get; set; }
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
         public string Email { get; set; }
+        public string Telefon { get; set; }
         public System.DateTime DatumRegistracije { get; set; }
+        public string Adresa { get; set; }
+        public Nullable<int> BlokID { get; set; }
+        public int UlogaKorisnikaID { get; set; }
     
-        public virtual Administratori Administratori { get; set; }
+        public virtual Blokovi Blokovi { get; set; }
+        public virtual UlogaKorisnika UlogaKorisnika { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LoginStats> LoginStats { get; set; }
-        public virtual Narucioci Narucioci { get; set; }
-        public virtual Vlasnici Vlasnici { get; set; }
-        public virtual Zaposlenici Zaposlenici { get; set; }
+        public virtual ICollection<Zalbe> Zalbe { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Narudzbe> Narudzbe { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Recenzije> Recenzije { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Restorani> Restorani { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vlasnici> Vlasnici { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Zaposlenici> Zaposlenici { get; set; }
     }
 }

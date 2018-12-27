@@ -15,10 +15,10 @@ namespace eDostava_API.Models
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class eRestoraniEntities : DbContext
+    public partial class EasyFoodEntities : DbContext
     {
-        public eRestoraniEntities()
-            : base("name=eRestoraniEntities")
+        public EasyFoodEntities()
+            : base("name=EasyFoodEntities")
         {
         }
     
@@ -27,13 +27,10 @@ namespace eDostava_API.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Administratori> Administratori { get; set; }
         public virtual DbSet<Blokovi> Blokovi { get; set; }
         public virtual DbSet<Gradovi> Gradovi { get; set; }
         public virtual DbSet<Hrana> Hrana { get; set; }
         public virtual DbSet<Korisnik> Korisnik { get; set; }
-        public virtual DbSet<LoginStats> LoginStats { get; set; }
-        public virtual DbSet<Narucioci> Narucioci { get; set; }
         public virtual DbSet<NarudzbaStatusi> NarudzbaStatusi { get; set; }
         public virtual DbSet<Narudzbe> Narudzbe { get; set; }
         public virtual DbSet<Recenzije> Recenzije { get; set; }
@@ -41,8 +38,9 @@ namespace eDostava_API.Models
         public virtual DbSet<RestoranStatusi> RestoranStatusi { get; set; }
         public virtual DbSet<StavkeNarudzbe> StavkeNarudzbe { get; set; }
         public virtual DbSet<TipoviKuhinje> TipoviKuhinje { get; set; }
-        public virtual DbSet<Vlasnici> Vlasnici { get; set; }
+        public virtual DbSet<UlogaKorisnika> UlogaKorisnika { get; set; }
         public virtual DbSet<Zalbe> Zalbe { get; set; }
+        public virtual DbSet<Vlasnici> Vlasnici { get; set; }
         public virtual DbSet<Zaposlenici> Zaposlenici { get; set; }
     
         public virtual ObjectResult<Blokovi_Result> esp_Blokovi_SelectAll(Nullable<int> gradId)
@@ -81,37 +79,35 @@ namespace eDostava_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Hrana_Result>("esp_Hrana_SelectByRestoran", restoranIdParameter);
         }
     
-        public virtual ObjectResult<TipoviKuhinje_Result> esp_TipoviKuhinje_SelectAll()
+        public virtual ObjectResult<Korisnici_Result> esp_Korisnici_SelectByUlogaOrGrad(Nullable<int> ulogaId, Nullable<int> gradId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TipoviKuhinje_Result>("esp_TipoviKuhinje_SelectAll");
+            var ulogaIdParameter = ulogaId.HasValue ?
+                new ObjectParameter("ulogaId", ulogaId) :
+                new ObjectParameter("ulogaId", typeof(int));
+    
+            var gradIdParameter = gradId.HasValue ?
+                new ObjectParameter("gradId", gradId) :
+                new ObjectParameter("gradId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Korisnici_Result>("esp_Korisnici_SelectByUlogaOrGrad", ulogaIdParameter, gradIdParameter);
         }
     
-        public virtual ObjectResult<Restorani_Result> esp_Restorani_SelectAll()
+        public virtual ObjectResult<NarudzbeStatusi_Result> esp_NarudzbeStatusi_SelectAll()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_SelectAll");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<NarudzbeStatusi_Result>("esp_NarudzbeStatusi_SelectAll");
         }
     
-        public virtual ObjectResult<NarudzbaStatusi_Result> esp_NarudzbeStatusi_SelectAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<NarudzbaStatusi_Result>("esp_NarudzbeStatusi_SelectAll");
-        }
-    
-        public virtual ObjectResult<Recenzije_Result> esp_Recenzije_SelectByRestoranOrNarucilac(Nullable<int> filterRestoranID, Nullable<int> filterNarucilacID)
+        public virtual ObjectResult<Recenzije_Result> esp_Recenzije_SelectByRestoranOrKorisnik(Nullable<int> filterRestoranID, Nullable<int> filterKorisnikID)
         {
             var filterRestoranIDParameter = filterRestoranID.HasValue ?
                 new ObjectParameter("filterRestoranID", filterRestoranID) :
                 new ObjectParameter("filterRestoranID", typeof(int));
     
-            var filterNarucilacIDParameter = filterNarucilacID.HasValue ?
-                new ObjectParameter("filterNarucilacID", filterNarucilacID) :
-                new ObjectParameter("filterNarucilacID", typeof(int));
+            var filterKorisnikIDParameter = filterKorisnikID.HasValue ?
+                new ObjectParameter("filterKorisnikID", filterKorisnikID) :
+                new ObjectParameter("filterKorisnikID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Recenzije_Result>("esp_Recenzije_SelectByRestoranOrNarucilac", filterRestoranIDParameter, filterNarucilacIDParameter);
-        }
-    
-        public virtual ObjectResult<RestoranStatusi_Result> esp_RestoranStatusi_SelectAll()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RestoranStatusi_Result>("esp_RestoranStatusi_SelectAll");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Recenzije_Result>("esp_Recenzije_SelectByRestoranOrKorisnik", filterRestoranIDParameter, filterKorisnikIDParameter);
         }
     
         public virtual ObjectResult<Restorani_Result> esp_Restorani_FilterBlokGradVlasnikStatus(Nullable<int> blokId, Nullable<int> gradId, Nullable<int> vlasnikId, Nullable<int> statusId)
@@ -144,6 +140,26 @@ namespace eDostava_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_FilterString", filterStringParameter);
         }
     
+        public virtual ObjectResult<Restorani_Result> esp_Restorani_SelectAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_SelectAll");
+        }
+    
+        public virtual ObjectResult<RestoranStatusi_Result> esp_RestoranStatusi_SelectAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RestoranStatusi_Result>("esp_RestoranStatusi_SelectAll");
+        }
+    
+        public virtual ObjectResult<TipoviKuhinje_Result> esp_TipoviKuhinje_SelectAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TipoviKuhinje_Result>("esp_TipoviKuhinje_SelectAll");
+        }
+    
+        public virtual ObjectResult<UlogeKorisnika_Result> esp_UlogeKorisnika_SelectAll()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UlogeKorisnika_Result>("esp_UlogeKorisnika_SelectAll");
+        }
+    
         public virtual ObjectResult<Zalbe_Result> esp_Zalbe_SelectByRestoranOrNarucilac(Nullable<int> filterRestoranID, Nullable<int> filterNarucilacID)
         {
             var filterRestoranIDParameter = filterRestoranID.HasValue ?
@@ -157,13 +173,34 @@ namespace eDostava_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Zalbe_Result>("esp_Zalbe_SelectByRestoranOrNarucilac", filterRestoranIDParameter, filterNarucilacIDParameter);
         }
     
-        public virtual ObjectResult<Zaposlenici_Result> esp_Zaposlenici_SelectByRestoran(Nullable<int> filterRestoranID)
+        public virtual ObjectResult<Restorani_Result> esp_Restorani_FilterBlokGradStatus(Nullable<int> blokId, Nullable<int> gradId, Nullable<int> statusId)
         {
-            var filterRestoranIDParameter = filterRestoranID.HasValue ?
-                new ObjectParameter("filterRestoranID", filterRestoranID) :
-                new ObjectParameter("filterRestoranID", typeof(int));
+            var blokIdParameter = blokId.HasValue ?
+                new ObjectParameter("blokId", blokId) :
+                new ObjectParameter("blokId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Zaposlenici_Result>("esp_Zaposlenici_SelectByRestoran", filterRestoranIDParameter);
+            var gradIdParameter = gradId.HasValue ?
+                new ObjectParameter("gradId", gradId) :
+                new ObjectParameter("gradId", typeof(int));
+    
+            var statusIdParameter = statusId.HasValue ?
+                new ObjectParameter("statusId", statusId) :
+                new ObjectParameter("statusId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_FilterBlokGradStatus", blokIdParameter, gradIdParameter, statusIdParameter);
+        }
+    
+        public virtual ObjectResult<Restorani_Result> esp_Restorani_SelectAllByZaposlenikVlasnik(Nullable<int> zaposlenikId, Nullable<int> vlasnikId)
+        {
+            var zaposlenikIdParameter = zaposlenikId.HasValue ?
+                new ObjectParameter("zaposlenikId", zaposlenikId) :
+                new ObjectParameter("zaposlenikId", typeof(int));
+    
+            var vlasnikIdParameter = vlasnikId.HasValue ?
+                new ObjectParameter("vlasnikId", vlasnikId) :
+                new ObjectParameter("vlasnikId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_SelectAllByZaposlenikVlasnik", zaposlenikIdParameter, vlasnikIdParameter);
         }
     }
 }

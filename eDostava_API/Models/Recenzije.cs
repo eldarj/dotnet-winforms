@@ -15,13 +15,13 @@ namespace eDostava_API.Models
     public partial class Recenzije
     {
         public int RestoranRecenzijaID { get; set; }
-        public Nullable<int> NarucilacID { get; set; }
+        public Nullable<int> KorisnikID { get; set; }
         public int RestoranID { get; set; }
         public System.DateTime Datum { get; set; }
         public string Komentar { get; set; }
         public int Ocjena { get; set; }
     
-        public virtual Narucioci Narucioci { get; set; }
+        public virtual Korisnik Korisnik { get; set; }
         public virtual Restorani Restorani { get; set; }
     }
 }
