@@ -40,6 +40,7 @@
         <AssociationConnector Association="EasyFoodModel.FK__Zaposleni__Koris__68487DD7" />
         <AssociationConnector Association="EasyFoodModel.FK__Vlasnici__Restor__6D0D32F4" />
         <AssociationConnector Association="EasyFoodModel.FK__Zaposleni__Resto__693CA210" />
+        <AssociationConnector Association="EasyFoodModel.FK__Narudzbe__BlokID__73BA3083" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

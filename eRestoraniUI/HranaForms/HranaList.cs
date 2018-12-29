@@ -191,18 +191,14 @@ namespace eRestoraniUI.HranaUI
                     hranaStavka.SetSlikaImage(ResizedImage); // bind model
                     pictureBoxSlika.Image = ResizedImage; // bind picture in form
 
-                    // if: resized veličina veća od cropped, ako nije, nemoj ni stavljati thumb sliku
-                    if (ResizedImage.Width >= croppedImageWidth && ResizedImage.Height >= croppedImageHeight)
-                    {
-                        int xPosition = (ResizedImage.Width - croppedImageWidth) / 2;
-                        int yPosition = (resizedImageHeight - croppedImageHeight) / 2;
+                    int xPosition = (ResizedImage.Width - croppedImageWidth) / 2;
+                    int yPosition = (ResizedImage.Height - croppedImageHeight) / 2;
 
-                        croppedImage = UIHelper.CropImage(ResizedImage,
-                            new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
+                    croppedImage = UIHelper.CropImage(ResizedImage,
+                        new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
 
-                        checkCropImage.Enabled = true;
-                        lblCropDisabled.Visible = false;
-                    }
+                    checkCropImage.Enabled = true;
+                    lblCropDisabled.Visible = false;
                 }
                 // ELSE ORIGINAL: ako je originalna manja od resize veličine, odmah stavi original
                 else
@@ -258,7 +254,7 @@ namespace eRestoraniUI.HranaUI
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(String.Format(ValidationMessages.PrvoIzaberiObj, "stavku hrane"));
+                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "stavku hrane"));
             }
         }
 
@@ -365,18 +361,5 @@ namespace eRestoraniUI.HranaUI
             formErrorProvider.SetError(cmbTipoviKuhinje, error);
         }
         #endregion
-
-        //private void pnlHranaForm_VisibleChanged(object sender, EventArgs e)
-        //{
-        //    if (splitContainer1.Panel1Collapsed == true)
-        //    {
-        //        this.Height -= (int)splitContainer1.Panel1.Height;
-        //    }
-        //    else
-        //    {
-        //        this.Height += (int)splitContainer1.Panel1.Height;
-        //    }
-        //}
-
     }
 }

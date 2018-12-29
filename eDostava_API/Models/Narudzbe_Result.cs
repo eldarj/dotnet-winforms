@@ -10,30 +10,25 @@
 namespace eDostava_API.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Narudzbe
+    public partial class Narudzbe_Result
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Narudzbe()
-        {
-            this.StavkeNarudzbe = new HashSet<StavkeNarudzbe>();
-        }
-    
         public int NarudzbaID { get; set; }
         public System.Guid Sifra { get; set; }
         public System.DateTime DatumVrijeme { get; set; }
         public double UkupnaCijena { get; set; }
         public Nullable<int> NarucilacID { get; set; }
+        public string Narucilac { get; set; }
         public Nullable<int> NarudzbaStatusID { get; set; }
-        public Nullable<int> KorisnikID { get; set; }
+        public string StatusNarudzbe { get; set; }
+        public string AdresaFull { get; set; }
         public string Adresa { get; set; }
         public Nullable<int> BlokID { get; set; }
-    
-        public virtual Korisnik Korisnik { get; set; }
-        public virtual NarudzbaStatusi NarudzbaStatusi { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<StavkeNarudzbe> StavkeNarudzbe { get; set; }
-        public virtual Blokovi Blokovi { get; set; }
+        public string BlokNaziv { get; set; }
+        public Nullable<int> GradID { get; set; }
+        public string GradNaziv { get; set; }
+        public Nullable<int> StatusPromijenioZaposlenikID { get; set; }
+        public string StatusPromijenioZaposlenik { get; set; }
+        public Nullable<int> BrojStavkiNarudzbe { get; set; }
     }
 }

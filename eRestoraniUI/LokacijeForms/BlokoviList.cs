@@ -122,7 +122,7 @@ namespace eRestoraniUI.LokacijeForms
                 }
             } else
             {
-                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "blok");
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "blok");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
@@ -141,7 +141,7 @@ namespace eRestoraniUI.LokacijeForms
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(String.Format(ValidationMessages.PrvoIzaberiObj, "blok"));
+                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "blok"));
             }
         }
 

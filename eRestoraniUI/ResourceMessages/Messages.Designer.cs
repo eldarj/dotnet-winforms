@@ -106,6 +106,33 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Narudžbe naručioca: {0}.
+        /// </summary>
+        internal static string narudzbe_narucioca {
+            get {
+                return ResourceManager.GetString("narudzbe_narucioca", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Narudžbe restorana: {0}.
+        /// </summary>
+        internal static string narudzbe_restorana {
+            get {
+                return ResourceManager.GetString("narudzbe_restorana", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trenutni status restorana {0}.
+        /// </summary>
+        internal static string restoran_trenutni_status {
+            get {
+                return ResourceManager.GetString("restoran_trenutni_status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ukupno {0}.
         /// </summary>
         internal static string ukupno_general {

@@ -577,7 +577,7 @@
             this.dgvZaposlenici.Location = new System.Drawing.Point(8, 36);
             this.dgvZaposlenici.Name = "dgvZaposlenici";
             this.dgvZaposlenici.RowTemplate.Height = 24;
-            this.dgvZaposlenici.Size = new System.Drawing.Size(1161, 1122);
+            this.dgvZaposlenici.Size = new System.Drawing.Size(1161, 1503);
             this.dgvZaposlenici.TabIndex = 63;
             // 
             // KorisnikID
@@ -638,7 +638,7 @@
             // 
             this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupno.AutoSize = true;
-            this.lblUkupno.Location = new System.Drawing.Point(1019, 1161);
+            this.lblUkupno.Location = new System.Drawing.Point(1019, 1542);
             this.lblUkupno.Name = "lblUkupno";
             this.lblUkupno.Size = new System.Drawing.Size(149, 17);
             this.lblUkupno.TabIndex = 64;

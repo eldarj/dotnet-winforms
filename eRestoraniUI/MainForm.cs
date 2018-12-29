@@ -1,5 +1,6 @@
 ﻿using eRestoraniUI.KorisniciForms;
 using eRestoraniUI.LokacijeForms;
+using eRestoraniUI.NarudzbeForms;
 using System;
 using System.Windows.Forms;
 
@@ -13,11 +14,12 @@ namespace eRestoraniUI
         private static BlokoviList blokoviListForm;
         private static GradoviList gradoviListForm;
         private static KorisniciList korisniciForm;
-        private static KorisniciList naruciociForm;
+        private static NaruciociList naruciociForm;
         private static UlogeManagement ulogeForm;
         private static Zaposlenici zaposleniciForm;
         private static VlasniciList vlasniciForm;
-        #pragma warning restore 0649
+        private static NarudzbeList narudzbeForm;
+#pragma warning restore 0649
 
         public MainForm()
         {
@@ -57,9 +59,8 @@ namespace eRestoraniUI
             DisplayForm(korisniciForm);
         }
 
-        private void naručiociToolStripMenuItem_Click(object sender, EventArgs e)
+        private void naruciociToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            naruciociForm = new KorisniciList(ulogaKorisnika: 3);
             DisplayForm(naruciociForm);
         }
         private void zaposleniciToolStripMenuItem_Click(object sender, EventArgs e)
@@ -70,6 +71,10 @@ namespace eRestoraniUI
         private void vlasniciToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisplayForm(vlasniciForm);
+        }
+        private void sveNarudžbeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DisplayForm(narudzbeForm);
         }
         // Skontaj kako od svih ovih click handler-a napravit jedan (možda koristi Tag property u toolstripmenu item-ima?
 

@@ -26,7 +26,7 @@ namespace eDostava_API.Controllers
         [Route("blokovi")]
         public IHttpActionResult GetBlokovi()
         {
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             return Ok(db.esp_Blokovi_SelectAll(null).ToList());
         }
 

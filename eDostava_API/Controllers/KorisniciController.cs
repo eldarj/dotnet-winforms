@@ -3,6 +3,7 @@ using eDostava_API.Helpers.BaseClasses;
 using eDostava_API.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,12 +57,30 @@ namespace eDostava_API.Controllers
             {
                 db.Korisnik.Remove(k);
                 await db.SaveChangesAsync();
+
+                List<Zaposlenici> deleteZaposlenikRelations = db.Zaposlenici.Where(z => z.KorisnikID == id).ToList();
+                List<Vlasnici> deleteVlasnikRelations = db.Vlasnici.Where(v => v.KorisnikID == id).ToList();
+                db.Zaposlenici.RemoveRange(deleteZaposlenikRelations);
+                db.Vlasnici.RemoveRange(deleteVlasnikRelations);
+
+                await db.SaveChangesAsync();
+
                 return Ok("Uspješno ste izbrisali korisnika!");
             }
             catch (Exception e)
             {
                 throw new InvalidOperationException();
             }
+        }
+
+        //api/narucioci
+        // optional: api/narucioci?gradId=1
+        [HttpGet]
+        [Route("narucioci")]
+        public IHttpActionResult GetNarucioci([FromUri] int? grad = null)
+        {
+            List<Narucioci_Result> narucioci = db.esp_Narucioci_SelectAllOrByGrad(grad).ToList();
+            return Ok(narucioci);
         }
 
         //api/ulogekorisnika

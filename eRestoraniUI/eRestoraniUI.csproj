@@ -53,11 +53,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControls\ButtonList.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="KorisniciForms\KorisniciList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="KorisniciForms\KorisniciList.Designer.cs">
       <DependentUpon>KorisniciList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="KorisniciForms\NaruciociList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KorisniciForms\NaruciociList.Designer.cs">
+      <DependentUpon>NaruciociList.cs</DependentUpon>
     </Compile>
     <Compile Include="KorisniciForms\UlogeManagement.cs">
       <SubType>Form</SubType>
@@ -114,6 +123,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NarudzbeForms\NarudzbeList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NarudzbeForms\NarudzbeList.Designer.cs">
+      <DependentUpon>NarudzbeList.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResourceMessages\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -136,6 +151,7 @@
     <Compile Include="Utils\DataTransformationHelper.cs" />
     <Compile Include="Utils\KorisnikManagementHelper.cs" />
     <Compile Include="Utils\PanelValidator.cs" />
+    <Compile Include="Utils\BindingListHelper.cs" />
     <Compile Include="Utils\UIHelper.cs" />
     <Compile Include="Utils\WebApiHelper.cs" />
     <Compile Include="ResourceMessages\ValidationMessages.Designer.cs">
@@ -145,6 +161,9 @@
     </Compile>
     <EmbeddedResource Include="KorisniciForms\KorisniciList.resx">
       <DependentUpon>KorisniciList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KorisniciForms\NaruciociList.resx">
+      <DependentUpon>NaruciociList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="KorisniciForms\UlogeManagement.resx">
       <DependentUpon>UlogeManagement.cs</DependentUpon>
@@ -172,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NarudzbeForms\NarudzbeList.resx">
+      <DependentUpon>NarudzbeList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ResourceMessages\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -110,6 +110,7 @@
     <Compile Include="Controllers\HranaController.cs" />
     <Compile Include="Controllers\KorisniciController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\NarudzbeController.cs" />
     <Compile Include="Controllers\RestoraniController.cs" />
     <Compile Include="Controllers\TipoviKuhinjeController.cs" />
     <Compile Include="ExtendedModels\Blokovi_Result.cs" />
@@ -162,6 +163,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Narucioci_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NarudzbaStatusi.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -169,6 +173,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NarudzbeStatusi_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Narudzbe_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Recenzije.cs">

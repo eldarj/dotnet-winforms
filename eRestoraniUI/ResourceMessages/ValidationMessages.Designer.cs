@@ -88,7 +88,7 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jeste li sigurni da želite izbrisati &quot;{0}&quot;?.
+        ///   Looks up a localized string similar to Jeste li sigurni da želite izbrisati {0}?.
         /// </summary>
         internal static string izbrisi_stavku_potvrda {
             get {
@@ -102,6 +102,24 @@ namespace eRestoraniUI.ResourceMessages {
         internal static string izbrisi_stavku_potvrda_title {
             get {
                 return ResourceManager.GetString("izbrisi_stavku_potvrda_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Morate odabrati {0}!.
+        /// </summary>
+        internal static string morate_prvo_izaberite_obj {
+            get {
+                return ResourceManager.GetString("morate_prvo_izaberite_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odaberite zapis.
+        /// </summary>
+        internal static string morate_prvo_izabrati_title {
+            get {
+                return ResourceManager.GetString("morate_prvo_izabrati_title", resourceCulture);
             }
         }
         
@@ -138,15 +156,6 @@ namespace eRestoraniUI.ResourceMessages {
         internal static string polje_tip_duzina {
             get {
                 return ResourceManager.GetString("polje_tip_duzina", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Morate odabrati {0}!.
-        /// </summary>
-        internal static string PrvoIzaberiObj {
-            get {
-                return ResourceManager.GetString("PrvoIzaberiObj", resourceCulture);
             }
         }
         

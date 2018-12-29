@@ -132,6 +132,15 @@
   <data name="login_user_fail" xml:space="preserve">
     <value>Unijeli ste pogrešno korisničko ime ili lozinku</value>
   </data>
+  <data name="narudzbe_narucioca" xml:space="preserve">
+    <value>Narudžbe naručioca: {0}</value>
+  </data>
+  <data name="narudzbe_restorana" xml:space="preserve">
+    <value>Narudžbe restorana: {0}</value>
+  </data>
+  <data name="restoran_trenutni_status" xml:space="preserve">
+    <value>Trenutni status restorana {0}</value>
+  </data>
   <data name="ukupno_general" xml:space="preserve">
     <value>Ukupno {0}</value>
   </data>

@@ -70,6 +70,8 @@
           <Property Name="NarucilacID" Type="int" />
           <Property Name="NarudzbaStatusID" Type="int" />
           <Property Name="KorisnikID" Type="int" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="100" />
+          <Property Name="BlokID" Type="int" />
         </EntityType>
         <EntityType Name="Recenzije">
           <Key>
@@ -181,6 +183,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Narudzbe__BlokID__73BA3083">
+          <End Role="Blokovi" Type="Self.Blokovi" Multiplicity="0..1" />
+          <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Narudzbe__Narudz__44FF419A">
           <End Role="NarudzbaStatusi" Type="Self.NarudzbaStatusi" Multiplicity="0..1" />
           <End Role="Narudzbe" Type="Self.Narudzbe" Multiplicity="*" />
@@ -279,8 +293,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Zaposleni__Resto__693CA210">
-          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1" />
+        <Association Name="FK__Zaposleni__Resto__Cascade">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Zaposlenici" Type="Self.Zaposlenici" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Restorani">
@@ -424,6 +440,14 @@
           <Parameter Name="ulogaId" Type="int" Mode="In" />
           <Parameter Name="gradId" Type="int" Mode="In" />
         </Function>
+        <Function Name="esp_Narucioci_SelectAllOrByGrad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="gradId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_Narudzbe_SelectAllOrByNarucilacOrRestoran" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="narucilacId" Type="int" Mode="In" />
+          <Parameter Name="restoranId" Type="int" Mode="In" />
+          <Parameter Name="statusId" Type="int" Mode="In" />
+        </Function>
         <Function Name="esp_NarudzbeStatusi_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="esp_Recenzije_SelectByRestoranOrKorisnik" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="filterRestoranID" Type="int" Mode="In" />
@@ -473,6 +497,10 @@
             <End Role="UlogaKorisnika" EntitySet="UlogaKorisnika" />
             <End Role="Korisnik" EntitySet="Korisnik" />
           </AssociationSet>
+          <AssociationSet Name="FK__Narudzbe__BlokID__73BA3083" Association="Self.FK__Narudzbe__BlokID__73BA3083">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
           <AssociationSet Name="FK__Narudzbe__Narudz__44FF419A" Association="Self.FK__Narudzbe__Narudz__44FF419A">
             <End Role="NarudzbaStatusi" EntitySet="NarudzbaStatusi" />
             <End Role="Narudzbe" EntitySet="Narudzbe" />
@@ -505,7 +533,7 @@
             <End Role="Korisnik" EntitySet="Korisnik" />
             <End Role="Zaposlenici" EntitySet="Zaposlenici" />
           </AssociationSet>
-          <AssociationSet Name="FK__Zaposleni__Resto__693CA210" Association="Self.FK__Zaposleni__Resto__693CA210">
+          <AssociationSet Name="FK__Zaposleni__Resto__Cascade" Association="Self.FK__Zaposleni__Resto__Cascade">
             <End Role="Restorani" EntitySet="Restorani" />
             <End Role="Zaposlenici" EntitySet="Zaposlenici" />
           </AssociationSet>
@@ -560,6 +588,7 @@
           <NavigationProperty Name="Korisnik" Relationship="Self.FK__Korisnik__BlokID__4316F928" FromRole="Blokovi" ToRole="Korisnik" />
           <NavigationProperty Name="Restorani" Relationship="Self.FK__Restorani__BlokI__48CFD27E" FromRole="Blokovi" ToRole="Restorani" />
           <NavigationProperty Name="Gradovi" Relationship="Self.FK_Blokovi_Gradovi_GradID" FromRole="Blokovi" ToRole="Gradovi" />
+          <NavigationProperty Name="Narudzbe" Relationship="EasyFoodModel.FK__Narudzbe__BlokID__73BA3083" FromRole="Blokovi" ToRole="Narudzbe" />
         </EntityType>
         <EntityType Name="Gradovi">
           <Key>
@@ -634,6 +663,9 @@
           <NavigationProperty Name="Korisnik" Relationship="Self.FK_Narudzbe_Korisnik_KorisnikID" FromRole="Narudzbe" ToRole="Korisnik" />
           <NavigationProperty Name="NarudzbaStatusi" Relationship="Self.FK__Narudzbe__Narudz__44FF419A" FromRole="Narudzbe" ToRole="NarudzbaStatusi" />
           <NavigationProperty Name="StavkeNarudzbe" Relationship="Self.FK_StavkeNarudzbe_Narudzbe_NarudzbaID" FromRole="Narudzbe" ToRole="StavkeNarudzbe" />
+          <Property Name="Adresa" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BlokID" Type="Int32" />
+          <NavigationProperty Name="Blokovi" Relationship="EasyFoodModel.FK__Narudzbe__BlokID__73BA3083" FromRole="Narudzbe" ToRole="Blokovi" />
         </EntityType>
         <EntityType Name="Recenzije">
           <Key>
@@ -1022,12 +1054,6 @@
             <Parameter Name="filterRestoranID" Mode="In" Type="Int32" />
             <Parameter Name="filterKorisnikID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="esp_Restorani_FilterBlokGradVlasnikStatus" ReturnType="Collection(EasyFoodModel.Restorani_Result)">
-            <Parameter Name="blokId" Mode="In" Type="Int32" />
-            <Parameter Name="gradId" Mode="In" Type="Int32" />
-            <Parameter Name="vlasnikId" Mode="In" Type="Int32" />
-            <Parameter Name="statusId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="esp_Restorani_FilterString" ReturnType="Collection(EasyFoodModel.Restorani_Result)">
           <Parameter Name="filterString" Mode="In" Type="String" />
           </FunctionImport>
@@ -1066,12 +1092,25 @@
             <Parameter Name="zaposlenikId" Mode="In" Type="Int32" />
             <Parameter Name="vlasnikId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="esp_Narucioci_SelectAllOrByGrad" ReturnType="Collection(EasyFoodModel.Narucioci_Result)">
+          <Parameter Name="gradId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <AssociationSet Name="FK__Narudzbe__BlokID__73BA3083" Association="EasyFoodModel.FK__Narudzbe__BlokID__73BA3083">
+            <End Role="Blokovi" EntitySet="Blokovi" />
+            <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <FunctionImport Name="esp_Narudzbe_SelectAllOrByNarucilacOrRestoran" ReturnType="Collection(EasyFoodModel.Narudzbe_Result)">
+            <Parameter Name="narucilacId" Mode="In" Type="Int32" />
+            <Parameter Name="restoranId" Mode="In" Type="Int32" />
+            <Parameter Name="statusId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Blokovi_Result">
           <Property Type="Int32" Name="BlokID" Nullable="false" />
           <Property Type="String" Name="Naziv" Nullable="true" />
           <Property Type="Int32" Name="GradID" Nullable="false" />
           <Property Type="String" Name="NazivGrada" Nullable="true" />
+          <Property Type="String" Name="BlogGradFull" Nullable="true" />
         </ComplexType>
         <ComplexType Name="Gradovi_Result">
           <Property Type="Int32" Name="GradID" Nullable="false" />
@@ -1131,17 +1170,17 @@
           <Property Type="String" Name="WebUrl" Nullable="true" />
           <Property Type="String" Name="Telefon" Nullable="true" />
           <Property Type="Decimal" Name="MinimalnaCijenaNarudzbe" Nullable="true" Precision="5" Scale="2" />
-          <Property Type="Int32" Name="KorisnikID" Nullable="false" />
-          <Property Type="String" Name="VlasnikUsername" Nullable="true" />
-          <Property Type="String" Name="VlasnikImePrezime" Nullable="true" MaxLength="51" />
-          <Property Type="String" Name="VlasnikTelefon" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="VlasnikEmail" Nullable="true" />
-          <Property Type="DateTime" Name="VlasnikDatumRegistracije" Nullable="true" />
-          <Property Type="String" Name="Adresa" Nullable="true" />
+          <Property Type="String" Name="Adresa" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="BlokID" Nullable="false" />
           <Property Type="Int32" Name="GradID" Nullable="true" />
           <Property Type="Int32" Name="RestoranStatusID" Nullable="true" />
           <Property Type="String" Name="StatusNaziv" Nullable="true" />
+          <Property Type="String" Name="AdresaFull" Nullable="true" />
+          <Property Type="String" Name="BlokNaziv" Nullable="true" />
+          <Property Type="String" Name="GradNaziv" Nullable="true" />
+          <Property Type="Int32" Name="PromStatusKorisnikID" Nullable="true" />
+          <Property Type="String" Name="PromStatusUsername" Nullable="true" />
+          <Property Type="String" Name="PromStatusImePrezime" Nullable="true" MaxLength="51" />
         </ComplexType>
         <ComplexType Name="RestoranStatusi_Result">
           <Property Type="Int32" Name="RestoranStatusID" Nullable="false" />
@@ -1235,6 +1274,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="Narucioci_Result">
+          <Property Type="Int32" Name="KorisnikID" Nullable="false" />
+          <Property Type="String" Name="Username" Nullable="true" />
+          <Property Type="String" Name="ImePrezime" Nullable="false" MaxLength="51" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="Telefon" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="DatumRegistracije" Nullable="false" />
+          <Property Type="String" Name="Adresa" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="BlokID" Nullable="true" />
+          <Property Type="String" Name="Blok" Nullable="true" />
+          <Property Type="Int32" Name="GradID" Nullable="true" />
+          <Property Type="String" Name="Grad" Nullable="true" />
+          <Property Type="Int32" Name="UlogaKorisnikaID" Nullable="false" />
+          <Property Type="String" Name="Uloga" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="BrojNarudzbi" Nullable="true" />
+          <Property Type="Double" Name="UkupnoPotrosio" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK__Narudzbe__BlokID__73BA3083">
+          <End Type="EasyFoodModel.Blokovi" Role="Blokovi" Multiplicity="0..1" />
+          <End Type="EasyFoodModel.Narudzbe" Role="Narudzbe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blokovi">
+              <PropertyRef Name="BlokID" />
+            </Principal>
+            <Dependent Role="Narudzbe">
+              <PropertyRef Name="BlokID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Narudzbe_Result">
+          <Property Type="Int32" Name="NarudzbaID" Nullable="false" />
+          <Property Type="Guid" Name="Sifra" Nullable="false" />
+          <Property Type="DateTime" Name="DatumVrijeme" Nullable="false" />
+          <Property Type="Double" Name="UkupnaCijena" Nullable="false" />
+          <Property Type="Int32" Name="NarucilacID" Nullable="true" />
+          <Property Type="String" Name="Narucilac" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="NarudzbaStatusID" Nullable="true" />
+          <Property Type="String" Name="StatusNarudzbe" Nullable="true" />
+          <Property Type="String" Name="AdresaFull" Nullable="true" />
+          <Property Type="String" Name="Adresa" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="BlokID" Nullable="true" />
+          <Property Type="String" Name="BlokNaziv" Nullable="true" />
+          <Property Type="Int32" Name="GradID" Nullable="true" />
+          <Property Type="String" Name="GradNaziv" Nullable="true" />
+          <Property Type="Int32" Name="StatusPromijenioZaposlenikID" Nullable="true" />
+          <Property Type="String" Name="StatusPromijenioZaposlenik" Nullable="true" MaxLength="51" />
+          <Property Type="Int32" Name="BrojStavkiNarudzbe" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1303,6 +1390,8 @@
           <EntitySetMapping Name="Narudzbe">
             <EntityTypeMapping TypeName="EasyFoodModel.Narudzbe">
               <MappingFragment StoreEntitySet="Narudzbe">
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
                 <ScalarProperty Name="NarudzbaID" ColumnName="NarudzbaID" />
                 <ScalarProperty Name="Sifra" ColumnName="Sifra" />
                 <ScalarProperty Name="DatumVrijeme" ColumnName="DatumVrijeme" />
@@ -1397,6 +1486,7 @@
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="GradID" ColumnName="GradID" />
                 <ScalarProperty Name="NazivGrada" ColumnName="NazivGrada" />
+                <ScalarProperty Name="BlogGradFull" ColumnName="BlogGradFull" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1496,17 +1586,17 @@
                 <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
-                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
-                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
-                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
-                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
-                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
-                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
                 <ScalarProperty Name="Adresa" ColumnName="Adresa" />
                 <ScalarProperty Name="BlokID" ColumnName="BlokID" />
                 <ScalarProperty Name="GradID" ColumnName="GradID" />
                 <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
                 <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="PromStatusKorisnikID" ColumnName="PromStatusKorisnikID" />
+                <ScalarProperty Name="PromStatusUsername" ColumnName="PromStatusUsername" />
+                <ScalarProperty Name="PromStatusImePrezime" ColumnName="PromStatusImePrezime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1522,17 +1612,17 @@
                 <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
-                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
-                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
-                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
-                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
-                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
-                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
                 <ScalarProperty Name="Adresa" ColumnName="Adresa" />
                 <ScalarProperty Name="BlokID" ColumnName="BlokID" />
                 <ScalarProperty Name="GradID" ColumnName="GradID" />
                 <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
                 <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="PromStatusKorisnikID" ColumnName="PromStatusKorisnikID" />
+                <ScalarProperty Name="PromStatusUsername" ColumnName="PromStatusUsername" />
+                <ScalarProperty Name="PromStatusImePrezime" ColumnName="PromStatusImePrezime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1606,17 +1696,17 @@
                 <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
-                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
-                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
-                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
-                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
-                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
-                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
                 <ScalarProperty Name="Adresa" ColumnName="Adresa" />
                 <ScalarProperty Name="BlokID" ColumnName="BlokID" />
                 <ScalarProperty Name="GradID" ColumnName="GradID" />
                 <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
                 <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="PromStatusKorisnikID" ColumnName="PromStatusKorisnikID" />
+                <ScalarProperty Name="PromStatusUsername" ColumnName="PromStatusUsername" />
+                <ScalarProperty Name="PromStatusImePrezime" ColumnName="PromStatusImePrezime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1632,17 +1722,61 @@
                 <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
-                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
-                <ScalarProperty Name="VlasnikUsername" ColumnName="VlasnikUsername" />
-                <ScalarProperty Name="VlasnikImePrezime" ColumnName="VlasnikImePrezime" />
-                <ScalarProperty Name="VlasnikTelefon" ColumnName="VlasnikTelefon" />
-                <ScalarProperty Name="VlasnikEmail" ColumnName="VlasnikEmail" />
-                <ScalarProperty Name="VlasnikDatumRegistracije" ColumnName="VlasnikDatumRegistracije" />
                 <ScalarProperty Name="Adresa" ColumnName="Adresa" />
                 <ScalarProperty Name="BlokID" ColumnName="BlokID" />
                 <ScalarProperty Name="GradID" ColumnName="GradID" />
                 <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
                 <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="PromStatusKorisnikID" ColumnName="PromStatusKorisnikID" />
+                <ScalarProperty Name="PromStatusUsername" ColumnName="PromStatusUsername" />
+                <ScalarProperty Name="PromStatusImePrezime" ColumnName="PromStatusImePrezime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Narucioci_SelectAllOrByGrad" FunctionName="EasyFoodModel.Store.esp_Narucioci_SelectAllOrByGrad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EasyFoodModel.Narucioci_Result">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ImePrezime" ColumnName="ImePrezime" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="DatumRegistracije" ColumnName="DatumRegistracije" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="Blok" ColumnName="Blok" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="Grad" ColumnName="Grad" />
+                <ScalarProperty Name="UlogaKorisnikaID" ColumnName="UlogaKorisnikaID" />
+                <ScalarProperty Name="Uloga" ColumnName="Uloga" />
+                <ScalarProperty Name="BrojNarudzbi" ColumnName="BrojNarudzbi" />
+                <ScalarProperty Name="UkupnoPotrosio" ColumnName="UkupnoPotrosio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="esp_Narudzbe_SelectAllOrByNarucilacOrRestoran" FunctionName="EasyFoodModel.Store.esp_Narudzbe_SelectAllOrByNarucilacOrRestoran">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EasyFoodModel.Narudzbe_Result">
+                <ScalarProperty Name="NarudzbaID" ColumnName="NarudzbaID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="DatumVrijeme" ColumnName="DatumVrijeme" />
+                <ScalarProperty Name="UkupnaCijena" ColumnName="UkupnaCijena" />
+                <ScalarProperty Name="NarucilacID" ColumnName="NarucilacID" />
+                <ScalarProperty Name="Narucilac" ColumnName="Narucilac" />
+                <ScalarProperty Name="NarudzbaStatusID" ColumnName="NarudzbaStatusID" />
+                <ScalarProperty Name="StatusNarudzbe" ColumnName="StatusNarudzbe" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="StatusPromijenioZaposlenikID" ColumnName="StatusPromijenioZaposlenikID" />
+                <ScalarProperty Name="StatusPromijenioZaposlenik" ColumnName="StatusPromijenioZaposlenik" />
+                <ScalarProperty Name="BrojStavkiNarudzbe" ColumnName="BrojStavkiNarudzbe" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

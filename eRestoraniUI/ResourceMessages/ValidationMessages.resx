@@ -127,7 +127,7 @@
     <value>Došlo je do greške, pokušajte ponovo.</value>
   </data>
   <data name="izbrisi_stavku_potvrda" xml:space="preserve">
-    <value>Jeste li sigurni da želite izbrisati "{0}"?</value>
+    <value>Jeste li sigurni da želite izbrisati {0}?</value>
   </data>
   <data name="izbrisi_stavku_potvrda_title" xml:space="preserve">
     <value>Izbriši {0}</value>
@@ -144,7 +144,7 @@
   <data name="polje_tip_duzina" xml:space="preserve">
     <value>Polje {0} smije sadržati samo {1} i ne smije biti kraće od {2}, ili duže od {3} karaktera!</value>
   </data>
-  <data name="PrvoIzaberiObj" xml:space="preserve">
+  <data name="morate_prvo_izaberite_obj" xml:space="preserve">
     <value>Morate odabrati {0}!</value>
   </data>
   <data name="UspjenoKreiranTitle" xml:space="preserve">
@@ -164,5 +164,8 @@
   </data>
   <data name="uspjesno_napravljene_izmjene_title" xml:space="preserve">
     <value>Uspjeh</value>
+  </data>
+  <data name="morate_prvo_izabrati_title" xml:space="preserve">
+    <value>Odaberite zapis</value>
   </data>
 </root>

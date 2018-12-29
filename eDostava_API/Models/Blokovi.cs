@@ -19,6 +19,7 @@ namespace eDostava_API.Models
         {
             this.Korisnik = new HashSet<Korisnik>();
             this.Restorani = new HashSet<Restorani>();
+            this.Narudzbe = new HashSet<Narudzbe>();
         }
     
         public int BlokID { get; set; }
@@ -30,5 +31,7 @@ namespace eDostava_API.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Restorani> Restorani { get; set; }
         public virtual Gradovi Gradovi { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Narudzbe> Narudzbe { get; set; }
     }
 }

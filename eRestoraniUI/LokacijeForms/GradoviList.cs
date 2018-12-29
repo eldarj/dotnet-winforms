@@ -152,7 +152,7 @@ namespace eRestoraniUI.LokacijeForms
                 }
             } else
             {
-                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "grad");
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "grad");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
@@ -166,7 +166,7 @@ namespace eRestoraniUI.LokacijeForms
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "grad");
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "grad");
             }
         }
 

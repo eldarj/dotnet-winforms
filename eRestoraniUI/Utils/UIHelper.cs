@@ -14,7 +14,7 @@ namespace eRestoraniUI.Utils
 {
     class UIHelper
     {
-        #region Static vars
+        #region Regex Strings
         public static int TELEFON_STANDARDNA_DUZINA = 6;
         public static string TELEFON_REGEX = @"\D+|((00)?387){1,}";
 
@@ -37,7 +37,7 @@ namespace eRestoraniUI.Utils
         public static string ExtractDecimalCijena(string str)
         {
             Match m = Regex.Match(str, DECIMAL_REGEX);
-            return m.Value;
+            return m.Value != "" ? m.Value : "0";
         }
 
         public static string GenerateMaskedDecimal(double value)
@@ -61,7 +61,8 @@ namespace eRestoraniUI.Utils
                 {
                     maskedString += "0";
                 }
-            } catch (ArgumentOutOfRangeException e)
+            }
+            catch (ArgumentOutOfRangeException e)
             {
                 maskedString = "00.00";
             }
@@ -78,7 +79,8 @@ namespace eRestoraniUI.Utils
                 {
                     return "0" + telefon;
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 // handle exception ? za sad samo vrati prazan string...
                 telefon = "";
@@ -127,7 +129,9 @@ namespace eRestoraniUI.Utils
                 byteLozinka = Encoding.Unicode.GetBytes(lozinka);
                 byteSalt = Convert.FromBase64String(salt);
                 forHashing = new byte[byteLozinka.Length + byteSalt.Length];
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 // check the callstack here
                 // exception ćemo uhvatiti ako ne možemo dohvatiti bytove ili base64 od lozinke ili salta (ako nisu dobrog formata ili dužine)
                 // također, vrati bilo koji string kao hash, jer je svakako nije validan
@@ -147,9 +151,16 @@ namespace eRestoraniUI.Utils
         public static Image CropImage(Image img, Rectangle cropArea)
         {
             Bitmap bmpImage = new Bitmap(img);
-            Bitmap bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat);
-
-            return (Image)bmpCrop;
+            try
+            {
+                Bitmap bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat);
+                return (Image)bmpCrop;
+            }
+            catch (Exception e)
+            {
+                // croparea outside image
+                return null;
+            }
         }
 
         public static Image ResizeImage(Image imgToResize, Size size)
@@ -161,11 +172,11 @@ namespace eRestoraniUI.Utils
             float nPercentW = 0;
             float nPercentH = 0;
 
-            nPercentW = (float)size.Width / (float)sourceWidth;
-            nPercentH = (float)size.Height / (float)sourceHeight;
+            nPercentW = (float)size.Width / (float)sourceWidth; // 0.1
+            nPercentH = (float)size.Height / (float)sourceHeight; //0.5
 
-            if (nPercentH > nPercentW) nPercent = nPercentH;
-            else nPercent = nPercentW;
+            if (nPercentH > nPercentW) nPercent = nPercentW;
+            else nPercent = nPercentH;
 
             int destWidth = (int)(sourceWidth * nPercent);
             int destHeight = (int)(sourceHeight * nPercent);
@@ -200,6 +211,59 @@ namespace eRestoraniUI.Utils
             }
             loaderImgStack.Pop();
         }
+        #endregion
+
+        #region Generic UI element bindings
+        public static async Task<List<T>> GenericBindCmb<T>(PictureBox spinner, Stack<bool> spinnerTracker, string requestRoute,
+            ComboBox cmb, string valueMemberName, string displayMember)
+        {
+            WebApiHelper servis = new WebApiHelper();
+            List<T> data = new List<T>();
+
+            UIHelper.LoaderImgStackDisplay(ref spinner, ref spinnerTracker);
+            HttpResponseMessage response = await servis.GetResponse(requestRoute);
+            if (response.IsSuccessStatusCode)
+            {
+                data = new List<T>(response.Content.ReadAsAsync<List<T>>().Result);
+                cmb.DataSource = data;
+                cmb.ValueMember = valueMemberName;
+                cmb.DisplayMember = displayMember;
+
+                //enable controls
+                cmb.Enabled = true;
+            }
+            UIHelper.LoaderImgStackHide(ref spinner, ref spinnerTracker);
+            return data;
+        }
+        public static async Task<BindingListHelper<T>> GenericBindListBox<T>(PictureBox spinner, Stack<bool> spinnerTracker, string requestRoute,
+            ListBox listBox, string valueMemberName, string displayMember)
+        {
+            WebApiHelper servis = new WebApiHelper();
+            BindingListHelper<T> data = new BindingListHelper<T>();
+
+            try
+            {
+                UIHelper.LoaderImgStackDisplay(ref spinner, ref spinnerTracker);
+                HttpResponseMessage response = await servis.GetResponse(requestRoute);
+                if (response.IsSuccessStatusCode)
+                {
+                    data = new BindingListHelper<T>(response.Content.ReadAsAsync<List<T>>().Result);
+                    listBox.DataSource = data.Source;
+                    listBox.ValueMember = valueMemberName;
+                    listBox.DisplayMember = displayMember;
+
+                    //enable controls
+                    listBox.Enabled = true;
+                }
+                UIHelper.LoaderImgStackHide(ref spinner, ref spinnerTracker);
+            }
+            catch (Exception e)
+            {
+                // podataka nema, pa nećemo ni popuniti listbox
+            }
+            return data;
+        }
+
         #endregion
     }
 }

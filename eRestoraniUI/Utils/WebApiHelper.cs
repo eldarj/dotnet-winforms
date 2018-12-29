@@ -56,8 +56,8 @@ namespace eRestoraniUI.Utils
         #endregion
 
         #region PutMethods
-        // api/Endpoint/{param}/
-        // ili api/Endpoint/{param}/segment1/segment2/.../segmentN/
+        // api/Endpoint/{id}/
+        // ili api/Endpoint/{id}/segment1/segment2/.../segmentN/
         public HttpResponseMessage PutResponse(int id, Object existingObj, List<string> dodatniUrlSegmenti = null)
         {
             string endRoute = Route + "/" + id + "/";
@@ -113,9 +113,16 @@ namespace eRestoraniUI.Utils
         #endregion
 
         #region DeleteMethods
-        internal async Task<HttpResponseMessage> DeleteResponse(int resourceId)
+        // api/Endpoint/{id}
+        public async Task<HttpResponseMessage> DeleteResponse(int resourceId)
         {
             HttpResponseMessage result = await Client.DeleteAsync(Route + "/" + resourceId + "/");
+            return result;
+        }
+        // api/Endpoint/Param/{id}
+        public async Task<HttpResponseMessage> DeleteResponse(string param, int resourceId)
+        {
+            HttpResponseMessage result = await Client.DeleteAsync(Route + "/" + param + "/" + resourceId + "/");
             return result;
         }
         #endregion

@@ -1,15 +1,15 @@
 ﻿using eDostava_API.Models;
 using eRestoraniUI.HranaUI;
+using eRestoraniUI.NarudzbeForms;
+using eRestoraniUI.ResourceMessages;
 using eRestoraniUI.RestoraniUI;
 using eRestoraniUI.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,22 +19,114 @@ namespace eRestoraniUI
     {
         private WebApiHelper servis = new WebApiHelper("http://localhost:58299", "restorani");
 
+        // Stack; handle the loading spinner image
+        private Stack<bool> loaderImgStack = new Stack<bool>();
+
+        // Restorani grid source
+        private BindingList<Restorani_Result> dgvBindingList, dgvOriginalBindingList;
+        private BindingSource dgvBindingSource = new BindingSource();
+
         public RestoraniList()
         {
             InitializeComponent();
             dgvRestorani.AutoGenerateColumns = false;
-            
         }
 
         private void RestoraniList_Load(object sender, EventArgs e)
         {
             LoadData();
+            BindStatusiCmb();
+        }
+        private async void BindStatusiCmb()
+        {
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
+            HttpResponseMessage response = await servis.GetResponse("statusi");
+            if (response.IsSuccessStatusCode)
+            {
+                List<RestoranStatusi_Result> statusi = response.Content.ReadAsAsync<List<RestoranStatusi_Result>>().Result;
+                statusi.Insert(0, new RestoranStatusi_Result { RestoranStatusID = 0, Naziv = "Svi statusi" });
+                cmbStatusi.DataSource = statusi;
+                cmbStatusi.ValueMember = "RestoranStatusID";
+                cmbStatusi.DisplayMember = "Naziv";
+
+                //enable controls
+                cmbStatusi.Enabled = true;
+            }
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
 
-        private void btnUcitajRestorane_Click(object sender, EventArgs e)
+        public async void LoadData(bool recheckPretraga = false)
         {
-            LoadData();
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
+
+            HttpResponseMessage response = await servis.GetResponse();
+            if (response.IsSuccessStatusCode)
+            {
+                dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(response.Content.ReadAsAsync<List<Restorani_Result>>().Result);
+                dgvBindingSource.DataSource = dgvBindingList;
+
+                dgvRestorani.DataSource = dgvBindingSource;
+                dgvRestorani.ClearSelection();
+
+                //enable controls
+                txtRestoranFilter.Enabled = true;
+                btnIzbrisi.Enabled = true;
+                btnUredi.Enabled = true;
+                btnVise.Enabled = true;
+
+                if (recheckPretraga)
+                {
+                    pretragaByString();
+                }
+            }
+
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
+
+        private void pretragaByString()
+        {
+            List<Restorani_Result> temp = dgvOriginalBindingList
+                .Where(r => (r.Sifra + " " + r.Naziv + " " + r.Email + " " + r.WebUrl + " " + " " + r.AdresaFull
+                    + r.Telefon + " " + r.MinimalnaCijenaNarudzbe + " " + r.StatusNaziv).Contains(txtRestoranFilter.Text))
+                .ToList();
+
+            dgvBindingList = new BindingList<Restorani_Result>(temp);
+            dgvBindingSource.DataSource = dgvBindingList;
+
+            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
+        }
+
+        private void txtRestoranFilter_TextChanged(object sender, EventArgs e)
+        {
+            pretragaByString();
+        }
+        private async void cmbStatusi_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int selectedValue;
+            try
+            {
+                selectedValue = (int)cmbStatusi.SelectedValue;
+            }
+            catch (Exception ex)
+            {
+                return; // return ako lista još nije učitana na UI threadu
+            }
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
+
+            HttpResponseMessage response = selectedValue == 0 ?
+                await GetRestoraniFromApi() :
+                await GetRestoraniFromApi(status: selectedValue);
+            if (response.IsSuccessStatusCode)
+            {
+                dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(response.Content.ReadAsAsync<List<Restorani_Result>>().Result);
+                dgvBindingSource.DataSource = dgvBindingList;
+
+                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
+                pretragaByString();
+            }
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
+        }
+
         private void btnUrediRestoran_Click(object sender, EventArgs e)
         {
             RestoraniEdit f = new RestoraniEdit((Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem);
@@ -52,22 +144,55 @@ namespace eRestoraniUI
             }
         }
 
-        public async void LoadData()
+        private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
-            HttpResponseMessage response = txtRestoranFilter.Text.Length > 3 ? 
-                await servis.GetResponse("pretraga/" + txtRestoranFilter.Text) : 
-                await servis.GetResponse();
+            UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
 
-            if (response.IsSuccessStatusCode)
+            var r = (Restorani_Result) dgvRestorani.CurrentRow.DataBoundItem;
+            if (r != null)
             {
-                List<Restorani_Result> restorani = response.Content.ReadAsAsync<List<Restorani_Result>>().Result;
-                dgvRestorani.DataSource = restorani;
-                dgvRestorani.ClearSelection();
+                var potvrdi = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, "restoran " + r.Naziv),
+                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "restoran"),
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+                if (potvrdi == DialogResult.Yes)
+                {
+                    HttpResponseMessage response = await servis.DeleteResponse(r.RestoranID);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "restoran " + r.Naziv,
+                            ValidationMessages.uspjesno_izbrisan_title));
+                        LoadData(recheckPretraga: true);
+                    }
+                    else
+                    {
+                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Error code: " + response.StatusCode + " Message: " +
-                    response.ReasonPhrase);
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "restoran");
+            }
+
+            UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
+        }
+
+        private void btnNarudzbe_Click(object sender, EventArgs e)
+        {
+            if (dgvRestorani.SelectedRows.Count > 0)
+            {
+                Restorani_Result r = (Restorani_Result)dgvRestorani.SelectedRows[0].DataBoundItem;
+                NarudzbeList f = new NarudzbeList(restoran: r);
+                f.MdiParent = Global.Mdi;
+                f.Show();
+            }
+            else
+            {
+                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "restoran"),
+                    ValidationMessages.morate_prvo_izabrati_title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
         }
 
@@ -83,34 +208,23 @@ namespace eRestoraniUI
                 f.Text = String.Format(f.Text, restoranNaziv);
 
                 f.Show();
-            } else
+            }
+            else
             {
-                MessageBox.Show("Da biste pregledali jelovnike prvo odaberite restoran", 
-                    "Izaberite restoran", 
-                    MessageBoxButtons.OK, 
+                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "restoran"),
+                    ValidationMessages.morate_prvo_izabrati_title,
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
         }
 
-        private async void btnIzbrisi_Click(object sender, EventArgs e)
+        private async Task<HttpResponseMessage> GetRestoraniFromApi(int status = 0)
         {
-            var r = (Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem;
-            var potvrdi = MessageBox.Show("Jeste li sigurni da želite trajno izbrisati restoran " + r.Naziv,
-                "Izbriši restoran " + r.Naziv,
-                MessageBoxButtons.YesNo);
-            if (potvrdi == DialogResult.Yes)
-            {
-                HttpResponseMessage response = await servis.DeleteResponse(r.RestoranID);
+            Dictionary<string, int> queryParams = status != 0 ?
+                new Dictionary<string, int>() { { "status", status } } :
+                new Dictionary<string, int>();
 
-                if (response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show("Uspješno ste izbrisali restoran!");
-                    LoadData();
-                } else
-                {
-                    MessageBox.Show("Došlo je do greške, restoran nije izbrisan.");
-                }
-            }
+            return await servis.GetResponse(queryParams);
         }
     }
 }

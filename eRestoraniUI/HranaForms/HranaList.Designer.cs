@@ -152,8 +152,8 @@
             this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.lblUkupnoStavki);
             this.splitContainer1.Panel2.Controls.Add(this.dgvHranaList);
-            this.splitContainer1.Size = new System.Drawing.Size(1138, 755);
-            this.splitContainer1.SplitterDistance = 346;
+            this.splitContainer1.Size = new System.Drawing.Size(1138, 673);
+            this.splitContainer1.SplitterDistance = 314;
             this.splitContainer1.TabIndex = 37;
             // 
             // label8
@@ -192,7 +192,7 @@
             this.pnlForm.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pnlForm.Location = new System.Drawing.Point(8, 6);
             this.pnlForm.Name = "pnlForm";
-            this.pnlForm.Size = new System.Drawing.Size(767, 338);
+            this.pnlForm.Size = new System.Drawing.Size(767, 301);
             this.pnlForm.TabIndex = 75;
             // 
             // panel2
@@ -243,16 +243,16 @@
             // 
             this.pictureBoxSlika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxSlika.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.pictureBoxSlika.Location = new System.Drawing.Point(487, 28);
+            this.pictureBoxSlika.Location = new System.Drawing.Point(537, 28);
             this.pictureBoxSlika.Name = "pictureBoxSlika";
-            this.pictureBoxSlika.Size = new System.Drawing.Size(270, 270);
+            this.pictureBoxSlika.Size = new System.Drawing.Size(220, 220);
             this.pictureBoxSlika.TabIndex = 70;
             this.pictureBoxSlika.TabStop = false;
             // 
             // btnOdustani
             // 
             this.btnOdustani.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOdustani.Location = new System.Drawing.Point(601, 308);
+            this.btnOdustani.Location = new System.Drawing.Point(601, 271);
             this.btnOdustani.Name = "btnOdustani";
             this.btnOdustani.Size = new System.Drawing.Size(75, 23);
             this.btnOdustani.TabIndex = 72;
@@ -272,7 +272,7 @@
             // btnSacuvaj
             // 
             this.btnSacuvaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSacuvaj.Location = new System.Drawing.Point(682, 308);
+            this.btnSacuvaj.Location = new System.Drawing.Point(682, 271);
             this.btnSacuvaj.Name = "btnSacuvaj";
             this.btnSacuvaj.Size = new System.Drawing.Size(75, 23);
             this.btnSacuvaj.TabIndex = 63;
@@ -474,7 +474,7 @@
             // 
             this.lblUkupnoStavki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupnoStavki.AutoSize = true;
-            this.lblUkupnoStavki.Location = new System.Drawing.Point(966, 385);
+            this.lblUkupnoStavki.Location = new System.Drawing.Point(966, 416);
             this.lblUkupnoStavki.Name = "lblUkupnoStavki";
             this.lblUkupnoStavki.Size = new System.Drawing.Size(160, 17);
             this.lblUkupnoStavki.TabIndex = 45;
@@ -500,7 +500,7 @@
             this.dgvHranaList.Name = "dgvHranaList";
             this.dgvHranaList.RowHeadersWidth = 50;
             this.dgvHranaList.RowTemplate.Height = 100;
-            this.dgvHranaList.Size = new System.Drawing.Size(1118, 345);
+            this.dgvHranaList.Size = new System.Drawing.Size(1118, 376);
             this.dgvHranaList.TabIndex = 51;
             // 
             // Sifra
@@ -573,7 +573,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(1139, 786);
+            this.ClientSize = new System.Drawing.Size(1139, 704);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.Name = "HranaList";

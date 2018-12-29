@@ -31,9 +31,9 @@ namespace eRestoraniUI.KorisniciForms
         // Zaposlenik detaljno sources
         Korisnici_Result detaljnoZaposlenik;
         List<Restorani_Result> listRestoraniFromApi = new List<Restorani_Result>();
-        BindingSource restoraniZaposlenikaSource = new BindingSource();
 
         BindingList<Restorani_Result> restoraniZaposlenikaList = new BindingList<Restorani_Result>();
+        BindingSource restoraniZaposlenikaSource = new BindingSource();
 
         public Zaposlenici()
         {
@@ -167,7 +167,7 @@ namespace eRestoraniUI.KorisniciForms
             }
             else
             {
-                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "korisnika");
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "korisnika");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }

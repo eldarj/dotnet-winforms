@@ -156,7 +156,7 @@ namespace eRestoraniUI.KorisniciForms
             }
             else
             {
-                MessageBox.Show(ValidationMessages.PrvoIzaberiObj, "korisnika");
+                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "korisnika");
             }
         }
 

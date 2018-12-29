@@ -28,34 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnUcitajRestorane = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RestoraniList));
             this.dgvRestorani = new System.Windows.Forms.DataGridView();
             this.RestoranID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Sifra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Naziv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Adresa = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.WebUrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Telefon = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MinimalnaCijenaNarudzbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnNoviRestoran = new System.Windows.Forms.Button();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRestoranFilter = new System.Windows.Forms.TextBox();
             this.ucitajRestoraneBtn = new System.Windows.Forms.Button();
-            this.btnJelovnik = new System.Windows.Forms.Button();
             this.btnUredi = new System.Windows.Forms.Button();
             this.btnIzbrisi = new System.Windows.Forms.Button();
+            this.imgLoader = new System.Windows.Forms.PictureBox();
+            this.lblUkupno = new System.Windows.Forms.Label();
+            this.cmbStatusi = new System.Windows.Forms.ComboBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.noviRestoranToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnViseJelovnik = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnViseNarudzbe = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnVise = new eRestoraniUI.CustomControls.ButtonList();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRestorani)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnUcitajRestorane
-            // 
-            this.btnUcitajRestorane.Location = new System.Drawing.Point(372, 6);
-            this.btnUcitajRestorane.Name = "btnUcitajRestorane";
-            this.btnUcitajRestorane.Size = new System.Drawing.Size(75, 23);
-            this.btnUcitajRestorane.TabIndex = 0;
-            this.btnUcitajRestorane.Text = "Traži";
-            this.btnUcitajRestorane.UseVisualStyleBackColor = true;
-            this.btnUcitajRestorane.Click += new System.EventHandler(this.btnUcitajRestorane_Click);
             // 
             // dgvRestorani
             // 
@@ -71,14 +72,16 @@
             this.RestoranID,
             this.Sifra,
             this.Naziv,
+            this.Adresa,
             this.Email,
             this.WebUrl,
             this.Telefon,
-            this.MinimalnaCijenaNarudzbe});
-            this.dgvRestorani.Location = new System.Drawing.Point(15, 35);
+            this.MinimalnaCijenaNarudzbe,
+            this.Status});
+            this.dgvRestorani.Location = new System.Drawing.Point(9, 38);
             this.dgvRestorani.Name = "dgvRestorani";
             this.dgvRestorani.RowTemplate.Height = 24;
-            this.dgvRestorani.Size = new System.Drawing.Size(1208, 573);
+            this.dgvRestorani.Size = new System.Drawing.Size(1298, 605);
             this.dgvRestorani.TabIndex = 1;
             // 
             // RestoranID
@@ -104,6 +107,13 @@
             this.Naziv.Name = "Naziv";
             this.Naziv.ReadOnly = true;
             this.Naziv.Width = 72;
+            // 
+            // Adresa
+            // 
+            this.Adresa.DataPropertyName = "AdresaFull";
+            this.Adresa.HeaderText = "Adresa";
+            this.Adresa.Name = "Adresa";
+            this.Adresa.Width = 82;
             // 
             // Email
             // 
@@ -132,26 +142,22 @@
             // MinimalnaCijenaNarudzbe
             // 
             this.MinimalnaCijenaNarudzbe.DataPropertyName = "MinimalnaCijenaNarudzbe";
-            this.MinimalnaCijenaNarudzbe.HeaderText = "Minimalna cijena narudzbe";
+            this.MinimalnaCijenaNarudzbe.HeaderText = "Min. cijena narudžbe";
             this.MinimalnaCijenaNarudzbe.Name = "MinimalnaCijenaNarudzbe";
             this.MinimalnaCijenaNarudzbe.ReadOnly = true;
-            this.MinimalnaCijenaNarudzbe.Width = 187;
+            this.MinimalnaCijenaNarudzbe.Width = 154;
             // 
-            // btnNoviRestoran
+            // Status
             // 
-            this.btnNoviRestoran.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNoviRestoran.Location = new System.Drawing.Point(1117, 6);
-            this.btnNoviRestoran.Name = "btnNoviRestoran";
-            this.btnNoviRestoran.Size = new System.Drawing.Size(106, 23);
-            this.btnNoviRestoran.TabIndex = 2;
-            this.btnNoviRestoran.Text = "Novi restoran";
-            this.btnNoviRestoran.UseVisualStyleBackColor = true;
-            this.btnNoviRestoran.Click += new System.EventHandler(this.btnNoviRestoran_Click);
+            this.Status.DataPropertyName = "StatusNaziv";
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.Width = 77;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(6, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 17);
             this.label1.TabIndex = 3;
@@ -159,10 +165,12 @@
             // 
             // txtRestoranFilter
             // 
-            this.txtRestoranFilter.Location = new System.Drawing.Point(85, 7);
+            this.txtRestoranFilter.Enabled = false;
+            this.txtRestoranFilter.Location = new System.Drawing.Point(79, 7);
             this.txtRestoranFilter.Name = "txtRestoranFilter";
             this.txtRestoranFilter.Size = new System.Drawing.Size(281, 22);
             this.txtRestoranFilter.TabIndex = 4;
+            this.txtRestoranFilter.TextChanged += new System.EventHandler(this.txtRestoranFilter_TextChanged);
             // 
             // ucitajRestoraneBtn
             // 
@@ -172,22 +180,12 @@
             this.ucitajRestoraneBtn.TabIndex = 0;
             this.ucitajRestoraneBtn.Text = "Traži";
             this.ucitajRestoraneBtn.UseVisualStyleBackColor = true;
-            this.ucitajRestoraneBtn.Click += new System.EventHandler(this.btnUcitajRestorane_Click);
-            // 
-            // btnJelovnik
-            // 
-            this.btnJelovnik.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnJelovnik.Location = new System.Drawing.Point(874, 6);
-            this.btnJelovnik.Name = "btnJelovnik";
-            this.btnJelovnik.Size = new System.Drawing.Size(75, 23);
-            this.btnJelovnik.TabIndex = 6;
-            this.btnJelovnik.Text = "Jelovnik";
-            this.btnJelovnik.UseVisualStyleBackColor = true;
-            this.btnJelovnik.Click += new System.EventHandler(this.btnJelovnik_Click);
             // 
             // btnUredi
             // 
-            this.btnUredi.Location = new System.Drawing.Point(1036, 6);
+            this.btnUredi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUredi.Enabled = false;
+            this.btnUredi.Location = new System.Drawing.Point(1144, 6);
             this.btnUredi.Name = "btnUredi";
             this.btnUredi.Size = new System.Drawing.Size(75, 23);
             this.btnUredi.TabIndex = 7;
@@ -197,7 +195,9 @@
             // 
             // btnIzbrisi
             // 
-            this.btnIzbrisi.Location = new System.Drawing.Point(955, 6);
+            this.btnIzbrisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIzbrisi.Enabled = false;
+            this.btnIzbrisi.Location = new System.Drawing.Point(1063, 6);
             this.btnIzbrisi.Name = "btnIzbrisi";
             this.btnIzbrisi.Size = new System.Drawing.Size(75, 23);
             this.btnIzbrisi.TabIndex = 8;
@@ -205,50 +205,132 @@
             this.btnIzbrisi.UseVisualStyleBackColor = true;
             this.btnIzbrisi.Click += new System.EventHandler(this.btnIzbrisi_Click);
             // 
+            // imgLoader
+            // 
+            this.imgLoader.Image = ((System.Drawing.Image)(resources.GetObject("imgLoader.Image")));
+            this.imgLoader.Location = new System.Drawing.Point(493, 2);
+            this.imgLoader.Name = "imgLoader";
+            this.imgLoader.Size = new System.Drawing.Size(31, 30);
+            this.imgLoader.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgLoader.TabIndex = 78;
+            this.imgLoader.TabStop = false;
+            this.imgLoader.Visible = false;
+            // 
+            // lblUkupno
+            // 
+            this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblUkupno.AutoSize = true;
+            this.lblUkupno.Location = new System.Drawing.Point(7, 646);
+            this.lblUkupno.Name = "lblUkupno";
+            this.lblUkupno.Size = new System.Drawing.Size(131, 17);
+            this.lblUkupno.TabIndex = 79;
+            this.lblUkupno.Text = "Ukupno restorana -";
+            // 
+            // cmbStatusi
+            // 
+            this.cmbStatusi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStatusi.Enabled = false;
+            this.cmbStatusi.FormattingEnabled = true;
+            this.cmbStatusi.Location = new System.Drawing.Point(366, 6);
+            this.cmbStatusi.Name = "cmbStatusi";
+            this.cmbStatusi.Size = new System.Drawing.Size(121, 24);
+            this.cmbStatusi.TabIndex = 80;
+            this.cmbStatusi.SelectedIndexChanged += new System.EventHandler(this.cmbStatusi_SelectedIndexChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noviRestoranToolStripMenuItem,
+            this.btnViseJelovnik,
+            this.btnViseNarudzbe});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 76);
+            // 
+            // noviRestoranToolStripMenuItem
+            // 
+            this.noviRestoranToolStripMenuItem.Name = "noviRestoranToolStripMenuItem";
+            this.noviRestoranToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.noviRestoranToolStripMenuItem.Text = "Novi restoran";
+            this.noviRestoranToolStripMenuItem.Click += new System.EventHandler(this.btnNoviRestoran_Click);
+            // 
+            // btnViseJelovnik
+            // 
+            this.btnViseJelovnik.Name = "btnViseJelovnik";
+            this.btnViseJelovnik.Size = new System.Drawing.Size(167, 24);
+            this.btnViseJelovnik.Text = "Jelovnik";
+            this.btnViseJelovnik.Click += new System.EventHandler(this.btnJelovnik_Click);
+            // 
+            // btnViseNarudzbe
+            // 
+            this.btnViseNarudzbe.Name = "btnViseNarudzbe";
+            this.btnViseNarudzbe.Size = new System.Drawing.Size(167, 24);
+            this.btnViseNarudzbe.Text = "Narudžbe";
+            this.btnViseNarudzbe.Click += new System.EventHandler(this.btnNarudzbe_Click);
+            // 
+            // btnVise
+            // 
+            this.btnVise.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnVise.Location = new System.Drawing.Point(1225, 7);
+            this.btnVise.Menu = this.contextMenuStrip1;
+            this.btnVise.Name = "btnVise";
+            this.btnVise.Size = new System.Drawing.Size(77, 23);
+            this.btnVise.TabIndex = 81;
+            this.btnVise.Text = "Više";
+            this.btnVise.UseVisualStyleBackColor = true;
+            // 
             // RestoraniList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.ClientSize = new System.Drawing.Size(1235, 613);
+            this.ClientSize = new System.Drawing.Size(1314, 664);
+            this.Controls.Add(this.btnVise);
+            this.Controls.Add(this.cmbStatusi);
+            this.Controls.Add(this.lblUkupno);
+            this.Controls.Add(this.imgLoader);
             this.Controls.Add(this.btnIzbrisi);
             this.Controls.Add(this.btnUredi);
-            this.Controls.Add(this.btnJelovnik);
             this.Controls.Add(this.txtRestoranFilter);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnNoviRestoran);
             this.Controls.Add(this.dgvRestorani);
-            this.Controls.Add(this.btnUcitajRestorane);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "RestoraniList";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Restorani";
             this.Load += new System.EventHandler(this.RestoraniList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRestorani)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnUcitajRestorane;
         private System.Windows.Forms.DataGridView dgvRestorani;
-        private System.Windows.Forms.Button btnNoviRestoran;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtRestoranFilter;
         private System.Windows.Forms.Button ucitajRestoraneBtn;
+        private System.Windows.Forms.Button btnUredi;
+        private System.Windows.Forms.Button btnIzbrisi;
+        private System.Windows.Forms.PictureBox imgLoader;
+        private System.Windows.Forms.Label lblUkupno;
         private System.Windows.Forms.DataGridViewTextBoxColumn RestoranID;
         private System.Windows.Forms.DataGridViewTextBoxColumn Sifra;
         private System.Windows.Forms.DataGridViewTextBoxColumn Naziv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Adresa;
         private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.DataGridViewTextBoxColumn WebUrl;
         private System.Windows.Forms.DataGridViewTextBoxColumn Telefon;
         private System.Windows.Forms.DataGridViewTextBoxColumn MinimalnaCijenaNarudzbe;
-        private System.Windows.Forms.Button btnJelovnik;
-        private System.Windows.Forms.Button btnUredi;
-        private System.Windows.Forms.Button btnIzbrisi;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
+        private System.Windows.Forms.ComboBox cmbStatusi;
+        private CustomControls.ButtonList btnVise;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem btnViseJelovnik;
+        private System.Windows.Forms.ToolStripMenuItem btnViseNarudzbe;
+        private System.Windows.Forms.ToolStripMenuItem noviRestoranToolStripMenuItem;
     }
 }
 

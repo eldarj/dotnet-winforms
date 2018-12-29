@@ -17,5 +17,6 @@ namespace eDostava_API.Models
         public string Naziv { get; set; }
         public int GradID { get; set; }
         public string NazivGrada { get; set; }
+        public string BlogGradFull { get; set; }
     }
 }

@@ -142,9 +142,9 @@
             this.label26.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label26.Location = new System.Drawing.Point(4, 1);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(148, 17);
+            this.label26.Size = new System.Drawing.Size(124, 17);
             this.label26.TabIndex = 78;
-            this.label26.Text = "Restorani zaposlenika";
+            this.label26.Text = "Restorani vlasnika";
             // 
             // button4
             // 
@@ -355,7 +355,7 @@
             // 
             this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupno.AutoSize = true;
-            this.lblUkupno.Location = new System.Drawing.Point(1019, 1161);
+            this.lblUkupno.Location = new System.Drawing.Point(1020, 399);
             this.lblUkupno.Name = "lblUkupno";
             this.lblUkupno.Size = new System.Drawing.Size(149, 17);
             this.lblUkupno.TabIndex = 64;
@@ -397,7 +397,7 @@
             this.dgvVlasnici.Location = new System.Drawing.Point(8, 36);
             this.dgvVlasnici.Name = "dgvVlasnici";
             this.dgvVlasnici.RowTemplate.Height = 24;
-            this.dgvVlasnici.Size = new System.Drawing.Size(1161, 1122);
+            this.dgvVlasnici.Size = new System.Drawing.Size(1161, 360);
             this.dgvVlasnici.TabIndex = 63;
             // 
             // splitContainer1
@@ -411,7 +411,6 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             this.splitContainer1.Panel1.Controls.Add(this.pnlRestoraniVlasnika);
-            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
@@ -462,9 +461,9 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(211, 296);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(186, 17);
+            this.label3.Size = new System.Drawing.Size(162, 17);
             this.label3.TabIndex = 107;
-            this.label3.Text = "Uredi restorane zaposlenika";
+            this.label3.Text = "Uredi restorane vlasnika";
             // 
             // btnDetaljnoRestorani
             // 
@@ -511,9 +510,9 @@
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(203, 119);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(94, 17);
+            this.label15.Size = new System.Drawing.Size(140, 17);
             this.label15.TabIndex = 100;
-            this.label15.Text = "Zaposlen u:";
+            this.label15.Text = "Vlasnik restorana:";
             // 
             // lblDetaljnoBlok
             // 
@@ -652,9 +651,9 @@
             this.lblHranaFormTitle.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblHranaFormTitle.Location = new System.Drawing.Point(4, 1);
             this.lblHranaFormTitle.Name = "lblHranaFormTitle";
-            this.lblHranaFormTitle.Size = new System.Drawing.Size(142, 17);
+            this.lblHranaFormTitle.Size = new System.Drawing.Size(118, 17);
             this.lblHranaFormTitle.TabIndex = 78;
-            this.lblHranaFormTitle.Text = "Podaci o zaposleniku";
+            this.lblHranaFormTitle.Text = "Podaci o vlasniku";
             // 
             // VlasniciList
             // 
