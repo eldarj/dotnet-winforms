@@ -42,6 +42,7 @@ namespace eDostava_API.Models
         public virtual DbSet<Zalbe> Zalbe { get; set; }
         public virtual DbSet<Vlasnici> Vlasnici { get; set; }
         public virtual DbSet<Zaposlenici> Zaposlenici { get; set; }
+        public virtual DbSet<Omiljeni> Omiljeni { get; set; }
     
         public virtual ObjectResult<Blokovi_Result> esp_Blokovi_SelectAll(Nullable<int> gradId)
         {
@@ -119,9 +120,13 @@ namespace eDostava_API.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_FilterString", filterStringParameter);
         }
     
-        public virtual ObjectResult<Restorani_Result> esp_Restorani_SelectAll()
+        public virtual ObjectResult<Restorani_Result> esp_Restorani_SelectAll(Nullable<int> id)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_SelectAll");
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_SelectAll", idParameter);
         }
     
         public virtual ObjectResult<RestoranStatusi_Result> esp_RestoranStatusi_SelectAll()
@@ -206,6 +211,19 @@ namespace eDostava_API.Models
                 new ObjectParameter("statusId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Narudzbe_Result>("esp_Narudzbe_SelectAllOrByNarucilacOrRestoran", narucilacIdParameter, restoranIdParameter, statusIdParameter);
+        }
+    
+        public virtual ObjectResult<Restorani_Result> esp_Restorani_Omiljeni(Nullable<int> korisnikId, Nullable<int> restoranId)
+        {
+            var korisnikIdParameter = korisnikId.HasValue ?
+                new ObjectParameter("korisnikId", korisnikId) :
+                new ObjectParameter("korisnikId", typeof(int));
+    
+            var restoranIdParameter = restoranId.HasValue ?
+                new ObjectParameter("restoranId", restoranId) :
+                new ObjectParameter("restoranId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Restorani_Result>("esp_Restorani_Omiljeni", korisnikIdParameter, restoranIdParameter);
         }
     }
 }

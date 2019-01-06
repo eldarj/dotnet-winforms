@@ -17,6 +17,7 @@ namespace eDostava_API.Controllers
         [HttpGet]
         public async Task<IHttpActionResult> GetByRestoran([FromUri] int restoranId)
         {
+            Thread.Sleep(1000);
             var Restoran = await db.Restorani.FindAsync(restoranId);
             if (Restoran != null)
             {

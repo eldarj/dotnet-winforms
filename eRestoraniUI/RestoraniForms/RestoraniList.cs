@@ -132,7 +132,7 @@ namespace eRestoraniUI
             RestoraniEdit f = new RestoraniEdit((Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem);
             if (f.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                LoadData(true);
             }
         }
         private void btnNoviRestoran_Click(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace eRestoraniUI
             RestoraniEdit f = new RestoraniEdit();
             if (f.ShowDialog() == DialogResult.OK)
             {
-                LoadData();
+                LoadData(true);
             }
         }
 

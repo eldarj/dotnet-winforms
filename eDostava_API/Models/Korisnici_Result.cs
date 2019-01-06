@@ -16,6 +16,8 @@ namespace eDostava_API.Models
         public int KorisnikID { get; set; }
         public string Username { get; set; }
         public string ImePrezime { get; set; }
+        public string Ime{ get; set; }
+        public string Prezime { get; set; }
         public string Email { get; set; }
         public string Telefon { get; set; }
         public System.DateTime DatumRegistracije { get; set; }

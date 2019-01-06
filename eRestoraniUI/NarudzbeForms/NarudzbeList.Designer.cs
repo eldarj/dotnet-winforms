@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NarudzbeList));
             this.label2 = new System.Windows.Forms.Label();
             this.lblUkupno = new System.Windows.Forms.Label();
@@ -45,8 +46,14 @@
             this.UkupnaCijena = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusNarudzbe = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusPromijenioZaposlenik = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDetaljiNarudzbe = new System.Windows.Forms.Button();
+            this.btnIzvjestajiList = new eRestoraniUI.CustomControls.ButtonList();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.narudžbePoGradovimaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trenutnoPrikazaneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNarudzbe)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
@@ -86,7 +93,7 @@
             // 
             this.btnIzbrisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnIzbrisi.Enabled = false;
-            this.btnIzbrisi.Location = new System.Drawing.Point(1088, 10);
+            this.btnIzbrisi.Location = new System.Drawing.Point(979, 8);
             this.btnIzbrisi.Name = "btnIzbrisi";
             this.btnIzbrisi.Size = new System.Drawing.Size(75, 23);
             this.btnIzbrisi.TabIndex = 76;
@@ -194,11 +201,61 @@
             this.StatusPromijenioZaposlenik.HeaderText = "Uredio zaposlenik";
             this.StatusPromijenioZaposlenik.Name = "StatusPromijenioZaposlenik";
             // 
+            // btnDetaljiNarudzbe
+            // 
+            this.btnDetaljiNarudzbe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDetaljiNarudzbe.Enabled = false;
+            this.btnDetaljiNarudzbe.Location = new System.Drawing.Point(898, 8);
+            this.btnDetaljiNarudzbe.Name = "btnDetaljiNarudzbe";
+            this.btnDetaljiNarudzbe.Size = new System.Drawing.Size(75, 23);
+            this.btnDetaljiNarudzbe.TabIndex = 81;
+            this.btnDetaljiNarudzbe.Text = "Detalji";
+            this.btnDetaljiNarudzbe.UseVisualStyleBackColor = true;
+            this.btnDetaljiNarudzbe.Click += new System.EventHandler(this.btnDetaljiNarudzbe_Click);
+            // 
+            // btnIzvjestajiList
+            // 
+            this.btnIzvjestajiList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnIzvjestajiList.Enabled = false;
+            this.btnIzvjestajiList.Location = new System.Drawing.Point(1060, 8);
+            this.btnIzvjestajiList.Menu = this.contextMenuStrip1;
+            this.btnIzvjestajiList.Name = "btnIzvjestajiList";
+            this.btnIzvjestajiList.Size = new System.Drawing.Size(101, 23);
+            this.btnIzvjestajiList.TabIndex = 82;
+            this.btnIzvjestajiList.Text = "Izvještaji";
+            this.btnIzvjestajiList.UseVisualStyleBackColor = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.narudžbePoGradovimaToolStripMenuItem,
+            this.trenutnoPrikazaneToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(241, 52);
+            // 
+            // narudžbePoGradovimaToolStripMenuItem
+            // 
+            this.narudžbePoGradovimaToolStripMenuItem.Name = "narudžbePoGradovimaToolStripMenuItem";
+            this.narudžbePoGradovimaToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.narudžbePoGradovimaToolStripMenuItem.Text = "Izvještaj - sve narudžbe";
+            this.narudžbePoGradovimaToolStripMenuItem.Click += new System.EventHandler(this.narudžbePoGradovimaToolStripMenuItem_Click);
+            // 
+            // trenutnoPrikazaneToolStripMenuItem
+            // 
+            this.trenutnoPrikazaneToolStripMenuItem.Name = "trenutnoPrikazaneToolStripMenuItem";
+            this.trenutnoPrikazaneToolStripMenuItem.Size = new System.Drawing.Size(240, 24);
+            this.trenutnoPrikazaneToolStripMenuItem.Text = "Izvještaj - trenutni prikaz";
+            this.trenutnoPrikazaneToolStripMenuItem.Click += new System.EventHandler(this.trenutnoPrikazaneToolStripMenuItem_Click);
+            // 
             // NarudzbeList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1173, 579);
+            this.Controls.Add(this.btnIzvjestajiList);
+            this.Controls.Add(this.btnDetaljiNarudzbe);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblUkupno);
             this.Controls.Add(this.imgLoader);
@@ -214,6 +271,7 @@
             this.Load += new System.EventHandler(this.NarudzbeList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNarudzbe)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -237,5 +295,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn UkupnaCijena;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusNarudzbe;
         private System.Windows.Forms.DataGridViewTextBoxColumn StatusPromijenioZaposlenik;
+        private System.Windows.Forms.Button btnDetaljiNarudzbe;
+        private CustomControls.ButtonList btnIzvjestajiList;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem narudžbePoGradovimaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trenutnoPrikazaneToolStripMenuItem;
     }
 }

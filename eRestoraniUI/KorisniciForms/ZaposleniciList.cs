@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace eRestoraniUI.KorisniciForms
 {
-    public partial class Zaposlenici : Form
+    public partial class ZaposleniciList : Form
     {
         private WebApiHelper servisKorisnici = new WebApiHelper("korisnici");
         private WebApiHelper servis = new WebApiHelper(); // create just the base api, because we'll handle /korisnici, /restorani, /zaposlenici and /vlasnici
@@ -35,7 +35,7 @@ namespace eRestoraniUI.KorisniciForms
         BindingList<Restorani_Result> restoraniZaposlenikaList = new BindingList<Restorani_Result>();
         BindingSource restoraniZaposlenikaSource = new BindingSource();
 
-        public Zaposlenici()
+        public ZaposleniciList()
         {
             InitializeComponent();
             dgvZaposlenici.AutoGenerateColumns = false;

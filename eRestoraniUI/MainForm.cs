@@ -1,7 +1,11 @@
-﻿using eRestoraniUI.KorisniciForms;
+﻿using eDostava_API.Models;
+using eRestoraniUI.KorisniciForms;
 using eRestoraniUI.LokacijeForms;
 using eRestoraniUI.NarudzbeForms;
+using eRestoraniUI.Utils;
 using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Windows.Forms;
 
 namespace eRestoraniUI
@@ -16,24 +20,42 @@ namespace eRestoraniUI
         private static KorisniciList korisniciForm;
         private static NaruciociList naruciociForm;
         private static UlogeManagement ulogeForm;
-        private static Zaposlenici zaposleniciForm;
+        private static ZaposleniciList zaposleniciForm;
         private static VlasniciList vlasniciForm;
         private static NarudzbeList narudzbeForm;
-#pragma warning restore 0649
+        #pragma warning restore 0649
 
         public MainForm()
         {
             InitializeComponent();
             Global.Mdi = this;
 
-            // restoraniToolStripMenuItem_Click(null, null); // na init pokaži formu restorana
-            restoraniToolStripMenuItem_Click(null, null); // na init pokaži formu restorana
+            //restoraniToolStripMenuItem_Click(null, null); // na init pokaži formu restorana
 
-            //this.Text = String.Format(this.Text, Global.PrijavljeniKorisnik.Username);
-            this.Text = String.Format(this.Text, "eldarjahijagic");
+            this.Text = String.Format(this.Text, Global.PrijavljeniKorisnik.Username);
+            //this.Text = String.Format(this.Text, "eldarjahijagic");
         }
 
+        private async void MainForm_Load(object sender, EventArgs e)
+        {
+            HttpResponseMessage response = await new WebApiHelper("narudzbe").GetResponse(new Dictionary<string, int> { { "status", 1 } });
+            if (response.IsSuccessStatusCode)
+            {
+                List<Narudzbe_Result> narudzbeNaCekanju = response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result;
+                int brn = narudzbeNaCekanju.Count;
+                if (brn > 0)
+                {
+                    notifyIcon.ShowBalloonTip(4000, "Narudžbe na čekanju", "Imate " + brn + " narudžbi na čekanju!", ToolTipIcon.Info);
+                }
+            }
+        }
 
+        private void notifyIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            DisplayForm(narudzbeForm);
+        }
+
+        #region ToolstripHandlers
         private void restoraniToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisplayForm(restoraniListForm);
@@ -77,6 +99,7 @@ namespace eRestoraniUI
             DisplayForm(narudzbeForm);
         }
         // Skontaj kako od svih ovih click handler-a napravit jedan (možda koristi Tag property u toolstripmenu item-ima?
+        #endregion
 
         // Za sve forme, kod otvaranja, prvo provjeri jel već postoji forma, da ne bi pravili duple prozore...
         private void DisplayForm<T>(T forma, bool bindToMdi = true) where T: new()
@@ -100,6 +123,5 @@ namespace eRestoraniUI
                 _forma.BringToFront();
             }
         }
-
     }
 }

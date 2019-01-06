@@ -73,6 +73,14 @@
           <Property Name="Adresa" Type="nvarchar" MaxLength="100" />
           <Property Name="BlokID" Type="int" />
         </EntityType>
+        <EntityType Name="Omiljeni">
+          <Key>
+            <PropertyRef Name="OmiljeniID" />
+          </Key>
+          <Property Name="OmiljeniID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestoranID" Type="int" Nullable="false" />
+          <Property Name="KorisnikID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Recenzije">
           <Key>
             <PropertyRef Name="RestoranRecenzijaID" />
@@ -204,6 +212,34 @@
             </Principal>
             <Dependent Role="Narudzbe">
               <PropertyRef Name="NarudzbaStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Omiljeni__Korisn__03F0984C">
+          <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Omiljeni" Type="Self.Omiljeni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Omiljeni">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Omiljeni__Restor__02FC7413">
+          <End Role="Restorani" Type="Self.Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Omiljeni" Type="Self.Omiljeni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Omiljeni">
+              <PropertyRef Name="RestoranID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -461,7 +497,13 @@
         <Function Name="esp_Restorani_FilterString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="filterString" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="esp_Restorani_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="esp_Restorani_Omiljeni" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="korisnikId" Type="int" Mode="In" />
+          <Parameter Name="restoranId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="esp_Restorani_SelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
         <Function Name="esp_Restorani_SelectAllByZaposlenikVlasnik" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="zaposlenikId" Type="int" Mode="In" />
           <Parameter Name="vlasnikId" Type="int" Mode="In" />
@@ -480,6 +522,7 @@
           <EntitySet Name="Korisnik" EntityType="Self.Korisnik" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NarudzbaStatusi" EntityType="Self.NarudzbaStatusi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Narudzbe" EntityType="Self.Narudzbe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Omiljeni" EntityType="Self.Omiljeni" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recenzije" EntityType="Self.Recenzije" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Restorani" EntityType="Self.Restorani" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RestoranStatusi" EntityType="Self.RestoranStatusi" Schema="dbo" store:Type="Tables" />
@@ -504,6 +547,14 @@
           <AssociationSet Name="FK__Narudzbe__Narudz__44FF419A" Association="Self.FK__Narudzbe__Narudz__44FF419A">
             <End Role="NarudzbaStatusi" EntitySet="NarudzbaStatusi" />
             <End Role="Narudzbe" EntitySet="Narudzbe" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Omiljeni__Korisn__03F0984C" Association="Self.FK__Omiljeni__Korisn__03F0984C">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Omiljeni" EntitySet="Omiljeni" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Omiljeni__Restor__02FC7413" Association="Self.FK__Omiljeni__Restor__02FC7413">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Omiljeni" EntitySet="Omiljeni" />
           </AssociationSet>
           <AssociationSet Name="FK__Restorani__BlokI__48CFD27E" Association="Self.FK__Restorani__BlokI__48CFD27E">
             <End Role="Blokovi" EntitySet="Blokovi" />
@@ -640,6 +691,7 @@
           <NavigationProperty Name="Restorani" Relationship="Self.FK_Restorani_Korisnik_KorisnikID" FromRole="Korisnik" ToRole="Restorani" />
           <NavigationProperty Name="Vlasnici" Relationship="EasyFoodModel.FK__Vlasnici__Korisn__6C190EBB" FromRole="Korisnik" ToRole="Vlasnici" />
           <NavigationProperty Name="Zaposlenici" Relationship="EasyFoodModel.FK__Zaposleni__Koris__68487DD7" FromRole="Korisnik" ToRole="Zaposlenici" />
+          <NavigationProperty Name="Omiljeni" Relationship="EasyFoodModel.FK__Omiljeni__Korisn__03F0984C" FromRole="Korisnik" ToRole="Omiljeni" />
         </EntityType>
         <EntityType Name="NarudzbaStatusi">
           <Key>
@@ -705,6 +757,7 @@
           <NavigationProperty Name="Zalbe" Relationship="Self.FK__Zalbe__RestoranI__4D94879B" FromRole="Restorani" ToRole="Zalbe" />
           <NavigationProperty Name="Vlasnici" Relationship="EasyFoodModel.FK__Vlasnici__Restor__6D0D32F4" FromRole="Restorani" ToRole="Vlasnici" />
           <NavigationProperty Name="Zaposlenici" Relationship="EasyFoodModel.FK__Zaposleni__Resto__693CA210" FromRole="Restorani" ToRole="Zaposlenici" />
+          <NavigationProperty Name="Omiljeni" Relationship="EasyFoodModel.FK__Omiljeni__Restor__02FC7413" FromRole="Restorani" ToRole="Omiljeni" />
         </EntityType>
         <EntityType Name="RestoranStatusi">
           <Key>
@@ -1057,7 +1110,9 @@
           <FunctionImport Name="esp_Restorani_FilterString" ReturnType="Collection(EasyFoodModel.Restorani_Result)">
           <Parameter Name="filterString" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="esp_Restorani_SelectAll" ReturnType="Collection(EasyFoodModel.Restorani_Result)" />
+          <FunctionImport Name="esp_Restorani_SelectAll" ReturnType="Collection(EasyFoodModel.Restorani_Result)" >
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="esp_RestoranStatusi_SelectAll" ReturnType="Collection(EasyFoodModel.RestoranStatusi_Result)" />
           <FunctionImport Name="esp_TipoviKuhinje_SelectAll" ReturnType="Collection(EasyFoodModel.TipoviKuhinje_Result)" />
           <FunctionImport Name="esp_UlogeKorisnika_SelectAll" ReturnType="Collection(EasyFoodModel.UlogeKorisnika_Result)" />
@@ -1104,6 +1159,19 @@
             <Parameter Name="restoranId" Mode="In" Type="Int32" />
             <Parameter Name="statusId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Omiljeni" EntityType="EasyFoodModel.Omiljeni" />
+          <AssociationSet Name="FK__Omiljeni__Korisn__03F0984C" Association="EasyFoodModel.FK__Omiljeni__Korisn__03F0984C">
+            <End Role="Korisnik" EntitySet="Korisnik" />
+            <End Role="Omiljeni" EntitySet="Omiljeni" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Omiljeni__Restor__02FC7413" Association="EasyFoodModel.FK__Omiljeni__Restor__02FC7413">
+            <End Role="Restorani" EntitySet="Restorani" />
+            <End Role="Omiljeni" EntitySet="Omiljeni" />
+          </AssociationSet>
+          <FunctionImport Name="esp_Restorani_Omiljeni" ReturnType="Collection(EasyFoodModel.Restorani_Result)">
+            <Parameter Name="korisnikId" Mode="In" Type="Int32" />
+            <Parameter Name="restoranId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="Blokovi_Result">
           <Property Type="Int32" Name="BlokID" Nullable="false" />
@@ -1129,6 +1197,7 @@
           <Property Type="Int32" Name="TipKuhinjeID" Nullable="false" />
           <Property Type="String" Name="TipKuhinjeNaziv" Nullable="true" />
           <Property Type="Int32" Name="RestoranID" Nullable="true" />
+          <Property Type="String" Name="RestoranNaziv" Nullable="true" MaxLength="40" />
         </ComplexType>
         <ComplexType Name="Korisnici_Result">
           <Property Type="Int32" Name="KorisnikID" Nullable="false" />
@@ -1322,6 +1391,44 @@
           <Property Type="String" Name="StatusPromijenioZaposlenik" Nullable="true" MaxLength="51" />
           <Property Type="Int32" Name="BrojStavkiNarudzbe" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Omiljeni">
+          <Key>
+            <PropertyRef Name="OmiljeniID" />
+          </Key>
+          <Property Name="OmiljeniID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RestoranID" Type="Int32" Nullable="false" />
+          <Property Name="KorisnikID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Korisnik" Relationship="EasyFoodModel.FK__Omiljeni__Korisn__03F0984C" FromRole="Omiljeni" ToRole="Korisnik" />
+          <NavigationProperty Name="Restorani" Relationship="EasyFoodModel.FK__Omiljeni__Restor__02FC7413" FromRole="Omiljeni" ToRole="Restorani" />
+        </EntityType>
+        <Association Name="FK__Omiljeni__Korisn__03F0984C">
+          <End Type="EasyFoodModel.Korisnik" Role="Korisnik" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EasyFoodModel.Omiljeni" Role="Omiljeni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Korisnik">
+              <PropertyRef Name="KorisnikID" />
+            </Principal>
+            <Dependent Role="Omiljeni">
+              <PropertyRef Name="KorisnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Omiljeni__Restor__02FC7413">
+          <End Type="EasyFoodModel.Restorani" Role="Restorani" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EasyFoodModel.Omiljeni" Role="Omiljeni" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorani">
+              <PropertyRef Name="RestoranID" />
+            </Principal>
+            <Dependent Role="Omiljeni">
+              <PropertyRef Name="RestoranID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1529,6 +1636,7 @@
                 <ScalarProperty Name="TipKuhinjeID" ColumnName="TipKuhinjeID" />
                 <ScalarProperty Name="TipKuhinjeNaziv" ColumnName="TipKuhinjeNaziv" />
                 <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="RestoranNaziv" ColumnName="RestoranNaziv" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1777,6 +1885,41 @@
                 <ScalarProperty Name="StatusPromijenioZaposlenikID" ColumnName="StatusPromijenioZaposlenikID" />
                 <ScalarProperty Name="StatusPromijenioZaposlenik" ColumnName="StatusPromijenioZaposlenik" />
                 <ScalarProperty Name="BrojStavkiNarudzbe" ColumnName="BrojStavkiNarudzbe" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Omiljeni">
+            <EntityTypeMapping TypeName="EasyFoodModel.Omiljeni">
+              <MappingFragment StoreEntitySet="Omiljeni">
+                <ScalarProperty Name="KorisnikID" ColumnName="KorisnikID" />
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="OmiljeniID" ColumnName="OmiljeniID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="esp_Restorani_Omiljeni" FunctionName="EasyFoodModel.Store.esp_Restorani_Omiljeni">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="EasyFoodModel.Restorani_Result">
+                <ScalarProperty Name="RestoranID" ColumnName="RestoranID" />
+                <ScalarProperty Name="Sifra" ColumnName="Sifra" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Slika" ColumnName="Slika" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="WebUrl" ColumnName="WebUrl" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="MinimalnaCijenaNarudzbe" ColumnName="MinimalnaCijenaNarudzbe" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="BlokID" ColumnName="BlokID" />
+                <ScalarProperty Name="GradID" ColumnName="GradID" />
+                <ScalarProperty Name="RestoranStatusID" ColumnName="RestoranStatusID" />
+                <ScalarProperty Name="StatusNaziv" ColumnName="StatusNaziv" />
+                <ScalarProperty Name="AdresaFull" ColumnName="AdresaFull" />
+                <ScalarProperty Name="BlokNaziv" ColumnName="BlokNaziv" />
+                <ScalarProperty Name="GradNaziv" ColumnName="GradNaziv" />
+                <ScalarProperty Name="PromStatusKorisnikID" ColumnName="PromStatusKorisnikID" />
+                <ScalarProperty Name="PromStatusUsername" ColumnName="PromStatusUsername" />
+                <ScalarProperty Name="PromStatusImePrezime" ColumnName="PromStatusImePrezime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

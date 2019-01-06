@@ -8,12 +8,16 @@ namespace eDostava_API.Models
 {
     public partial class Korisnici_Result
     {
+        public string AdresaFull { get; set; }
+
         public static Korisnici_Result GetKorisnikResultInstance(Korisnik obj)
         {
-            return new Korisnici_Result
+            return obj == null ? null : new Korisnici_Result
             {
                 KorisnikID = obj.KorisnikID,
                 Username = obj.Username,
+                Ime = obj.Ime,
+                Prezime = obj.Prezime,
                 ImePrezime = obj.Ime + " " + obj.Prezime,
                 Adresa = obj.Adresa,
                 BlokID = obj.BlokID,
@@ -22,6 +26,7 @@ namespace eDostava_API.Models
                 Email = obj.Email,
                 Grad = obj.Blokovi.Gradovi.Naziv,
                 GradID = obj.Blokovi.GradID,
+                AdresaFull = obj.Blokovi != null && obj.Blokovi.Gradovi != null ? obj.Adresa + " " + obj.Blokovi.Naziv + ", " + obj.Blokovi.Gradovi.Naziv : "-",
                 Telefon = obj.Telefon,
                 Uloga = obj.UlogaKorisnika.Uloga,
                 UlogaKorisnikaID = obj.UlogaKorisnikaID

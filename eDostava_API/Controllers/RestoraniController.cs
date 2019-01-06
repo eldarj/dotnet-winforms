@@ -11,6 +11,7 @@ using System.Data.Entity.Core;
 using eDostava_API.Helpers;
 using System.Threading.Tasks;
 using System.Threading;
+using eDostava_API.Helpers.Recommenders;
 
 namespace eDostava_API.Controllers
 {
@@ -34,9 +35,7 @@ namespace eDostava_API.Controllers
         {
             try
             {
-                Restorani_Result r = db.esp_Restorani_SelectAll().ToList()
-                    .Where(x => x.RestoranID == id)
-                    .Single();
+                Restorani_Result r = db.esp_Restorani_SelectAll(id).Single();
                 return Ok(r);
             }
             catch (Exception e)
@@ -116,6 +115,24 @@ namespace eDostava_API.Controllers
 
             await db.SaveChangesAsync();
             return CreatedAtRoute("DefaultApi", new { controller = "Restorani", action = "GetSingle", id = obj.RestoranID }, obj);
+        }
+
+        //api/restorani/{id}/slicni
+        [HttpGet]
+        [Route("{id}/slicni")]
+        public List<Restorani_Result> PreporuceniRestorani([FromUri] int id)
+        {
+            SlicniRestorani r = new SlicniRestorani();
+            return r.GetSlicnePoOcjenama(id);
+        }
+
+        //api/restorani/{id}/recenzije
+        [HttpGet]
+        [Route("{id}/recenzije")]
+        [MyExceptionFilter]
+        public List<Recenzije_Result> Recenzije([FromUri] int id)
+        {
+            return db.esp_Recenzije_SelectByRestoranOrKorisnik(id, null).ToList();
         }
 
         //api/restorani/statusi

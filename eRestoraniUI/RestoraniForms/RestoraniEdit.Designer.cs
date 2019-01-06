@@ -201,7 +201,7 @@
             this.lblDivider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblDivider.Location = new System.Drawing.Point(-7, 33);
             this.lblDivider.Name = "lblDivider";
-            this.lblDivider.Size = new System.Drawing.Size(746, 2);
+            this.lblDivider.Size = new System.Drawing.Size(725, 2);
             this.lblDivider.TabIndex = 35;
             // 
             // txtMaskMinCijena
@@ -216,7 +216,7 @@
             // 
             this.pictureBoxSlika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxSlika.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.pictureBoxSlika.Location = new System.Drawing.Point(476, 74);
+            this.pictureBoxSlika.Location = new System.Drawing.Point(455, 74);
             this.pictureBoxSlika.Name = "pictureBoxSlika";
             this.pictureBoxSlika.Size = new System.Drawing.Size(220, 220);
             this.pictureBoxSlika.TabIndex = 81;
@@ -233,7 +233,7 @@
             // txtSlikaName
             // 
             this.txtSlikaName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSlikaName.Location = new System.Drawing.Point(473, 46);
+            this.txtSlikaName.Location = new System.Drawing.Point(452, 46);
             this.txtSlikaName.Name = "txtSlikaName";
             this.txtSlikaName.ReadOnly = true;
             this.txtSlikaName.Size = new System.Drawing.Size(187, 22);
@@ -252,7 +252,7 @@
             // label13
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.Location = new System.Drawing.Point(405, 49);
+            this.label13.Location = new System.Drawing.Point(384, 49);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 17);
             this.label13.TabIndex = 80;
@@ -301,7 +301,7 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Location = new System.Drawing.Point(-7, 360);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(746, 2);
+            this.label3.Size = new System.Drawing.Size(725, 2);
             this.label3.TabIndex = 87;
             // 
             // label5
@@ -319,7 +319,7 @@
             this.btnDodajSliku.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDodajSliku.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDodajSliku.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDodajSliku.Location = new System.Drawing.Point(666, 45);
+            this.btnDodajSliku.Location = new System.Drawing.Point(645, 45);
             this.btnDodajSliku.Name = "btnDodajSliku";
             this.btnDodajSliku.Size = new System.Drawing.Size(30, 23);
             this.btnDodajSliku.TabIndex = 75;
@@ -332,7 +332,7 @@
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(436, 336);
+            this.label14.Location = new System.Drawing.Point(415, 336);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 17);
             this.label14.TabIndex = 88;
@@ -342,7 +342,7 @@
             // 
             this.lblTrenutniStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTrenutniStatus.AutoSize = true;
-            this.lblTrenutniStatus.Location = new System.Drawing.Point(436, 380);
+            this.lblTrenutniStatus.Location = new System.Drawing.Point(415, 380);
             this.lblTrenutniStatus.Name = "lblTrenutniStatus";
             this.lblTrenutniStatus.Size = new System.Drawing.Size(116, 17);
             this.lblTrenutniStatus.TabIndex = 89;
@@ -352,7 +352,7 @@
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(436, 411);
+            this.label16.Location = new System.Drawing.Point(415, 411);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(108, 17);
             this.label16.TabIndex = 90;
@@ -364,7 +364,7 @@
             this.cmbStatusi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatusi.Enabled = false;
             this.cmbStatusi.FormattingEnabled = true;
-            this.cmbStatusi.Location = new System.Drawing.Point(550, 408);
+            this.cmbStatusi.Location = new System.Drawing.Point(529, 408);
             this.cmbStatusi.Name = "cmbStatusi";
             this.cmbStatusi.Size = new System.Drawing.Size(146, 24);
             this.cmbStatusi.TabIndex = 91;
@@ -414,7 +414,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(436, 470);
+            this.label18.Location = new System.Drawing.Point(415, 470);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(56, 17);
             this.label18.TabIndex = 100;
@@ -427,7 +427,7 @@
             this.label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label19.Location = new System.Drawing.Point(-7, 494);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(746, 2);
+            this.label19.Size = new System.Drawing.Size(725, 2);
             this.label19.TabIndex = 99;
             // 
             // label20
@@ -462,7 +462,7 @@
             // label21
             // 
             this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.Location = new System.Drawing.Point(424, 508);
+            this.label21.Location = new System.Drawing.Point(403, 508);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(165, 17);
             this.label21.TabIndex = 106;
@@ -474,7 +474,7 @@
             this.lblVecDodanVlasnik.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVecDodanVlasnik.AutoSize = true;
             this.lblVecDodanVlasnik.BackColor = System.Drawing.SystemColors.Info;
-            this.lblVecDodanVlasnik.Location = new System.Drawing.Point(645, 774);
+            this.lblVecDodanVlasnik.Location = new System.Drawing.Point(624, 774);
             this.lblVecDodanVlasnik.Name = "lblVecDodanVlasnik";
             this.lblVecDodanVlasnik.Size = new System.Drawing.Size(51, 17);
             this.lblVecDodanVlasnik.TabIndex = 105;
@@ -484,7 +484,7 @@
             // btnDodajVlasnika
             // 
             this.btnDodajVlasnika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDodajVlasnika.Location = new System.Drawing.Point(615, 746);
+            this.btnDodajVlasnika.Location = new System.Drawing.Point(594, 746);
             this.btnDodajVlasnika.Name = "btnDodajVlasnika";
             this.btnDodajVlasnika.Size = new System.Drawing.Size(81, 23);
             this.btnDodajVlasnika.TabIndex = 104;
@@ -498,7 +498,7 @@
             this.cmbVlasnici.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVlasnici.Enabled = false;
             this.cmbVlasnici.FormattingEnabled = true;
-            this.cmbVlasnici.Location = new System.Drawing.Point(527, 716);
+            this.cmbVlasnici.Location = new System.Drawing.Point(506, 716);
             this.cmbVlasnici.Name = "cmbVlasnici";
             this.cmbVlasnici.Size = new System.Drawing.Size(169, 24);
             this.cmbVlasnici.TabIndex = 103;
@@ -506,7 +506,7 @@
             // btnUkloniVlasnika
             // 
             this.btnUkloniVlasnika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUkloniVlasnika.Location = new System.Drawing.Point(621, 505);
+            this.btnUkloniVlasnika.Location = new System.Drawing.Point(600, 505);
             this.btnUkloniVlasnika.Name = "btnUkloniVlasnika";
             this.btnUkloniVlasnika.Size = new System.Drawing.Size(75, 23);
             this.btnUkloniVlasnika.TabIndex = 102;
@@ -519,7 +519,7 @@
             this.listBoxVlasnici.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxVlasnici.FormattingEnabled = true;
             this.listBoxVlasnici.ItemHeight = 16;
-            this.listBoxVlasnici.Location = new System.Drawing.Point(470, 530);
+            this.listBoxVlasnici.Location = new System.Drawing.Point(449, 530);
             this.listBoxVlasnici.Name = "listBoxVlasnici";
             this.listBoxVlasnici.Size = new System.Drawing.Size(226, 180);
             this.listBoxVlasnici.TabIndex = 101;
@@ -527,7 +527,7 @@
             // btnSacuvaj
             // 
             this.btnSacuvaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSacuvaj.Location = new System.Drawing.Point(615, 817);
+            this.btnSacuvaj.Location = new System.Drawing.Point(594, 817);
             this.btnSacuvaj.Name = "btnSacuvaj";
             this.btnSacuvaj.Size = new System.Drawing.Size(81, 23);
             this.btnSacuvaj.TabIndex = 107;

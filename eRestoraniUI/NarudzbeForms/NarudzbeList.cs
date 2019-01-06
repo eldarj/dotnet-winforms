@@ -1,4 +1,5 @@
 ﻿using eDostava_API.Models;
+using eRestoraniUI.Reports;
 using eRestoraniUI.ResourceMessages;
 using eRestoraniUI.Utils;
 using System;
@@ -20,7 +21,7 @@ namespace eRestoraniUI.NarudzbeForms
         private Stack<bool> loaderImgStack = new Stack<bool>();
 
         // Grid source
-        private BindingList<Narudzbe_Result> dgvBindingList, dgvOriginalBindingList;
+        private BindingList<Narudzbe_Result> dgvBindingList, dgvOriginalBindingList, dgvOriginalForReporting;
         private BindingSource dgvBindingSource = new BindingSource();
 
         private Restorani_Result predefinedRestoran;
@@ -90,6 +91,8 @@ namespace eRestoraniUI.NarudzbeForms
                 //enable controls
                 txtPretraga.Enabled = true;
                 btnIzbrisi.Enabled = true;
+                btnDetaljiNarudzbe.Enabled = true;
+                btnIzvjestajiList.Enabled = true;
 
                 if (recheckPretraga)
                 {
@@ -151,7 +154,7 @@ namespace eRestoraniUI.NarudzbeForms
                 await GetNarudzbeFromApi(status:selectedValue);
             if (response.IsSuccessStatusCode)
             {
-                dgvBindingList = dgvOriginalBindingList = new BindingList<Narudzbe_Result>(response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result);
+                dgvBindingList = dgvOriginalBindingList = dgvOriginalForReporting = new BindingList<Narudzbe_Result>(response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result);
                 dgvBindingSource.DataSource = dgvBindingList;
 
                 lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narudžbi", dgvBindingList.Count);
@@ -159,6 +162,7 @@ namespace eRestoraniUI.NarudzbeForms
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
+
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
@@ -191,6 +195,14 @@ namespace eRestoraniUI.NarudzbeForms
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
 
+        private void btnDetaljiNarudzbe_Click(object sender, EventArgs e)
+        {
+            NarudzbaDetaljno n = new NarudzbaDetaljno(((Narudzbe_Result)dgvNarudzbe.CurrentRow.DataBoundItem).NarudzbaID);
+            if (n.ShowDialog() == DialogResult.OK)
+            {
+                BindMainGrid(true);
+            }
+        }
 
         private async Task<HttpResponseMessage> GetNarudzbeFromApi(int status = 0)
         {
@@ -201,16 +213,30 @@ namespace eRestoraniUI.NarudzbeForms
             if (predefinedRestoran != null)
             {
                 queryParams.Add("restoran", predefinedRestoran.RestoranID);
-                return await servisNarudzbe.GetResponse(queryParams);
             }
 
             if (predefinedNarucilac != null)
             {
                 queryParams.Add("narucilac", predefinedNarucilac.KorisnikID);
-                return await servisNarudzbe.GetResponse(queryParams);
             }
 
-            return await servisNarudzbe.GetResponse();
+            return await servisNarudzbe.GetResponse(queryParams);
+        }
+        private void trenutnoPrikazaneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = ((NarudzbeStatusi_Result) cmbStatusi.SelectedItem).Naziv;
+
+            ReportViewForm f = new ReportViewForm();
+            f.narudzbePoGradovima = dgvBindingList.ToList();
+            f.statusiNarudzbi = s;
+            f.Show();
+        }
+
+        private void narudžbePoGradovimaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportViewForm f = new ReportViewForm();
+            f.narudzbePoGradovima = dgvOriginalForReporting.ToList();
+            f.Show();
         }
     }
 }

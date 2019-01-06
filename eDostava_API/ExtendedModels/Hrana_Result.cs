@@ -70,7 +70,9 @@ namespace eDostava_API.Models
                 Slika = obj.Slika,
                 SlikaThumb = obj.SlikaThumb,
                 TipKuhinjeID = obj.TipKuhinjeID,
-                RestoranID = obj.RestoranID
+                TipKuhinjeNaziv = obj.TipoviKuhinje.Naziv,
+                RestoranID = obj.RestoranID,
+                RestoranNaziv = obj.Restorani.Naziv
             };
         }
     }

@@ -65,5 +65,32 @@ namespace eDostava_API.Models
                 WebUrl = obj.WebUrl
             };
         }
+
+        public static Restorani_Result GetRestoraniResultInstance(Restorani obj)
+        {
+            return new Restorani_Result
+            {
+                RestoranID = obj.RestoranID,
+                Sifra = obj.Sifra,
+                Naziv = obj.Naziv,
+                Opis = obj.Opis,
+                Slika = obj.Slika,
+                Adresa = obj.Adresa,
+                BlokID = obj.BlokID,
+                BlokNaziv = obj.Blokovi?.Naziv,
+                GradID = obj.Blokovi?.Gradovi?.GradID,
+                GradNaziv = obj.Blokovi?.Gradovi?.Naziv,
+                AdresaFull = obj.Blokovi != null && obj.Blokovi.Gradovi != null ? obj.Adresa + " " + obj.Blokovi.Naziv + ", " + obj.Blokovi.Gradovi.Naziv : "-",
+                RestoranStatusID = obj.RestoranStatusID,
+                StatusNaziv = obj.RestoranStatusi?.Naziv,
+                PromStatusKorisnikID = obj.KorisnikID,
+                PromStatusImePrezime = obj.Korisnik?.Ime + " " + obj.Korisnik?.Prezime,
+                PromStatusUsername = obj.Korisnik?.Username,
+                MinimalnaCijenaNarudzbe = obj.MinimalnaCijenaNarudzbe,
+                Telefon = obj.Telefon,
+                WebUrl = obj.WebUrl,
+                Email = obj.Email
+            };
+        }
     }
 }

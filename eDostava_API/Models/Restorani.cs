@@ -22,6 +22,7 @@ namespace eDostava_API.Models
             this.Zalbe = new HashSet<Zalbe>();
             this.Vlasnici = new HashSet<Vlasnici>();
             this.Zaposlenici = new HashSet<Zaposlenici>();
+            this.Omiljeni = new HashSet<Omiljeni>();
         }
     
         public int RestoranID { get; set; }
@@ -51,5 +52,7 @@ namespace eDostava_API.Models
         public virtual ICollection<Vlasnici> Vlasnici { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zaposlenici> Zaposlenici { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Omiljeni> Omiljeni { get; set; }
     }
 }

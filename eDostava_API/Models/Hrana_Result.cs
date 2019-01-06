@@ -23,5 +23,6 @@ namespace eDostava_API.Models
         public int TipKuhinjeID { get; set; }
         public string TipKuhinjeNaziv { get; set; }
         public Nullable<int> RestoranID { get; set; }
+        public string RestoranNaziv { get; set; }
     }
 }

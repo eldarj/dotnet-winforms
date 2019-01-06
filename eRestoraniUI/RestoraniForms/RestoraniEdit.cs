@@ -244,7 +244,6 @@ namespace eRestoraniUI.RestoraniUI
         }
         #endregion
 
-
         #region Validators
         private void inputNaziv_Validating(object sender, CancelEventArgs e)
         {

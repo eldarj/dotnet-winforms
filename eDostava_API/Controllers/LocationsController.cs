@@ -129,6 +129,7 @@ namespace eDostava_API.Controllers
         [Route("gradovi")]
         public IHttpActionResult GetGradovi()
         {
+            Thread.Sleep(1000);
             return Ok(db.esp_Gradovi_SelectAll().ToList());
         }
 

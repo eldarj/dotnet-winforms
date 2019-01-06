@@ -271,7 +271,7 @@
             // btnVise
             // 
             this.btnVise.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnVise.Location = new System.Drawing.Point(1225, 7);
+            this.btnVise.Location = new System.Drawing.Point(1225, 6);
             this.btnVise.Menu = this.contextMenuStrip1;
             this.btnVise.Name = "btnVise";
             this.btnVise.Size = new System.Drawing.Size(77, 23);
