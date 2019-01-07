@@ -45,7 +45,7 @@ namespace eRestoraniUI
 
             if (UserAccessControlHelper.HasVlasnikAccess || UserAccessControlHelper.HasZaposlenikAcess)
             {
-                List<Restorani> restorani = await Global.GetKorisnikRestorani();
+                List<Restorani_Result> restorani = await Global.GetKorisnikRestorani();
                 foreach (var r in restorani)
                 {
                     HttpResponseMessage response = await new WebApiHelper("narudzbe")
