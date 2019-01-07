@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace eRestoraniUI.CustomControls
 {
-    class ButtonList : Button
+    class ButtonList : Button // button dropdown element
     {
         [DefaultValue(null)]
         public ContextMenuStrip Menu { get; set; }

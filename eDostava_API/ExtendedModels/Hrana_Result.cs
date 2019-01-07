@@ -10,6 +10,7 @@ namespace eDostava_API.Models
 {
     public partial class Hrana_Result
     {
+        #region SlikaHandlers
         public Image GetSlikaImage()
         {
             try
@@ -57,6 +58,7 @@ namespace eDostava_API.Models
             img.Save(ms, ImageFormat.Jpeg);
             this.SlikaThumb = ms.ToArray();
         }
+        #endregion
 
         public static Hrana_Result GetHranaResultInstance(Hrana obj)
         {
@@ -70,9 +72,9 @@ namespace eDostava_API.Models
                 Slika = obj.Slika,
                 SlikaThumb = obj.SlikaThumb,
                 TipKuhinjeID = obj.TipKuhinjeID,
-                TipKuhinjeNaziv = obj.TipoviKuhinje.Naziv,
+                TipKuhinjeNaziv = obj.TipoviKuhinje?.Naziv,
                 RestoranID = obj.RestoranID,
-                RestoranNaziv = obj.Restorani.Naziv
+                RestoranNaziv = obj.Restorani?.Naziv
             };
         }
     }

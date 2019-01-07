@@ -14,6 +14,7 @@ namespace eDostava_API.Controllers
 {
     [RoutePrefix("api/Auth")]
     [Route("")]
+    [MyExceptionFilter]
     public class AuthController : BaseApiController
     {
         // api/auth/{username}
@@ -47,7 +48,6 @@ namespace eDostava_API.Controllers
         // api/auth/register
         [HttpPost]
         [Route("register")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Register([FromBody] Korisnik Model)
         {
             Korisnik existing = await db.Korisnik.FindAsync(Model.KorisnikID); // provjeri je li postoji user
@@ -73,7 +73,7 @@ namespace eDostava_API.Controllers
             db.Korisnik.Add(novi);
             await db.SaveChangesAsync();
 
-            novi = db.Korisnik  // moramo ponovo učitati jer SaveChanges() ne puni 'navigation' propertije..
+            novi = db.Korisnik  // moramo ponovo učitati jer SaveChanges() neće popuniti 'navigation' propertije..
                 .Include(k => k.Blokovi.Gradovi)
                 .Include(k => k.UlogaKorisnika)
                 .Where(k => k.Username == novi.Username)
@@ -85,7 +85,6 @@ namespace eDostava_API.Controllers
         // api/auth/update
         [HttpPut]
         [Route("update")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Update([FromBody] Korisnik Model)
         {
             Korisnik k = await db.Korisnik.FindAsync(Model.KorisnikID); // provjeri je li postoji user
@@ -108,7 +107,6 @@ namespace eDostava_API.Controllers
         // api/auth/update/password
         [HttpPut]
         [Route("update/password")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> UpdatePassword([FromBody] PasswordEditModel Model)
         {
             Korisnik k = await db.Korisnik.FindAsync(Model.KorisnikID); // provjeri je li postoji user
@@ -123,6 +121,15 @@ namespace eDostava_API.Controllers
 
             await db.SaveChangesAsync();
             return Ok(Korisnici_Result.GetKorisnikResultInstance(k));
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

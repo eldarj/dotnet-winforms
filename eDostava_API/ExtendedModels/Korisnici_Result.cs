@@ -10,6 +10,15 @@ namespace eDostava_API.Models
     {
         public string AdresaFull { get; set; }
 
+        public override bool Equals(object obj)
+        {
+            //Check for null and compare run-time types.
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+                return false;
+            else
+                return KorisnikID == ((Korisnici_Result)obj).KorisnikID;
+        }
+
         public static Korisnici_Result GetKorisnikResultInstance(Korisnik obj)
         {
             return obj == null ? null : new Korisnici_Result

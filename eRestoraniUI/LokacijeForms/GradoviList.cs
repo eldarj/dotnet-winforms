@@ -102,15 +102,15 @@ namespace eRestoraniUI.LokacijeForms
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "grad"),
-                    ValidationMessages.UspjenoKreiranTitle,
+                MessageBox.Show(String.Format(Messages.uspjeh_save_obj, "grad"),
+                    Messages.uspjeh_title,
                     MessageBoxButtons.OK);
 
                 grad = response.Content.ReadAsAsync<Gradovi_Result>().Result;
                 BindGradoviGrid(recheckPretraga: true);
             } else
             {
-                MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
 
@@ -132,8 +132,8 @@ namespace eRestoraniUI.LokacijeForms
             Gradovi_Result grad = (Gradovi_Result)dgvGradovi.CurrentRow.DataBoundItem;
             if (grad != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, grad.Naziv),
-                    ValidationMessages.izbrisi_stavku_potvrda_title,
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, grad.Naziv),
+                    Messages.izbrisi_obj_potvrda_title,
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -141,18 +141,18 @@ namespace eRestoraniUI.LokacijeForms
                     HttpResponseMessage response = await servis.DeleteResponse(grad.GradID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, grad.Naziv),
-                            ValidationMessages.uspjesno_izbrisan_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, grad.Naziv),
+                            Messages.uspjeh_delete_title);
 
                         BindGradoviGrid(recheckPretraga: true);
                     } else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             } else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "grad");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "grad");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
@@ -166,7 +166,7 @@ namespace eRestoraniUI.LokacijeForms
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "grad");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "grad");
             }
         }
 
@@ -188,7 +188,7 @@ namespace eRestoraniUI.LokacijeForms
             if (!Regex.IsMatch(txtNaziv.Text, @"^(?=.*\p{L})[\p{L}\ ]{4,20}$"))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtNaziv, String.Format(ValidationMessages.polje_tip_duzina, "naziv", "slova", 4, 20));
+                errorProvider1.SetError(txtNaziv, String.Format(Messages.polje_type_length_error, "naziv", "slova", 4, 20));
             }
         }
 
@@ -197,7 +197,7 @@ namespace eRestoraniUI.LokacijeForms
             if (!Regex.IsMatch(txtPostanskiBroj.Text, @"^[\d]{4,20}$"))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtPostanskiBroj, String.Format(ValidationMessages.polje_tip_duzina, "poštanski broj", "cifre", 4, 20));
+                errorProvider1.SetError(txtPostanskiBroj, String.Format(Messages.polje_type_length_error, "poštanski broj", "cifre", 4, 20));
             }
         }
         #endregion

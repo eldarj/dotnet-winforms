@@ -355,7 +355,7 @@
             // 
             this.lblUkupno.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblUkupno.AutoSize = true;
-            this.lblUkupno.Location = new System.Drawing.Point(1020, 399);
+            this.lblUkupno.Location = new System.Drawing.Point(1020, 780);
             this.lblUkupno.Name = "lblUkupno";
             this.lblUkupno.Size = new System.Drawing.Size(149, 17);
             this.lblUkupno.TabIndex = 64;
@@ -397,7 +397,7 @@
             this.dgvVlasnici.Location = new System.Drawing.Point(8, 36);
             this.dgvVlasnici.Name = "dgvVlasnici";
             this.dgvVlasnici.RowTemplate.Height = 24;
-            this.dgvVlasnici.Size = new System.Drawing.Size(1161, 360);
+            this.dgvVlasnici.Size = new System.Drawing.Size(1161, 741);
             this.dgvVlasnici.TabIndex = 63;
             // 
             // splitContainer1
@@ -411,6 +411,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.panel1);
             this.splitContainer1.Panel1.Controls.Add(this.pnlRestoraniVlasnika);
+            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 

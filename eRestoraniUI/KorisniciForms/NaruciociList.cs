@@ -108,7 +108,7 @@ namespace eRestoraniUI.KorisniciForms
             naruciociBindingList = new BindingList<Narucioci_Result>(temp);
             naruciociBindingSource.DataSource = naruciociBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narucioca", naruciociBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "narucioca", naruciociBindingList.Count);
         }
         private void txtPretraga_TextChanged(object sender, EventArgs e)
         {
@@ -136,7 +136,7 @@ namespace eRestoraniUI.KorisniciForms
                 naruciociBindingList = originalNaruciociBindingList = new BindingList<Narucioci_Result>(response.Content.ReadAsAsync<List<Narucioci_Result>>().Result);
                 naruciociBindingSource.DataSource = naruciociBindingList;
 
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "zaposlenika", naruciociBindingList.Count);
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "zaposlenika", naruciociBindingList.Count);
                 pretragaByString();
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
@@ -151,7 +151,7 @@ namespace eRestoraniUI.KorisniciForms
                 f.Show();
             } else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "naručioca");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "naručioca");
             }
         }
 
@@ -161,8 +161,8 @@ namespace eRestoraniUI.KorisniciForms
             Narucioci_Result k = (Narucioci_Result)dgvNarucioci.CurrentRow.DataBoundItem;
             if (k != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, k.ImePrezime),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "naručioca"),
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, k.ImePrezime),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "naručioca"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -170,19 +170,19 @@ namespace eRestoraniUI.KorisniciForms
                     HttpResponseMessage response = await servis.DeleteResponse("korisnici", k.KorisnikID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "naručilac " + k.ImePrezime),
-                            ValidationMessages.uspjesno_izbrisan_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "naručilac " + k.ImePrezime),
+                            Messages.uspjeh_delete_title);
                         BindMainGrid(recheckPretraga: true);
                     }
                     else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             }
             else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "naručioca");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "naručioca");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }

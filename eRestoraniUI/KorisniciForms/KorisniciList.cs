@@ -101,7 +101,7 @@ namespace eRestoraniUI.KorisniciForms
                 korisniciBindingSource.DataSource = korisniciBindingList;
 
                 dgvKorisnici.DataSource = korisniciBindingSource;
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "korisnika", korisniciBindingList.Count);
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "korisnika", korisniciBindingList.Count);
 
                 if (recheckPretraga)
                 {
@@ -109,7 +109,7 @@ namespace eRestoraniUI.KorisniciForms
                 }
             } else
             {
-                MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
             }
 
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
@@ -128,7 +128,7 @@ namespace eRestoraniUI.KorisniciForms
                 .ToList());
             korisniciBindingSource.DataSource = korisniciBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "korisnika", korisniciBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "korisnika", korisniciBindingList.Count);
         }
 
         private async void btnIzbrisi_Click(object sender, EventArgs e)
@@ -136,8 +136,8 @@ namespace eRestoraniUI.KorisniciForms
             Korisnici_Result k = (Korisnici_Result) dgvKorisnici.CurrentRow.DataBoundItem;
             if (k != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, k.ImePrezime),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "korisnika"),
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, k.ImePrezime),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "korisnika"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -145,18 +145,18 @@ namespace eRestoraniUI.KorisniciForms
                     HttpResponseMessage response = await servis.DeleteResponse(k.KorisnikID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "korisnik " + k.ImePrezime),
-                            ValidationMessages.uspjesno_izbrisan_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "korisnik " + k.ImePrezime),
+                            Messages.uspjeh_delete_title);
                         BindKorisniciGrid(recheckPretraga: true);
                     } else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             }
             else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "korisnika");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "korisnika");
             }
         }
 
@@ -195,7 +195,7 @@ namespace eRestoraniUI.KorisniciForms
                 korisniciBindingList = originalKorisniciBindingList = new BindingList<Korisnici_Result>(response.Content.ReadAsAsync<List<Korisnici_Result>>().Result);
                 korisniciBindingSource.DataSource = korisniciBindingList;
 
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "korisnika", korisniciBindingList.Count);
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "korisnika", korisniciBindingList.Count);
                 pretragaByString();
             }
         }

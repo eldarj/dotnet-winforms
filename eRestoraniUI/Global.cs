@@ -11,20 +11,22 @@ namespace eRestoraniUI
 {
     class Global
     {
+        public static MainForm Mdi { get; set; }
+
         public static Korisnik PrijavljeniKorisnik { get; set; }
 
-        public async static Task<List<Restorani_Result>> GetKorisnikRestorani()
+        public async static Task<List<Restorani_Result>> LoadApiKorisnikRestorani()
         {
             HttpResponseMessage response = null;
-            if (UserAccessControlHelper.HasZaposlenikAcess)
+            if (UserAccessControlHelper.ZaposlenikRights)
             {
                 response = await new WebApiHelper().GetResponse(String.Format("zaposlenici/{0}/restorani", PrijavljeniKorisnik.KorisnikID));
             }
-            else if (UserAccessControlHelper.HasVlasnikAccess)
+            else if (UserAccessControlHelper.VlasnikRights)
             {
                 response = await new WebApiHelper().GetResponse(String.Format("vlasnici/{0}/restorani", PrijavljeniKorisnik.KorisnikID));
             }
-            else if (UserAccessControlHelper.HasAdminAccess)
+            else if (UserAccessControlHelper.AdminRights)
             {
                 response = await new WebApiHelper().GetResponse("restorani");
             }
@@ -36,7 +38,5 @@ namespace eRestoraniUI
 
             return null;
         }
-
-        public static MainForm Mdi { get; set; }
     }
 }

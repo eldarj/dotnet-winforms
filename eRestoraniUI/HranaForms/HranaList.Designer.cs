@@ -138,6 +138,7 @@
             this.splitContainer1.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
             this.splitContainer1.Panel1.Controls.Add(this.label8);
             this.splitContainer1.Panel1.Controls.Add(this.pnlForm);
+            this.splitContainer1.Panel1Collapsed = true;
             // 
             // splitContainer1.Panel2
             // 
@@ -163,7 +164,7 @@
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label8.Location = new System.Drawing.Point(1, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(1137, 2);
+            this.label8.Size = new System.Drawing.Size(2125, 2);
             this.label8.TabIndex = 55;
             // 
             // pnlForm
@@ -317,7 +318,7 @@
             // 
             // btnDodajSliku
             // 
-            this.btnDodajSliku.Location = new System.Drawing.Point(373, 159);
+            this.btnDodajSliku.Location = new System.Drawing.Point(373, 158);
             this.btnDodajSliku.Name = "btnDodajSliku";
             this.btnDodajSliku.Size = new System.Drawing.Size(75, 23);
             this.btnDodajSliku.TabIndex = 60;
@@ -401,7 +402,7 @@
             // 
             // btnTrazi
             // 
-            this.btnTrazi.Location = new System.Drawing.Point(373, 8);
+            this.btnTrazi.Location = new System.Drawing.Point(373, 7);
             this.btnTrazi.Name = "btnTrazi";
             this.btnTrazi.Size = new System.Drawing.Size(75, 23);
             this.btnTrazi.TabIndex = 54;
@@ -472,13 +473,13 @@
             // 
             // lblUkupnoStavki
             // 
-            this.lblUkupnoStavki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblUkupnoStavki.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblUkupnoStavki.AutoSize = true;
-            this.lblUkupnoStavki.Location = new System.Drawing.Point(966, 416);
+            this.lblUkupnoStavki.Location = new System.Drawing.Point(8, 652);
             this.lblUkupnoStavki.Name = "lblUkupnoStavki";
-            this.lblUkupnoStavki.Size = new System.Drawing.Size(160, 17);
+            this.lblUkupnoStavki.Size = new System.Drawing.Size(147, 17);
             this.lblUkupnoStavki.TabIndex = 45;
-            this.lblUkupnoStavki.Text = "Ukupno {0} stavki hrane";
+            this.lblUkupnoStavki.Text = "Ukupno - stavki hrane";
             // 
             // dgvHranaList
             // 
@@ -500,7 +501,7 @@
             this.dgvHranaList.Name = "dgvHranaList";
             this.dgvHranaList.RowHeadersWidth = 50;
             this.dgvHranaList.RowTemplate.Height = 100;
-            this.dgvHranaList.Size = new System.Drawing.Size(1118, 376);
+            this.dgvHranaList.Size = new System.Drawing.Size(1118, 610);
             this.dgvHranaList.TabIndex = 51;
             // 
             // Sifra
@@ -570,14 +571,14 @@
             // 
             // HranaList
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(1139, 704);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.Name = "HranaList";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Restoran {0}";
             this.Load += new System.EventHandler(this.HranaList_Load);
             this.panel1.ResumeLayout(false);

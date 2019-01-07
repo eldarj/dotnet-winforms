@@ -56,8 +56,7 @@ namespace eRestoraniUI.Utils
         #endregion
 
         #region PutMethods
-        // api/Endpoint/{id}/
-        // ili api/Endpoint/{id}/segment1/segment2/.../segmentN/
+        // api/Endpoint/{id}/opcionalno1/opcionalno2/.../opcionalnoN
         public HttpResponseMessage PutResponse(int id, Object existingObj, List<string> dodatniUrlSegmenti = null)
         {
             string endRoute = Route + "/" + id + "/";
@@ -88,13 +87,14 @@ namespace eRestoraniUI.Utils
         }
 
         // api/Endoint/?param1=value1&param2=value2....paramN=valueN
-        public async Task<HttpResponseMessage> GetResponse<T>(Dictionary<string, T> queryParams)
+        public async Task<HttpResponseMessage> GetResponse<T>(Dictionary<string, T> queryParams, string param = null)
         {
             //redirektaj na GetResponse ako je Dict. kojim slučajem prazan
-            if (queryParams.Count == 0)
-            {
-                return await GetResponse();
-            }
+            if (queryParams.Count == 0) return await GetResponse();
+
+            string endRoute = param != null ?
+                Route + "/" + param :
+                Route;
 
             //build query
             string query = "?";
@@ -105,9 +105,10 @@ namespace eRestoraniUI.Utils
 
                 query += item.Key + "=" + item.Value.ToString();
             }
+            endRoute += query;
 
             //execute
-            HttpResponseMessage result = await Client.GetAsync(Route + query);
+            HttpResponseMessage result = await Client.GetAsync(endRoute);
             return result;
         }
         #endregion

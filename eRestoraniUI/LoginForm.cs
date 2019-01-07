@@ -34,57 +34,65 @@ namespace eRestoraniUI
             imgLoader.Visible = true;
             if (txtKorisnickoIme.Text.Length < 4 || txtLozinka.Text.Length < 4)
             {
-                MessageBox.Show(Messages.login_user_invalid, "Upozorenje",
+                MessageBox.Show(Messages.login_user_invalid_length, "Upozorenje",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
                 imgLoader.Visible = false;
                 return;
             }
 
-            HttpResponseMessage response = await servis.GetResponse("auth/" + txtKorisnickoIme.Text);
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            try
             {
-                CredentialsInvalid();
-                imgLoader.Visible = false;
-                return;
-
-            }
-            else if (response.IsSuccessStatusCode)
-            {
-                string salt = response.Content.ReadAsAsync<string>().Result;
-                string hash = UIHelper.GenerateHash(txtLozinka.Text, salt);
-                Korisnik k = new Korisnik
+                HttpResponseMessage response = await servis.GetResponse("auth/" + txtKorisnickoIme.Text);
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    Username = txtKorisnickoIme.Text,
-                    LozinkaSalt = salt,
-                    LozinkaHash = hash
-                };
+                    CredentialsInvalid();
+                    imgLoader.Visible = false;
+                    return;
 
-                HttpResponseMessage responseLogin = await servis.PostResponse("auth", k);
-                if (responseLogin.IsSuccessStatusCode)
-                {
-                    k = responseLogin.Content.ReadAsAsync<Korisnik>().Result;
-                    if (UserAccessControlHelper.Roles.Select(pair => pair.Key).Contains(k.UlogaKorisnikaID))
-                    {
-                        Global.PrijavljeniKorisnik = k;
-
-                        DialogResult = DialogResult.OK;
-                        imgLoader.Visible = false;
-                        return;
-                    }
                 }
+                else if (response.IsSuccessStatusCode)
+                {
+                    string salt = response.Content.ReadAsAsync<string>().Result;
+                    string hash = UIHelper.GenerateHash(txtLozinka.Text, salt);
+                    Korisnik k = new Korisnik
+                    {
+                        Username = txtKorisnickoIme.Text,
+                        LozinkaSalt = salt,
+                        LozinkaHash = hash
+                    };
+
+                    HttpResponseMessage responseLogin = await servis.PostResponse("auth", k);
+                    if (responseLogin.IsSuccessStatusCode)
+                    {
+                        k = responseLogin.Content.ReadAsAsync<Korisnik>().Result;
+                        if (UserAccessControlHelper.Roles.Select(pair => pair.Key).Contains(k.UlogaKorisnikaID))
+                        {
+                            Global.PrijavljeniKorisnik = k;
+
+                            DialogResult = DialogResult.OK;
+                            imgLoader.Visible = false;
+                            return;
+                        }
+                    }
 
 
-                CredentialsInvalid();
-                imgLoader.Visible = false;
-                return;
+                    CredentialsInvalid();
+                    imgLoader.Visible = false;
+                    return;
+                }
             }
+            catch(Exception ex)
+            {
+                // ne može se ostvarit konekcija... pusti nek prikaže general grešku
+            }
+            imgLoader.Visible = false;
             UIHelper.MessageGeneralGreska();
         }
 
         private static void CredentialsInvalid()
         {
-            MessageBox.Show(Messages.login_user_fail, ValidationMessages.greska_msg_title,
+            MessageBox.Show(Messages.login_user_invalid_credentials, Messages.greska_msg_title,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }

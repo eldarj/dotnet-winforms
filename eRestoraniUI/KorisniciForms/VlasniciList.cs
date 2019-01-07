@@ -102,7 +102,7 @@ namespace eRestoraniUI.KorisniciForms
                 .ToList());
             vlasniciBindingSource.DataSource = vlasniciBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "vlasnika", vlasniciBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "vlasnika", vlasniciBindingList.Count);
         }
 
 
@@ -133,7 +133,7 @@ namespace eRestoraniUI.KorisniciForms
                 vlasniciBindingList = originalVlasniciBindingList = new BindingList<Korisnici_Result>(response.Content.ReadAsAsync<List<Korisnici_Result>>().Result);
                 vlasniciBindingSource.DataSource = vlasniciBindingList;
 
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "vlasnika", vlasniciBindingList.Count);
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "vlasnika", vlasniciBindingList.Count);
                 pretragaByString();
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
@@ -145,8 +145,8 @@ namespace eRestoraniUI.KorisniciForms
             Korisnici_Result k = (Korisnici_Result)dgvVlasnici.CurrentRow.DataBoundItem;
             if (k != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, k.ImePrezime),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "vlasnika"),
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, k.ImePrezime),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "vlasnika"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -154,19 +154,19 @@ namespace eRestoraniUI.KorisniciForms
                     HttpResponseMessage response = await servisKorisnici.DeleteResponse(k.KorisnikID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "vlasnika " + k.ImePrezime),
-                            ValidationMessages.uspjesno_izbrisan_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "vlasnika " + k.ImePrezime),
+                            Messages.uspjeh_delete_title);
                         BindMainGrid(recheckPretraga: true);
                     }
                     else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             }
             else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "vlasnika");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "vlasnika");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
@@ -268,7 +268,7 @@ namespace eRestoraniUI.KorisniciForms
             HttpResponseMessage r = await servis.PostResponse(String.Format("vlasnici/{0}/restorani", detaljnoVlasnik.KorisnikID), restoraniVlasnikaList);
             if (r.IsSuccessStatusCode)
             {
-                MessageBox.Show(ValidationMessages.uspjesno_napravljene_izmjene_body, ValidationMessages.uspjesno_napravljene_izmjene_title);
+                MessageBox.Show(Messages.uspjesno_napravljene_izmjene_body, Messages.uspjeh_save_title);
 
                 lblDetaljnoRestorani.Text = UIHelper.ListToString<Restorani_Result>(delimiter: ", ",
                             list: restoraniVlasnikaList.ToList<Restorani_Result>());

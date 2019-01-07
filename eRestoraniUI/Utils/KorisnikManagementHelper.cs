@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace eRestoraniUI.Utils
 {
-    class KorisnikManagementHelper
+    class KorisnikManagementHelper // helper za Korisnikmanagement page
     {
         public class KorisnikListModel
         {

@@ -25,18 +25,29 @@ namespace eRestoraniUI.HranaUI
         private BindingList<TipoviKuhinje_Result> tipoviKuhinje;
         private BindingSource tipoviKuhinjeSource = new BindingSource();
 
+        private Image mainImage;
         private Image croppedImage;
 
+        #region Constructors
         public HranaList(int restoranId, string restoranNaziv)
         {
             InitializeComponent();
-            servis.Route = String.Format(servis.Route, restoranId);
-            this.restoranId = restoranId;
-            lblRestoranInfo.Text = "Restoran: " + restoranNaziv;
-
+            _init(restoranId, restoranNaziv);
+        }
+        public HranaList(Restorani_Result restoran)
+        {
+            InitializeComponent();
+            _init(restoran.RestoranID, restoran.Naziv);
+        }
+        private void _init(int id, string naziv)
+        {
+            this.restoranId = id;
+            servis.Route = String.Format(servis.Route, id);
+            lblRestoranInfo.Text = this.Text = "Restoran: " + naziv;
             this.AutoValidate = AutoValidate.Disable;
             dgvHranaList.AutoGenerateColumns = false;
         }
+        #endregion
 
         private async void HranaList_Load(object sender, EventArgs e)
         {
@@ -57,10 +68,10 @@ namespace eRestoraniUI.HranaUI
 
             if (responseHranaGrid.IsSuccessStatusCode)
             {
-                List<Hrana_Result> restorani = responseHranaGrid.Content.ReadAsAsync<List<Hrana_Result>>().Result;
-                dgvHranaList.DataSource = restorani;
+                List<Hrana_Result> stavke = responseHranaGrid.Content.ReadAsAsync<List<Hrana_Result>>().Result;
+                dgvHranaList.DataSource = stavke;
                 dgvHranaList.ClearSelection();
-                lblUkupnoStavki.Text = String.Format(lblUkupnoStavki.Text, restorani.Count);
+                lblUkupnoStavki.Text = String.Format(Messages.ukupno_type_number, "stavki hrane", stavke.Count);
             }
             else
             {
@@ -102,10 +113,23 @@ namespace eRestoraniUI.HranaUI
             cmbTipoviKuhinje.SelectedIndex = cmbTipoviKuhinje.FindStringExact(hranaStavka.TipKuhinjeNaziv);
 
             pictureBoxSlika.Image = hranaStavka.GetSlikaImage();
+            mainImage = hranaStavka.GetSlikaImage();
+            croppedImage = hranaStavka.GetSlikaThumbImage();
 
             checkCropImage.CheckState = CheckState.Unchecked;
-            checkCropImage.Enabled = hranaStavka.GetSlikaThumbImage() == null ? false : true;
-            lblCropDisabled.Visible = hranaStavka.GetSlikaThumbImage() == null && hranaStavka.GetSlikaImage() != null ? true : false;
+            PrepareCropImgUI();
+        }
+
+        private void PrepareCropImgUI()
+        {
+            int croppedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageWidth"]);
+            int croppedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageHeight"]);
+
+            checkCropImage.Enabled = hranaStavka.GetSlikaImage() != null && 
+                hranaStavka.GetSlikaImage().Width > croppedImageWidth ? true : false;
+
+            lblCropDisabled.Visible = hranaStavka.GetSlikaImage() != null &&
+                hranaStavka.GetSlikaImage().Width < croppedImageWidth ? true : false;
         }
 
         #region FormHandlers
@@ -132,13 +156,18 @@ namespace eRestoraniUI.HranaUI
             hranaStavka.RestoranID = restoranId;
             hranaStavka.Cijena = Convert.ToDouble(UIHelper.ExtractDecimalCijena(txtCijena.Text));
 
+            if (mainImage != null)
+                hranaStavka.SetSlikaImage(mainImage);
+            if (croppedImage != null)
+                hranaStavka.SetSlikaThumbImage(croppedImage);
+
             HttpResponseMessage response = hranaStavka.HranaID != 0 ?
                 servis.PutResponse(hranaStavka.HranaID, hranaStavka) :
                 servis.PostResponse(hranaStavka);
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "stavku hrane"),
-                    ValidationMessages.UspjenoKreiranTitle,
+                MessageBox.Show(String.Format(Messages.uspjeh_save_obj, "stavku hrane"),
+                    Messages.uspjeh_title,
                     MessageBoxButtons.OK);
 
                 hranaStavka = response.Content.ReadAsAsync<Hrana_Result>().Result;
@@ -156,13 +185,23 @@ namespace eRestoraniUI.HranaUI
         {
             if (checkCropImage.CheckState == CheckState.Checked)
             {
-                hranaStavka.SetSlikaThumbImage(croppedImage);
+                if (croppedImage == null)
+                {
+                    int croppedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageWidth"]);
+                    int croppedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageHeight"]);
+
+                    int xPosition = (hranaStavka.GetSlikaImage().Width - croppedImageWidth) / 2;
+                    int yPosition = (hranaStavka.GetSlikaImage().Height - croppedImageHeight) / 2;
+
+                    croppedImage = UIHelper.CropImage(hranaStavka.GetSlikaImage(),
+                        new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
+                }
+
                 pictureBoxSlika.Image = croppedImage;
             }
             else
             {
-                hranaStavka.SetSlikaThumbImage(null);
-                pictureBoxSlika.Image = hranaStavka.GetSlikaImage();
+                pictureBoxSlika.Image = mainImage;
             }
         }
 
@@ -175,63 +214,59 @@ namespace eRestoraniUI.HranaUI
                 checkCropImage.Enabled = false; // po defaultu isključi crop opciju (kasnije ćemo uključiti ako je moguće uraditi crop)
                 lblCropDisabled.Visible = true;
 
-                Image originalImage = Image.FromFile(fileDialog.FileName);
-                hranaStavka.SetSlikaImage(originalImage);
+                mainImage = Image.FromFile(fileDialog.FileName);
+                croppedImage = null;
 
                 int resizedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImageWidth"]);
                 int resizedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImageHeight"]);
                 int croppedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageWidth"]);
                 int croppedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageHeight"]);
 
-                // IF ORIGINAL: veća onda uradi resize
-                if (originalImage.Width > croppedImageWidth)
+                Image resizedImage = UIHelper.ResizeImage(mainImage, new Size(resizedImageWidth, resizedImageHeight));
+
+                // Ako je slika veća od cropped-size, (samo) pripremi sliku i check-opcije za crop-anje
+                if (mainImage.Width > croppedImageWidth)
                 {
-                    Image ResizedImage = UIHelper.ResizeImage(originalImage, new Size(resizedImageWidth, resizedImageHeight));
-
-                    hranaStavka.SetSlikaImage(ResizedImage); // bind model
-                    pictureBoxSlika.Image = ResizedImage; // bind picture in form
-
-                    int xPosition = (ResizedImage.Width - croppedImageWidth) / 2;
-                    int yPosition = (ResizedImage.Height - croppedImageHeight) / 2;
-
-                    croppedImage = UIHelper.CropImage(ResizedImage,
-                        new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
-
                     checkCropImage.Enabled = true;
                     lblCropDisabled.Visible = false;
-                }
-                // ELSE ORIGINAL: ako je originalna manja od resize veličine, odmah stavi original
-                else
-                {
-                    hranaStavka.SetSlikaImage(originalImage);
-                    pictureBoxSlika.Image = originalImage;
+
+                    int xPosition = (resizedImage.Width - croppedImageWidth) / 2;
+                    int yPosition = (resizedImage.Height - croppedImageHeight) / 2;
+
+                    croppedImage = UIHelper.CropImage(resizedImage,
+                        new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
                 }
 
+                // Ako je slika veća i od resized-size, uradi resize
+                if (mainImage.Width > resizedImageWidth)
+                    mainImage = resizedImage; 
+
+                pictureBoxSlika.Image = mainImage;
             }
         }
         #endregion
-
 
         #region GridClickHandlers
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
             imgLoader.Visible = true;
             var h = (Hrana_Result)dgvHranaList.CurrentRow.DataBoundItem;
-            var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, h.Naziv),
-                String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, h.Naziv),
+            var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, h.Naziv),
+                String.Format(Messages.izbrisi_obj_potvrda_title, h.Naziv),
                 MessageBoxButtons.YesNo);
             if (potvrda == DialogResult.Yes)
             {
                 HttpResponseMessage response = await servis.DeleteResponse(h.HranaID);
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, h.Naziv), 
-                        ValidationMessages.izbrisi_stavku_potvrda_title);
+                    splitContainer1.Panel1Collapsed = true;
+                    MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "stavku - " + h.Naziv), 
+                        String.Format(Messages.izbrisi_obj_potvrda_title, "stavku hrane"));
                     await BindHranaGrid();
                 }
                 else
                 {
-                    MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                    MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                 }
             }
             imgLoader.Visible = false;
@@ -254,7 +289,7 @@ namespace eRestoraniUI.HranaUI
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "stavku hrane"));
+                MessageBox.Show(String.Format(Messages.morate_odabrati_msg_obj, "stavku hrane"));
             }
         }
 
@@ -276,7 +311,7 @@ namespace eRestoraniUI.HranaUI
             {
                 e.Cancel = true;
                 pretragaErrorProvider.SetError(btnTrazi, 
-                    String.Format(ValidationMessages.polje_tip, "za pretragu", "alfa numeričke znakove"));
+                    String.Format(Messages.polje_type_error, "za pretragu", "alfa numeričke znakove"));
             } 
         }
 
@@ -314,13 +349,13 @@ namespace eRestoraniUI.HranaUI
             string error = "Tip kuhinje ne postoji!";
             if (!Regex.IsMatch(cmbTipoviKuhinje.Text, @"^(?=.*[a-zA-Z])[a-zA-Z\ ]{4,20}$"))
             {
-                error = String.Format(ValidationMessages.polje_tip_duzina,
+                error = String.Format(Messages.polje_type_length_error,
                     "tip kuhinje", "slova", 4, 20);
             }
             else if (!tipoviKuhinje.Select(t => t.Naziv).ToList().Contains(cmbTipoviKuhinje.Text))
             {
-                var kreiraj = MessageBox.Show(String.Format(ValidationMessages.ObjNePostojiKreirajNovi, "tip kuhinje", cmbTipoviKuhinje.Text),
-                    String.Format(ValidationMessages.ObjNePostojiKreirajNoviTitle, "tip kuhinje"),
+                var kreiraj = MessageBox.Show(String.Format(Messages.obj_ne_postoji_kreiraj_novi_msg, "tip kuhinje", cmbTipoviKuhinje.Text),
+                    String.Format(Messages.obj_ne_postoji_kreiraj_novi_title, "tip kuhinje"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
 
@@ -332,8 +367,8 @@ namespace eRestoraniUI.HranaUI
                     });
                     if (apiresponse.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "tip kuhinje"), 
-                            ValidationMessages.UspjenoKreiranTitle, 
+                        MessageBox.Show(String.Format(Messages.uspjeh_save_obj, "tip kuhinje"), 
+                            Messages.uspjeh_title, 
                             MessageBoxButtons.OK);
 
                         TipoviKuhinje_Result novitip = apiresponse.Content.ReadAsAsync<TipoviKuhinje_Result>().Result;
@@ -346,8 +381,8 @@ namespace eRestoraniUI.HranaUI
                     }
                     else
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.GreskaKreiranObj, "tip kuhinje"), 
-                            ValidationMessages.greska_msg_title, 
+                        MessageBox.Show(String.Format(Messages.greska_msg_obj_body, "tip kuhinje"), 
+                            Messages.greska_msg_title, 
                             MessageBoxButtons.OK);
                     }
                 }

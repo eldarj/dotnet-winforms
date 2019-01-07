@@ -116,7 +116,7 @@ namespace eRestoraniUI.KorisniciForms
             UlogeManagementChanges formaPotvrdiPromjene = new UlogeManagementChanges(KorisniciToUpdate);
             if (formaPotvrdiPromjene.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show(ValidationMessages.uspjesno_napravljene_izmjene_body, ValidationMessages.uspjesno_napravljene_izmjene_title);
+                MessageBox.Show(Messages.uspjesno_napravljene_izmjene_body, Messages.uspjeh_save_title);
                 LoadEntireForm();
             }
         }

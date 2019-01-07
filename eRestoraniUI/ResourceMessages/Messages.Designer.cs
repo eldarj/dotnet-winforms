@@ -63,54 +63,99 @@ namespace eRestoraniUI.ResourceMessages {
         /// <summary>
         ///   Looks up a localized string similar to Email je u pogrešnom formatu.
         /// </summary>
-        internal static string edit_restoran_email_format_error {
+        internal static string email_format_error {
             get {
-                return ResourceManager.GetString("edit_restoran_email_format_error", resourceCulture);
+                return ResourceManager.GetString("email_format_error", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Polje Email ne smije biti prazno.
         /// </summary>
-        internal static string edit_restoran_obavezno_polje_email {
+        internal static string email_required_error {
             get {
-                return ResourceManager.GetString("edit_restoran_obavezno_polje_email", resourceCulture);
+                return ResourceManager.GetString("email_required_error", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Polje Naziv ne smije biti prazno.
+        ///   Looks up a localized string similar to Došlo je do greške, molimo pokušajte ponovo ili izaberite postojeći {0}..
         /// </summary>
-        internal static string edit_restoran_obavezno_polje_naziv {
+        internal static string greska_msg_obj_body {
             get {
-                return ResourceManager.GetString("edit_restoran_obavezno_polje_naziv", resourceCulture);
+                return ResourceManager.GetString("greska_msg_obj_body", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ukupno {0}: {1}.
+        ///   Looks up a localized string similar to Došlo je do greške, pokušajte ponovo..
         /// </summary>
-        internal static string grid_ukupno_stavki {
+        internal static string greska_msg_pokusaj_ponovo {
             get {
-                return ResourceManager.GetString("grid_ukupno_stavki", resourceCulture);
+                return ResourceManager.GetString("greska_msg_pokusaj_ponovo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Greška.
+        /// </summary>
+        internal static string greska_msg_title {
+            get {
+                return ResourceManager.GetString("greska_msg_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jeste li sigurni da želite izbrisati {0}?.
+        /// </summary>
+        internal static string izbrisi_obj_potvrda {
+            get {
+                return ResourceManager.GetString("izbrisi_obj_potvrda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Izbriši {0}.
+        /// </summary>
+        internal static string izbrisi_obj_potvrda_title {
+            get {
+                return ResourceManager.GetString("izbrisi_obj_potvrda_title", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Unijeli ste pogrešno korisničko ime ili lozinku.
         /// </summary>
-        internal static string login_user_fail {
+        internal static string login_user_invalid_credentials {
             get {
-                return ResourceManager.GetString("login_user_fail", resourceCulture);
+                return ResourceManager.GetString("login_user_invalid_credentials", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Polje username ili password ne smiju biti kraći od 4 karaktera!.
         /// </summary>
-        internal static string login_user_invalid {
+        internal static string login_user_invalid_length {
             get {
-                return ResourceManager.GetString("login_user_invalid", resourceCulture);
+                return ResourceManager.GetString("login_user_invalid_length", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Morate odabrati {0}!.
+        /// </summary>
+        internal static string morate_odabrati_msg_obj {
+            get {
+                return ResourceManager.GetString("morate_odabrati_msg_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Odaberite zapis.
+        /// </summary>
+        internal static string morate_odabrati_title {
+            get {
+                return ResourceManager.GetString("morate_odabrati_title", resourceCulture);
             }
         }
         
@@ -133,11 +178,65 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Polje Naziv ne smije biti prazno.
+        /// </summary>
+        internal static string naziv_obavezno_polje {
+            get {
+                return ResourceManager.GetString("naziv_obavezno_polje", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uneseni {0} ne postoji u bazi podataka, želite kreirati novi pod nazivom &quot;{1}&quot;?.
+        /// </summary>
+        internal static string obj_ne_postoji_kreiraj_novi_msg {
+            get {
+                return ResourceManager.GetString("obj_ne_postoji_kreiraj_novi_msg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Novi tip {0}.
+        /// </summary>
+        internal static string obj_ne_postoji_kreiraj_novi_title {
+            get {
+                return ResourceManager.GetString("obj_ne_postoji_kreiraj_novi_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polje {0} smije sadržati samo {1}!.
+        /// </summary>
+        internal static string polje_type_error {
+            get {
+                return ResourceManager.GetString("polje_type_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polje {0} smije sadržati samo {1} i ne smije biti kraće od {2}, ili duže od {3} karaktera!.
+        /// </summary>
+        internal static string polje_type_length_error {
+            get {
+                return ResourceManager.GetString("polje_type_length_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trenutni status: {0}.
+        /// </summary>
+        internal static string trenutni_status {
+            get {
+                return ResourceManager.GetString("trenutni_status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trenutni status restorana {0}.
         /// </summary>
-        internal static string restoran_trenutni_status {
+        internal static string trenutni_status_restoran {
             get {
-                return ResourceManager.GetString("restoran_trenutni_status", resourceCulture);
+                return ResourceManager.GetString("trenutni_status_restoran", resourceCulture);
             }
         }
         
@@ -160,6 +259,15 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ukupno {0}: {1}.
+        /// </summary>
+        internal static string ukupno_type_number {
+            get {
+                return ResourceManager.GetString("ukupno_type_number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Za korisnika &quot;{0}&quot;, nakon prebacivanja u grupu &quot;{1}&quot;, moraćete definisati restoran!.
         /// </summary>
         internal static string uloge_izmjene_napomene_def_restoran {
@@ -174,6 +282,69 @@ namespace eRestoraniUI.ResourceMessages {
         internal static string uloge_izmjene_pregled {
             get {
                 return ResourceManager.GetString("uloge_izmjene_pregled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uredi restoran - {0}.
+        /// </summary>
+        internal static string uredi_restoran_obj {
+            get {
+                return ResourceManager.GetString("uredi_restoran_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspješno ste izbrisali {0}!.
+        /// </summary>
+        internal static string uspjeh_delete_obj {
+            get {
+                return ResourceManager.GetString("uspjeh_delete_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zapis izbrisan.
+        /// </summary>
+        internal static string uspjeh_delete_title {
+            get {
+                return ResourceManager.GetString("uspjeh_delete_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspješno ste snimili {0}!.
+        /// </summary>
+        internal static string uspjeh_save_obj {
+            get {
+                return ResourceManager.GetString("uspjeh_save_obj", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspjeh.
+        /// </summary>
+        internal static string uspjeh_save_title {
+            get {
+                return ResourceManager.GetString("uspjeh_save_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspjeh.
+        /// </summary>
+        internal static string uspjeh_title {
+            get {
+                return ResourceManager.GetString("uspjeh_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uspješno ste sačuvali izmjene!.
+        /// </summary>
+        internal static string uspjesno_napravljene_izmjene_body {
+            get {
+                return ResourceManager.GetString("uspjesno_napravljene_izmjene_body", resourceCulture);
             }
         }
     }

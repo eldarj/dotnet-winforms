@@ -10,9 +10,9 @@ using System.Web.Http;
 
 namespace eDostava_API.Helpers
 {
-    public class ExceptionHandler
+    public static class ExceptionHandler
     {
-        private HttpResponseException CreateHttpResponseException(string reason, HttpStatusCode code)
+        public static HttpResponseException CreateHttpResponseException(string reason, HttpStatusCode code)
         {
             HttpResponseMessage m = new HttpResponseMessage
             {
@@ -48,13 +48,11 @@ namespace eDostava_API.Helpers
                 string constraintName = newMessage.Substring(startIndex + 1, endIndex - startIndex - 1);
 
                 if (constraintName == "UQ_Naziv")
-                {
                     newMessage = "restoran_naziv_constraint";
-                } else if (constraintName == "UQ_Email")
-                {
+                else if (constraintName == "UQ_Email")
                     newMessage = "restoran_email_constraint";
-                }
             }
+
             return newMessage;
         }
     }

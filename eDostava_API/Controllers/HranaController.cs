@@ -11,13 +11,14 @@ namespace eDostava_API.Controllers
 {
     [RoutePrefix("api/Restorani/{restoranId}/Hrana")]
     [Route("")]
+    [MyExceptionFilter]
     public class HranaController : BaseApiController
     {
         //api/Restorani/{restoranId}/Hrana
         [HttpGet]
         public async Task<IHttpActionResult> GetByRestoran([FromUri] int restoranId)
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(200);
             var Restoran = await db.Restorani.FindAsync(restoranId);
             if (Restoran != null)
             {
@@ -44,7 +45,7 @@ namespace eDostava_API.Controllers
         [Route("Pretraga/{param?}")]
         public async Task<IHttpActionResult> Pretraga([FromUri] int restoranId, [FromUri] string param = "")
         {
-            Thread.Sleep(1000); // ukloni kasnije
+            Thread.Sleep(200); // ukloni kasnije
             var Restoran = await db.Restorani.FindAsync(restoranId);
             if (Restoran != null)
             {
@@ -58,7 +59,6 @@ namespace eDostava_API.Controllers
         }
         //api/Restorani/{restoranId}/Hrana
         [HttpPost]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Nova([FromUri] int restoranId, [FromBody] Hrana obj)
         {
             if (!ModelState.IsValid)
@@ -80,7 +80,6 @@ namespace eDostava_API.Controllers
         //api/Restorani/{restoranId}/Hrana/{id}
         [HttpPut]
         [Route("{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Update([FromUri] int restoranId, [FromUri] int id, [FromBody] Hrana obj)
         {
             if (!ModelState.IsValid || obj.HranaID != id)
@@ -105,7 +104,6 @@ namespace eDostava_API.Controllers
                 stavka.SlikaThumb = obj.SlikaThumb;
 
                 await db.SaveChangesAsync();
-
                 return Ok(Hrana_Result.GetHranaResultInstance(obj));
             }
             catch (Exception e)
@@ -117,7 +115,6 @@ namespace eDostava_API.Controllers
         //api/Restorani/{restoranId}/Hrana/{id}
         [HttpDelete]
         [Route("{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Delete([FromUri] int restoranId, [FromUri] int id)
         {
             Restorani r = await db.Restorani.FindAsync(restoranId);
@@ -137,6 +134,15 @@ namespace eDostava_API.Controllers
             }
 
             return BadRequest("Stavka hrane ne postoji u bazi!");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

@@ -17,7 +17,6 @@ namespace eRestoraniUI.Utils
         #region Regex Strings
         public static int TELEFON_STANDARDNA_DUZINA = 6;
         public static string TELEFON_REGEX = @"\D+|((00)?387){1,}";
-
         public static string DECIMAL_REGEX = @"[1-9]?[0-9]?\.\d+";
         #endregion
 
@@ -91,11 +90,10 @@ namespace eRestoraniUI.Utils
         #endregion
 
         #region Messages
-        public static void MessageOnApiError(HttpResponseMessage response)
+        public static void MessageOnApiError(string msg)
         {
-            MessageBox.Show("Error code: " + response.StatusCode + " Error: " + response.ReasonPhrase,
-                "Greška",
-                MessageBoxButtons.RetryCancel,
+            MessageBox.Show(msg, ResourceMessages.Messages.greska_msg_title,
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
 
@@ -103,7 +101,7 @@ namespace eRestoraniUI.Utils
         {
             MessageBox.Show("Dogodila se greška. Pokušajte ponovo ili kontaktirajte podršku.",
                 "Greška",
-                MessageBoxButtons.RetryCancel,
+                MessageBoxButtons.OK,
                 MessageBoxIcon.Error);
         }
         #endregion
@@ -201,7 +199,7 @@ namespace eRestoraniUI.Utils
                 imgLoader.Visible = true;
             }
             loaderImgStack.Push(true);
-        }
+        } // za hendlanje više 'izvora' aktiviranja spinnera
 
         public static void LoaderImgStackHide(ref PictureBox imgLoader, ref Stack<bool> loaderImgStack)
         {
@@ -210,18 +208,22 @@ namespace eRestoraniUI.Utils
                 imgLoader.Visible = false;
             }
             loaderImgStack.Pop();
-        }
+        } // za hendlanje više 'izvora' aktiviranja spinnera
         #endregion
 
         #region Generic UI element bindings
+        // Za setup bind-a i comboboxa
         public static async Task<List<T>> GenericBindCmb<T>(PictureBox spinner, Stack<bool> spinnerTracker, string requestRoute,
-            ComboBox cmb, string valueMemberName, string displayMember)
+            ComboBox cmb, string valueMemberName, string displayMember, Dictionary<string, int> qparams = null)
         {
             WebApiHelper servis = new WebApiHelper();
             List<T> data = new List<T>();
 
             UIHelper.LoaderImgStackDisplay(ref spinner, ref spinnerTracker);
-            HttpResponseMessage response = await servis.GetResponse(requestRoute);
+            HttpResponseMessage response = qparams != null ? 
+                await servis.GetResponse(qparams, requestRoute) :
+                await servis.GetResponse(requestRoute);
+
             if (response.IsSuccessStatusCode)
             {
                 data = new List<T>(response.Content.ReadAsAsync<List<T>>().Result);
@@ -235,6 +237,23 @@ namespace eRestoraniUI.Utils
             UIHelper.LoaderImgStackHide(ref spinner, ref spinnerTracker);
             return data;
         }
+
+        // Za setup bind-a i listboxa
+        public static BindingListHelper<T> GenericBindListBox<T>(ListBox listBox, string valueMemberName, string displayMember, List<T> items)
+        {
+            BindingListHelper<T> data = new BindingListHelper<T>(items);
+
+            listBox.DataSource = data.Source;
+            listBox.ValueMember = valueMemberName;
+            listBox.DisplayMember = displayMember;
+
+            //enable controls
+            listBox.Enabled = true;
+
+            return data;
+        }
+
+        // Za setup bind-a i listboxa
         public static async Task<BindingListHelper<T>> GenericBindListBox<T>(PictureBox spinner, Stack<bool> spinnerTracker, string requestRoute,
             ListBox listBox, string valueMemberName, string displayMember)
         {

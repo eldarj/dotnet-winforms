@@ -14,6 +14,7 @@ using System.Web.Http;
 namespace eDostava_API.Controllers
 {
     [RoutePrefix("api")]
+    [MyExceptionFilter]
     public class NarudzbeController : BaseApiController
     {
 
@@ -23,14 +24,13 @@ namespace eDostava_API.Controllers
         [Route("narudzbe")]
         public IHttpActionResult GetAll([FromUri] int? narucilac = null, [FromUri] int? restoran = null, [FromUri] int? status = null)
         {
-            Thread.Sleep(500);
+            Thread.Sleep(200);
             return Ok(db.esp_Narudzbe_SelectAllOrByNarucilacOrRestoran(narucilac, restoran, status).ToList());
         }
 
         //api/narudzbe/{id}
         [HttpGet]
         [Route("narudzbe/{id}")]
-        [MyExceptionFilter]
         public IHttpActionResult GetSingle([FromUri] int id)
         {
             Narudzbe dbNarudzba = db.Narudzbe
@@ -46,7 +46,6 @@ namespace eDostava_API.Controllers
         //api/narudzbe
         [HttpPost]
         [Route("narudzbe")]
-        [MyExceptionFilter]
         public IHttpActionResult CreateNarudzba([FromBody] Narudzbe narudzba)
         {
             narudzba.DatumVrijeme = DateTime.Now;
@@ -71,7 +70,6 @@ namespace eDostava_API.Controllers
         //api/narudzbe/{id}
         [HttpDelete]
         [Route("narudzbe/{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Delete([FromUri] int id)
         {
             Narudzbe n = await db.Narudzbe.FindAsync(id);
@@ -90,7 +88,6 @@ namespace eDostava_API.Controllers
         //api/narudzbe/{id}
         [HttpPut]
         [Route("narudzbe/{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Update([FromUri] int id, [FromBody] Narudzbe obj)
         {
             Narudzbe n = await db.Narudzbe.FindAsync(id);

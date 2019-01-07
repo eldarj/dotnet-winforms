@@ -11,8 +11,8 @@ namespace eRestoraniUI.Utils
     {
         public static Dictionary<int, string> Roles = new Dictionary<int, string>{ { 1, "Zaposlenik" }, { 2, "Vlasnik" }, { 4, "Administrator" } };
 
-        public static bool HasAdminAccess => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 4;
-        public static bool HasVlasnikAccess => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 2;
-        public static bool HasZaposlenikAcess => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 1;
+        public static bool AdminRights => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 4;
+        public static bool VlasnikRights => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 2;
+        public static bool ZaposlenikRights => Global.PrijavljeniKorisnik.UlogaKorisnikaID == 1;
     }
 }

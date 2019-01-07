@@ -191,6 +191,7 @@
             this.btnUredi.TabIndex = 7;
             this.btnUredi.Text = "Uredi";
             this.btnUredi.UseVisualStyleBackColor = true;
+            this.btnUredi.Visible = false;
             this.btnUredi.Click += new System.EventHandler(this.btnUrediRestoran_Click);
             // 
             // btnIzbrisi
@@ -203,6 +204,7 @@
             this.btnIzbrisi.TabIndex = 8;
             this.btnIzbrisi.Text = "Izbriši";
             this.btnIzbrisi.UseVisualStyleBackColor = true;
+            this.btnIzbrisi.Visible = false;
             this.btnIzbrisi.Click += new System.EventHandler(this.btnIzbrisi_Click);
             // 
             // imgLoader
@@ -252,6 +254,7 @@
             this.noviRestoranToolStripMenuItem.Name = "noviRestoranToolStripMenuItem";
             this.noviRestoranToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.noviRestoranToolStripMenuItem.Text = "Novi restoran";
+            this.noviRestoranToolStripMenuItem.Visible = false;
             this.noviRestoranToolStripMenuItem.Click += new System.EventHandler(this.btnNoviRestoran_Click);
             // 
             // btnViseJelovnik

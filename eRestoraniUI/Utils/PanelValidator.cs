@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace eRestoraniUI.Utils
 {
-    public static class ValidatorHelper
+    public static class ValidatorHelper // helper za rad s više validacija (isključi, uključi specifične isl..)
     {
         public static bool ValidateChildren(ContainerControl containerToBeValidated, Control doNotValidate, Control doValidate)
         {

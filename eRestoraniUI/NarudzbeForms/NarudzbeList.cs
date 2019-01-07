@@ -29,19 +29,36 @@ namespace eRestoraniUI.NarudzbeForms
 
         private bool IsGridEmpty => dgvBindingList.Count == 0;
 
+        #region Constructors
         public NarudzbeList()
         {
             InitializeComponent();
-            dgvNarudzbe.AutoGenerateColumns = false;
+            _init();
         }
-        public NarudzbeList(Restorani_Result restoran = null, Narucioci_Result narucilac = null)
+
+        public NarudzbeList(Restorani_Result restoran)
         {
             this.predefinedRestoran = restoran;
-            this.predefinedNarucilac = narucilac;
-
             InitializeComponent();
-            dgvNarudzbe.AutoGenerateColumns = false;
+            _init();
         }
+
+        public NarudzbeList(Narucioci_Result narucilac)
+        {
+            this.predefinedNarucilac = narucilac;
+            InitializeComponent();
+            _init();
+        }
+        private void _init()
+        {
+            dgvNarudzbe.AutoGenerateColumns = false;
+
+            if (UserAccessControlHelper.ZaposlenikRights)
+            {
+                btnIzbrisi.Visible = false;
+            }
+        }
+        #endregion
 
         #region Binders
         private void NarudzbeList_Load(object sender, System.EventArgs e)
@@ -101,6 +118,11 @@ namespace eRestoraniUI.NarudzbeForms
         #endregion
 
         #region UIHandlers
+        private void txtPretraga_TextChanged(object sender, EventArgs e)
+        {
+            pretragaByString();
+        }
+
         private async void cmbStatusi_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedValue;
@@ -122,7 +144,7 @@ namespace eRestoraniUI.NarudzbeForms
                 dgvBindingList = dgvOriginalBindingList = dgvOriginalForReporting = new BindingList<Narudzbe_Result>(response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result);
                 dgvBindingSource.DataSource = dgvBindingList;
 
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narudžbi", dgvBindingList.Count);
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "narudžbi", dgvBindingList.Count);
                 pretragaByString();
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
@@ -135,8 +157,8 @@ namespace eRestoraniUI.NarudzbeForms
             Narudzbe_Result obj = (Narudzbe_Result)dgvNarudzbe.CurrentRow.DataBoundItem;
             if (obj != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, "narudžbu " + obj.Sifra.ToString().Substring(0, 5) + "..."),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "narudžbu"),
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, "narudžbu " + obj.Sifra.ToString().Substring(0, 5) + "..."),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "narudžbu"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -144,19 +166,19 @@ namespace eRestoraniUI.NarudzbeForms
                     HttpResponseMessage response = await servisNarudzbe.DeleteResponse(obj.NarudzbaID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "naručilac " + obj.Sifra.ToString().Substring(0, 5) + "..."),
-                            ValidationMessages.uspjesno_izbrisan_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "naručilac " + obj.Sifra.ToString().Substring(0, 5) + "..."),
+                            Messages.uspjeh_delete_title);
                         BindMainGrid(recheckPretraga: true);
                     }
                     else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             }
             else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "narudžbu");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "narudžbu");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
@@ -188,11 +210,6 @@ namespace eRestoraniUI.NarudzbeForms
         }
         #endregion
 
-        private void txtPretraga_TextChanged(object sender, EventArgs e)
-        {
-            pretragaByString();
-        }
-
         private void pretragaByString()
         {
             List<Narudzbe_Result> temp = null;
@@ -219,7 +236,7 @@ namespace eRestoraniUI.NarudzbeForms
             dgvBindingList = new BindingList<Narudzbe_Result>(temp);
             dgvBindingSource.DataSource = dgvBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narudžba", dgvBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "narudžba", dgvBindingList.Count);
         }
 
         private async Task<HttpResponseMessage> GetNarudzbeFromApi(int status = 0)

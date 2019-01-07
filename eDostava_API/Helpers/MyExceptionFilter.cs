@@ -22,6 +22,15 @@ namespace eDostava_API.Helpers
                     Content = new StringContent("Traženi resurs ne postoji u bazi i nije mogao biti pronađen.")
                 };
             }
+            else
+            {
+                actionExecutedContext.Response = new HttpResponseMessage
+                {
+                    StatusCode = System.Net.HttpStatusCode.ServiceUnavailable,
+                    ReasonPhrase = "Ne možemo obraditi zahtjev",
+                    Content = new StringContent("Trenutno ne možemo obraditi vaš zahtjev, molimo kontaktirajte podršku.")
+                };
+            }
 
             return base.OnExceptionAsync(actionExecutedContext, cancellationToken);
         }
@@ -33,8 +42,8 @@ namespace eDostava_API.Helpers
                 actionExecutedContext.Response = new HttpResponseMessage
                 {
                     StatusCode = System.Net.HttpStatusCode.NotFound,
-                    ReasonPhrase = "Uplata obavezna",
-                    Content = new StringContent("Potrebno izvršiti uplatu!")
+                    ReasonPhrase = "Podaci nisu validni",
+                    Content = new StringContent("Dogodila se greška, podaci nisu validni! Ako ste unijeli validne podatke, molimo provjerite još jedanput, te kontaktirajte podršku.")
                 };
             }
             else if(actionExecutedContext.Exception is InvalidOperationException)
@@ -48,7 +57,12 @@ namespace eDostava_API.Helpers
             }
             else
             {
-                base.OnException(actionExecutedContext);
+                actionExecutedContext.Response = new HttpResponseMessage
+                {
+                    StatusCode = System.Net.HttpStatusCode.ServiceUnavailable,
+                    ReasonPhrase = "Ne možemo obraditi zahtjev",
+                    Content = new StringContent("Trenutno ne možemo obraditi vaš zahtjev, molimo kontaktirajte podršku.")
+                };
             }
         }
     }

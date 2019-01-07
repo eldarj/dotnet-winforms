@@ -93,7 +93,7 @@
             // 
             this.btnIzbrisi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnIzbrisi.Enabled = false;
-            this.btnIzbrisi.Location = new System.Drawing.Point(979, 8);
+            this.btnIzbrisi.Location = new System.Drawing.Point(898, 8);
             this.btnIzbrisi.Name = "btnIzbrisi";
             this.btnIzbrisi.Size = new System.Drawing.Size(75, 23);
             this.btnIzbrisi.TabIndex = 76;
@@ -205,7 +205,7 @@
             // 
             this.btnDetaljiNarudzbe.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDetaljiNarudzbe.Enabled = false;
-            this.btnDetaljiNarudzbe.Location = new System.Drawing.Point(898, 8);
+            this.btnDetaljiNarudzbe.Location = new System.Drawing.Point(979, 8);
             this.btnDetaljiNarudzbe.Name = "btnDetaljiNarudzbe";
             this.btnDetaljiNarudzbe.Size = new System.Drawing.Size(75, 23);
             this.btnDetaljiNarudzbe.TabIndex = 81;

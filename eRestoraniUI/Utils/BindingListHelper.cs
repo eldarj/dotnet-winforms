@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace eRestoraniUI.Utils
 {
-    public class BindingListHelper<T>
+    public class BindingListHelper<T> // generic helper klasa za hendlanje bindling lista (gridovi, cmb isl...)
     {
         private BindingList<T> bindingList { get; set; }
         private BindingSource bindingSource { get; set; }

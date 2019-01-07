@@ -11,6 +11,7 @@ namespace eDostava_API.Controllers
 {
     [RoutePrefix("api/locations")]
     [Route("")]
+    [MyExceptionFilter]
     public class LocationsController : BaseApiController
     {
         //api/locations
@@ -26,14 +27,13 @@ namespace eDostava_API.Controllers
         [Route("blokovi")]
         public IHttpActionResult GetBlokovi()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(250);
             return Ok(db.esp_Blokovi_SelectAll(null).ToList());
         }
 
         //api/locations/blokovi/{id}
         [HttpGet]
         [Route("blokovi/{id}")]
-        [MyExceptionFilter]
         public IHttpActionResult GetSingleBlok([FromUri] int id)
         {
             return Ok(db.esp_Blokovi_SelectAll(null).ToList()
@@ -103,7 +103,6 @@ namespace eDostava_API.Controllers
         //api/locations/blokovi/{id}
         [HttpDelete]
         [Route("blokovi/{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> DeleteBlok([FromUri] int id)
         {
             Blokovi b = await db.Blokovi.FindAsync(id);
@@ -129,14 +128,13 @@ namespace eDostava_API.Controllers
         [Route("gradovi")]
         public IHttpActionResult GetGradovi()
         {
-            Thread.Sleep(1000);
+            Thread.Sleep(250);
             return Ok(db.esp_Gradovi_SelectAll().ToList());
         }
 
         //api/locations/gradovi/{id}
         [HttpGet]
         [Route("gradovi/{id}")]
-        [MyExceptionFilter]
         public IHttpActionResult GetSingleGrad([FromUri] int id)
         {
             return Ok(db.esp_Gradovi_SelectAll().ToList()
@@ -214,7 +212,6 @@ namespace eDostava_API.Controllers
         //api/locations/gradovi/{id}
         [HttpDelete]
         [Route("gradovi/{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> DeleteGrad([FromUri] int id)
         {
             Gradovi g = await db.Gradovi.FindAsync(id);
@@ -228,5 +225,14 @@ namespace eDostava_API.Controllers
             return BadRequest("Grad ne postoji u bazi podataka!");
         }
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

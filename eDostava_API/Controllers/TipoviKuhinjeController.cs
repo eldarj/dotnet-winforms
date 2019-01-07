@@ -14,15 +14,16 @@ namespace eDostava_API.Controllers
 {
     [RoutePrefix("api/tipovikuhinje")]
     [Route("")]
+    [MyExceptionFilter]
     public class TipoviKuhinjeController : BaseApiController
     {
         //api/TipoviKuhinje
         [HttpGet]
-        [MyExceptionFilter]
         public List<TipoviKuhinje_Result> GetAll()
         {
             return db.esp_TipoviKuhinje_SelectAll().ToList();
         }
+
         //api/TipoviKuhinje/{id}
         [HttpGet]
         [Route("{id}"),ActionName("GetSingle")]
@@ -45,23 +46,26 @@ namespace eDostava_API.Controllers
 
         //api/TipoviKuhinje
         [HttpPost]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostTipKuhinje([FromBody] TipoviKuhinje obj)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Ne validni podaci!");
+                return BadRequest("Nevalidni podaci!");
             }
 
             db.TipoviKuhinje.Add(obj);
             await db.SaveChangesAsync();
 
             return CreatedAtRoute("DefaultApi", new { controller = "TipoviKuhinje", action = "GetSingle", id = obj.TipKuhinjeID }, obj);
-            }
+        }
 
-        ////api/TipoviKuhinje/{id}
-        //[HttpPut]
-        ////api/TipoviKuhinje/{id}
-        //[HttpDelete]
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

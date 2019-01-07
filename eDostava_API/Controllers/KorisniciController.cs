@@ -13,9 +13,10 @@ using System.Web.Http;
 namespace eDostava_API.Controllers
 {
     [RoutePrefix("api")]
+    [MyExceptionFilter]
     public class KorisniciController : BaseApiController
     {
-        //api/korisnici?ulogaId=1&gradId=1
+        //api/korisnici?uloga=1&grad=1
         [HttpGet]
         [Route("korisnici")]
         public IHttpActionResult GetKorisnici([FromUri] int? uloga = null, [FromUri] int? grad = null)
@@ -27,7 +28,6 @@ namespace eDostava_API.Controllers
         //api/korisnici/{id}
         [HttpDelete]
         [Route("korisnici/{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Delete([FromUri] int id)
         {
             Korisnik k = await db.Korisnik.FindAsync(id);
@@ -94,7 +94,6 @@ namespace eDostava_API.Controllers
         //api/korisnici/{id}
         [HttpPut]
         [Route("korisnici/{id}/updaterole")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Update([FromUri] int id, [FromBody] Korisnik obj)
         {
             Korisnik k = await db.Korisnik.FindAsync(id);
@@ -133,7 +132,6 @@ namespace eDostava_API.Controllers
         //api/zaposlenici/{id}/restorani
         [HttpPost]
         [Route("zaposlenici/{id}/restorani")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostRestoraneZaposlenika([FromUri] int id, [FromBody] List<Restorani_Result> objList)
         {
             Korisnik k = await db.Korisnik.FindAsync(id);
@@ -159,7 +157,6 @@ namespace eDostava_API.Controllers
         //api/vlasnici/{id}/restorani
         [HttpPost]
         [Route("vlasnici/{id}/restorani")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostRestoraneVlasnika([FromUri] int id, [FromBody] List<Restorani_Result> objList)
         {
             Korisnik k = await db.Korisnik.FindAsync(id);

@@ -27,26 +27,40 @@ namespace eRestoraniUI.RestoraniUI
         private Stack<bool> loaderImgStack = new Stack<bool>();
 
         // Bindinglist helpers for UI binding
-        BindingListHelper<Korisnici_Result> vlasniciRestoranaBox = new BindingListHelper<Korisnici_Result>();
-        BindingListHelper<Korisnici_Result> zaposleniciRestoranaBox = new BindingListHelper<Korisnici_Result>();
+        BindingListHelper<Korisnici_Result> vlasniciRestoranaBox;
+        BindingListHelper<Korisnici_Result> zaposleniciRestoranaBox;
 
         public RestoraniEdit()
         {
             InitializeComponent();
+            this.Text = "Novi restoran";
             this.AutoValidate = AutoValidate.Disable;
         }
 
-        public RestoraniEdit(Restorani_Result editRestoran = null)
+        public RestoraniEdit(Restorani_Result editRestoran)
         {
             InitializeComponent();
             if (editRestoran != null)
+            {
                 restoranModel = editRestoran;
+                this.Text = String.Format(Messages.uredi_restoran_obj, restoranModel.Naziv);
+            }
 
             this.AutoValidate = AutoValidate.Disable;
         }
         #region Form Initializers
         private async void RestoraniEdit_Load(object sender, EventArgs e)
         {
+            if (UserAccessControlHelper.AdminRights)
+            {
+                lblCmbStatusi.Visible = cmbStatusi.Visible = true;
+                pnlEditVlasnici.Visible = btnUkloniVlasnika.Visible = true;
+            }
+            else
+            {
+                lblEditVlasnici.Text = "Vlasnik: " + Global.PrijavljeniKorisnik.Ime + " " + Global.PrijavljeniKorisnik.Prezime;
+            }
+
             BindCmbZaposleniciVlasnici();
 
             if (restoranModel == null)
@@ -55,11 +69,11 @@ namespace eRestoraniUI.RestoraniUI
             } else
             {
                 await BindCmbStatusiBlokovi();
-                FillForm();
+                FillFormOnEdit();
             }
         }
 
-        private async void FillForm()
+        private async void FillFormOnEdit()
         {
             txtSifra.Text = restoranModel.Sifra.ToString();
             txtNaziv.Text = restoranModel.Naziv;
@@ -74,34 +88,45 @@ namespace eRestoraniUI.RestoraniUI
             txtAdresa.Text = restoranModel.Adresa;
             cmbBlokoviGradovi.SelectedIndex = cmbBlokoviGradovi.FindStringExact(restoranModel.BlokNaziv + ", " + restoranModel.GradNaziv);
 
-            lblTrenutniStatus.Text = String.Format(Messages.restoran_trenutni_status, restoranModel.StatusNaziv);
-            cmbStatusi.SelectedIndex = cmbStatusi.FindStringExact(restoranModel.StatusNaziv);
+            lblTrenutniStatus.Text = String.Format(Messages.trenutni_status_restoran, restoranModel.StatusNaziv);
+            if (UserAccessControlHelper.AdminRights)
+            {
+                cmbStatusi.SelectedIndex = cmbStatusi.FindStringExact(restoranModel.StatusNaziv);
+
+                vlasniciRestoranaBox = await UIHelper.GenericBindListBox<Korisnici_Result>(imgLoader, loaderImgStack,
+                "restorani/" + restoranModel.RestoranID + "/vlasnici", listBoxVlasnici, "KorisnikID", "ImePrezime");
+            }
 
             zaposleniciRestoranaBox = await UIHelper.GenericBindListBox<Korisnici_Result>(imgLoader, loaderImgStack,
                 "restorani/" + restoranModel.RestoranID + "/zaposlenici", listBoxZaposlenici, "KorisnikID", "ImePrezime");
-
-            vlasniciRestoranaBox = await UIHelper.GenericBindListBox<Korisnici_Result>(imgLoader, loaderImgStack,
-                "restorani/" + restoranModel.RestoranID + "/vlasnici", listBoxVlasnici, "KorisnikID", "ImePrezime");
         }
         
         // Void jer hoćemo da setujemo cmb zaposlenike i vlasnike bez čekanja i uvijek asinhrono
         private void BindCmbZaposleniciVlasnici()
         {
-            Task bindZaposlenike = UIHelper.GenericBindCmb<Korisnici_Result>(imgLoader, loaderImgStack, "korisnici?uloga=1",
-                cmbZaposlenici, "KorisnikID", "ImePrezime");
+            Task bindZaposlenike = UIHelper.GenericBindCmb<Korisnici_Result>(imgLoader, loaderImgStack, "korisnici",
+                cmbZaposlenici, "KorisnikID", "ImePrezime", new Dictionary<string, int> { { "uloga", 1 } });
 
-            Task bindVlasnike = UIHelper.GenericBindCmb<Korisnici_Result>(imgLoader, loaderImgStack, "korisnici?uloga=2",
-                cmbVlasnici, "KorisnikID", "ImePrezime");
+            if (UserAccessControlHelper.AdminRights)
+            {
+                Task bindVlasnike = UIHelper.GenericBindCmb<Korisnici_Result>(imgLoader, loaderImgStack, "korisnici",
+                    cmbVlasnici, "KorisnikID", "ImePrezime", new Dictionary<string, int> { { "uloga", 2 } });
+            }
         }
+
         // Vrača Task, koji možemo vršiti sa 'await' ili bez (jer npr. na edit hoćemo sačekati da popunimo cmb prvo, prije setujemo postojeće podatke)
         private Task BindCmbStatusiBlokovi()
         {
-            Task populateStatusi = UIHelper.GenericBindCmb<RestoranStatusi_Result>(imgLoader, loaderImgStack, "restorani/statusi",
+            Task populateStatusi = null;
+            if (UserAccessControlHelper.AdminRights)
+            {
+                populateStatusi = UIHelper.GenericBindCmb<RestoranStatusi_Result>(imgLoader, loaderImgStack, "restorani/statusi",
                 cmbStatusi, "RestoranStatusID", "Naziv");
+            }
             Task populateBlokovi = UIHelper.GenericBindCmb<Blokovi_Result>(imgLoader, loaderImgStack, "locations/blokovi",
                 cmbBlokoviGradovi, "BlokID", "BlogGradFull");
 
-            return Task.WhenAll(populateStatusi, populateBlokovi);
+            return UserAccessControlHelper.AdminRights ? Task.WhenAll(populateStatusi, populateBlokovi) : populateBlokovi;
         }
         #endregion
 
@@ -128,10 +153,19 @@ namespace eRestoraniUI.RestoraniUI
             if (cmbZaposlenici.SelectedItem != null)
             {
                 Korisnici_Result r = (Korisnici_Result)cmbZaposlenici.SelectedItem;
-                if (zaposleniciRestoranaBox.Contains(r))
+                if (zaposleniciRestoranaBox == null)
+                {
+                    zaposleniciRestoranaBox = UIHelper.GenericBindListBox<Korisnici_Result>(listBoxZaposlenici, "KorisnikID",
+                        "ImePrezime", new List<Korisnici_Result> { r });
+                }
+                else if(zaposleniciRestoranaBox.Contains(r))
+                {
                     lblVecDodanZaposlenik.Visible = true;
+                }
                 else
+                {
                     zaposleniciRestoranaBox.Add(r);
+                }
             }
         }
 
@@ -141,10 +175,19 @@ namespace eRestoraniUI.RestoraniUI
             if(cmbVlasnici.SelectedItem != null)
             {
                 Korisnici_Result r = (Korisnici_Result) cmbVlasnici.SelectedItem;
-                if (vlasniciRestoranaBox.Contains(r))
+                if (vlasniciRestoranaBox == null)
+                {
+                    vlasniciRestoranaBox = UIHelper.GenericBindListBox<Korisnici_Result>(listBoxVlasnici, "KorisnikID",
+                        "ImePrezime", new List<Korisnici_Result> { r });
+                }
+                else if(vlasniciRestoranaBox.Contains(r))
+                {
                     lblVecDodanVlasnik.Visible = true;
+                }
                 else
+                {
                     vlasniciRestoranaBox.Add(r);
+                }
             }
         }
 
@@ -202,44 +245,41 @@ namespace eRestoraniUI.RestoraniUI
             if (Global.PrijavljeniKorisnik != null && restoran.RestoranStatusID != Convert.ToInt32(cmbStatusi.SelectedValue))
             {
                 restoran.KorisnikID = Global.PrijavljeniKorisnik.KorisnikID;
-            } else
-            {
-                restoran.KorisnikID = 16;
+                restoran.RestoranStatusID = Convert.ToInt32(cmbStatusi.SelectedValue);
             }
-            restoran.RestoranStatusID = Convert.ToInt32(cmbStatusi.SelectedValue);
+
+            List<HttpResponseMessage> responseStatuses = new List<HttpResponseMessage>();
 
             HttpResponseMessage rMain = isPutRequest ? 
                 servisRestorani.PutResponse(restoran.RestoranID, restoran) : 
                 servisRestorani.PostResponse(restoran);
+            responseStatuses.Add(rMain);
 
-            //HttpResponseMessage rZaposl = await servis.PostResponse(restoranModel.RestoranID + "/zaposlenici", zaposleniciRestoranaBox.GetList());
-            //HttpResponseMessage rVlasnici = await servis.PostResponse(restoranModel.RestoranID + "/vlasnici", vlasniciRestoranaBox.GetList());
-
-
-            //if (rZaposl.IsSuccessStatusCode)
-            //{
-                
-            //}
-            //if (rVlasnici.IsSuccessStatusCode)
-            //{
-               
-            //}
-            if (rMain.IsSuccessStatusCode)
+            if (zaposleniciRestoranaBox != null)
             {
-                MessageBox.Show(ValidationMessages.uspjesno_napravljene_izmjene_body, ValidationMessages.uspjesno_napravljene_izmjene_title);
+                HttpResponseMessage rZaposl = await servisRestorani.PostResponse(restoranModel.RestoranID + "/zaposlenici", zaposleniciRestoranaBox.GetList());
+                responseStatuses.Add(rZaposl);
+            }
+
+            if (UserAccessControlHelper.AdminRights && vlasniciRestoranaBox != null)
+            {
+                HttpResponseMessage rVlasnici = await servisRestorani.PostResponse(restoranModel.RestoranID + "/vlasnici", vlasniciRestoranaBox.GetList());
+                responseStatuses.Add(rVlasnici);
+            }
+
+            if (responseStatuses.Any(s => !s.IsSuccessStatusCode))
+            {
+                var resp = responseStatuses.Where(s => !s.IsSuccessStatusCode).FirstOrDefault();
+                string msg = resp.ReasonPhrase;
+                if (!String.IsNullOrEmpty(Messages.ResourceManager.GetString(msg)))
+                    msg = Messages.ResourceManager.GetString(msg);
+
+                UIHelper.MessageOnApiError(msg);
+            } else
+            {
+                MessageBox.Show(Messages.uspjesno_napravljene_izmjene_body, Messages.uspjeh_save_title);
                 DialogResult = DialogResult.OK;
                 Close();
-            }
-            else
-            {
-                string msg = rMain.ReasonPhrase;
-                if (!String.IsNullOrEmpty(Messages.ResourceManager.GetString(rMain.ReasonPhrase)))
-                {
-                    msg = Messages.ResourceManager.GetString(rMain.ReasonPhrase);
-                }
-
-                // TODO: change this to use the above msg
-                UIHelper.MessageOnApiError(rMain);
             }
         }
         #endregion
@@ -250,7 +290,7 @@ namespace eRestoraniUI.RestoraniUI
             if (String.IsNullOrEmpty(txtNaziv.Text))
             {
                 e.Cancel = true;
-                errorProvider.SetError(txtNaziv, Messages.edit_restoran_obavezno_polje_naziv);
+                errorProvider.SetError(txtNaziv, Messages.naziv_obavezno_polje);
             }
         }
 
@@ -259,7 +299,7 @@ namespace eRestoraniUI.RestoraniUI
             if (String.IsNullOrEmpty(txtEmail.Text))
             {
                 e.Cancel = true;
-                errorProvider.SetError(txtEmail, Messages.edit_restoran_obavezno_polje_email);
+                errorProvider.SetError(txtEmail, Messages.email_required_error);
             } else
             {
                 try
@@ -268,7 +308,7 @@ namespace eRestoraniUI.RestoraniUI
                 } catch (FormatException fe)
                 {
                     e.Cancel = true;
-                    errorProvider.SetError(txtEmail, Messages.edit_restoran_email_format_error);
+                    errorProvider.SetError(txtEmail, Messages.email_format_error);
                 }
             }
         }

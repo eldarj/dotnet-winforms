@@ -101,8 +101,8 @@ namespace eRestoraniUI.LokacijeForms
             Blokovi_Result b = (Blokovi_Result) dgvBlokovi.CurrentRow.DataBoundItem;
             if (b != null)
             {
-                var potvrda = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, b.Naziv),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, b.Naziv),
+                var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, b.Naziv),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, b.Naziv),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -111,18 +111,18 @@ namespace eRestoraniUI.LokacijeForms
 
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, b.Naziv),
-                            ValidationMessages.izbrisi_stavku_potvrda_title);
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, b.Naziv),
+                            Messages.izbrisi_obj_potvrda_title);
                         BindBlokoviGrid(recheckPretraga: true);
                     }
                     else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             } else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "blok");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "blok");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref imgLoaderStack);
         }
@@ -141,7 +141,7 @@ namespace eRestoraniUI.LokacijeForms
                 splitContainer1.Panel1Collapsed = false;
             } else
             {
-                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "blok"));
+                MessageBox.Show(String.Format(Messages.morate_odabrati_msg_obj, "blok"));
             }
         }
 
@@ -157,7 +157,7 @@ namespace eRestoraniUI.LokacijeForms
             if (!Regex.IsMatch(txtBlokNaziv.Text, @"^[\p{L}\ ]{4,20}$"))
             {
                 e.Cancel = true;
-                errorProvider1.SetError(txtBlokNaziv, String.Format(ValidationMessages.polje_tip_duzina, "naziv bloka", "slova", 4, 20));
+                errorProvider1.SetError(txtBlokNaziv, String.Format(Messages.polje_type_length_error, "naziv bloka", "slova", 4, 20));
             }
         }
 
@@ -166,13 +166,13 @@ namespace eRestoraniUI.LokacijeForms
             string error = "Grad ne postoji!";
             if (!Regex.IsMatch(cmbGradovi.Text, @"^(?=.*\p{L})[\p{L}\ ]{4,20}$"))
             {
-                error = String.Format(ValidationMessages.polje_tip_duzina, 
+                error = String.Format(Messages.polje_type_length_error, 
                     "naziv grada", "slova", 4, 20);
             }
             else if(!gradoviBindingList.Select(g => g.Naziv).ToList().Contains(cmbGradovi.Text))
             {
-                var kreiraj = MessageBox.Show(String.Format(ValidationMessages.ObjNePostojiKreirajNovi, "grad", cmbGradovi.Text),
-                    String.Format(ValidationMessages.ObjNePostojiKreirajNoviTitle, "grad"),
+                var kreiraj = MessageBox.Show(String.Format(Messages.obj_ne_postoji_kreiraj_novi_msg, "grad", cmbGradovi.Text),
+                    String.Format(Messages.obj_ne_postoji_kreiraj_novi_title, "grad"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Information);
 
@@ -184,8 +184,8 @@ namespace eRestoraniUI.LokacijeForms
                     });
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "grad"),
-                            ValidationMessages.UspjenoKreiranTitle,
+                        MessageBox.Show(String.Format(Messages.uspjeh_save_obj, "grad"),
+                            Messages.uspjeh_title,
                             MessageBoxButtons.OK);
 
                         Gradovi_Result novigrad = response.Content.ReadAsAsync<Gradovi_Result>().Result;
@@ -198,8 +198,8 @@ namespace eRestoraniUI.LokacijeForms
                     }
                     else
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.GreskaKreiranObj, "tip kuhinje"),
-                            ValidationMessages.greska_msg_title,
+                        MessageBox.Show(String.Format(Messages.greska_msg_obj_body, "tip kuhinje"),
+                            Messages.greska_msg_title,
                             MessageBoxButtons.OK);
                     }
                 }
@@ -242,8 +242,8 @@ namespace eRestoraniUI.LokacijeForms
 
             if (response.IsSuccessStatusCode)
             {
-                MessageBox.Show(String.Format(ValidationMessages.uspjesno_kreiran_obj, "blok"),
-                    ValidationMessages.UspjenoKreiranTitle,
+                MessageBox.Show(String.Format(Messages.uspjeh_save_obj, "blok"),
+                    Messages.uspjeh_title,
                     MessageBoxButtons.OK);
                 blok = response.Content.ReadAsAsync<Blokovi_Result>().Result;
                 BindBlokoviGrid(recheckPretraga: true);

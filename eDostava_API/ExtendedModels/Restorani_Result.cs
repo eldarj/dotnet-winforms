@@ -35,6 +35,7 @@ namespace eDostava_API.Models
             this.Slika = ms.ToArray();
         }
         #endregion
+
         public override bool Equals(object obj)
         {
             Restorani_Result _obj = obj as Restorani_Result;

@@ -17,9 +17,9 @@ namespace eDostava_API.Controllers
 {
     [RoutePrefix("api/Restorani")]
     [Route("")]
+    [MyExceptionFilter]
     public class RestoraniController : BaseApiController
     {
-        //api/Restorani
         //api/Restorani?blok=1&grad=1&status=1
         [HttpGet]
         public List<Restorani_Result> GetAll([FromUri] int? blok = null, [FromUri] int? grad = null, [FromUri] int? status = null)
@@ -30,7 +30,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}
         [HttpGet]
         [Route("{id}")]
-        [MyExceptionFilter]
         public IHttpActionResult GetSingle([FromUri] int id)
         {
             try
@@ -47,7 +46,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}
         [HttpDelete]
         [Route("{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> Delete([FromUri] int id)
         {
             Restorani r = await db.Restorani.FindAsync(id);
@@ -65,33 +63,30 @@ namespace eDostava_API.Controllers
 
         //api/Restorani
         [HttpPost]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostRestoran([FromBody] Restorani obj)
         {
             try
             {
+                obj.Sifra = Guid.NewGuid();
                 db.Restorani.Add(obj);
                 await db.SaveChangesAsync();
                 return Ok("Uspješno ste kreirali novi restoran!");
             }
-            catch (Exception e) // TODO: change this to EntityException when you add stored procedures (vid: RS2 8.)
+            catch (Exception e) 
             {
-                //if (e is EntityException)
-                //{
-                //    throw CreateHttpResponseException(ExceptionHandler.HandleEception(e as EntityException),
-                //        HttpStatusCode.Conflict);
-                //} else
-                //{
-                //    return BadRequest();
-                //}
-                throw new NotImplementedException();
+                if (e is EntityException)
+                {
+                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleEception(e as EntityException),
+                        HttpStatusCode.Conflict);
+                }
+
+                throw new InvalidOperationException();
             }
         }
 
         //api/restorani/{id}
         [HttpPut]
         [Route("{id}")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PutRestoran([FromUri] int id, [FromBody] Restorani obj)
         {
             Restorani r = await db.Restorani.FindAsync(id);
@@ -107,11 +102,11 @@ namespace eDostava_API.Controllers
             r.Adresa = obj.Adresa;
             r.BlokID = obj.BlokID;
 
-            r.RestoranStatusID = obj.RestoranStatusID;
-
-            //user koji je zadnji promijenio status restorana
-            r.KorisnikID = r.RestoranStatusID != obj.RestoranStatusID ?  
-                obj.KorisnikID : r.KorisnikID; 
+            if (obj.RestoranStatusID != 0 && obj.RestoranStatusID != r.RestoranStatusID)
+            {
+                r.RestoranStatusID = obj.RestoranStatusID;
+                r.KorisnikID = obj.KorisnikID;
+            }
 
             await db.SaveChangesAsync();
             return CreatedAtRoute("DefaultApi", new { controller = "Restorani", action = "GetSingle", id = obj.RestoranID }, obj);
@@ -129,7 +124,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}/recenzije
         [HttpGet]
         [Route("{id}/recenzije")]
-        [MyExceptionFilter]
         public List<Recenzije_Result> Recenzije([FromUri] int id)
         {
             return db.esp_Recenzije_SelectByRestoranOrKorisnik(id, null).ToList();
@@ -146,10 +140,9 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}/zaposlenici
         [HttpGet]
         [Route("{id}/zaposlenici")]
-        [MyExceptionFilter]
         public IHttpActionResult GetZaposlenikeRestorana([FromUri] int id)
         {
-            Thread.Sleep(250);
+            Thread.Sleep(100);
             List<Korisnik> zaposlenici = db.Korisnik
                 .Where(x => db.Zaposlenici
                     .Select(z => new { z.KorisnikID, z.RestoranID })
@@ -163,7 +156,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}/zaposlenici
         [HttpPost]
         [Route("{id}/zaposlenici")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostZaposlenikeRestorana([FromUri] int id, [FromBody] List<Korisnici_Result> objList)
         {
             Restorani r = await db.Restorani.FindAsync(id);
@@ -181,7 +173,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}/vlasnici
         [HttpGet]
         [Route("{id}/vlasnici")]
-        [MyExceptionFilter]
         public IHttpActionResult GetVlasnikeRestorana([FromUri] int id)
         {
             List<Korisnik> vlasnici = db.Korisnik
@@ -197,7 +188,6 @@ namespace eDostava_API.Controllers
         //api/restorani/{id}/vlasnici
         [HttpPost]
         [Route("{id}/vlasnici")]
-        [MyExceptionFilter]
         public async Task<IHttpActionResult> PostVlasnikeRestorana([FromUri] int id, [FromBody] List<Korisnici_Result> objList)
         {
             Restorani r = await db.Restorani.FindAsync(id);

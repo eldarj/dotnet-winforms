@@ -59,7 +59,7 @@
             this.btnDodajSliku = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.lblTrenutniStatus = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
+            this.lblCmbStatusi = new System.Windows.Forms.Label();
             this.cmbStatusi = new System.Windows.Forms.ComboBox();
             this.lblVecDodanZaposlenik = new System.Windows.Forms.Label();
             this.cmbZaposlenici = new System.Windows.Forms.ComboBox();
@@ -70,7 +70,7 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.btnDodajZaposlenika = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
+            this.lblEditVlasnici = new System.Windows.Forms.Label();
             this.lblVecDodanVlasnik = new System.Windows.Forms.Label();
             this.btnDodajVlasnika = new System.Windows.Forms.Button();
             this.cmbVlasnici = new System.Windows.Forms.ComboBox();
@@ -78,11 +78,13 @@
             this.listBoxVlasnici = new System.Windows.Forms.ListBox();
             this.btnSacuvaj = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pnlEditVlasnici = new System.Windows.Forms.Panel();
             this.imgLoader = new System.Windows.Forms.PictureBox();
             this.fileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSlika)).BeginInit();
             this.panel1.SuspendLayout();
+            this.pnlEditVlasnici.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).BeginInit();
             this.SuspendLayout();
             // 
@@ -201,7 +203,7 @@
             this.lblDivider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblDivider.Location = new System.Drawing.Point(-7, 33);
             this.lblDivider.Name = "lblDivider";
-            this.lblDivider.Size = new System.Drawing.Size(725, 2);
+            this.lblDivider.Size = new System.Drawing.Size(757, 2);
             this.lblDivider.TabIndex = 35;
             // 
             // txtMaskMinCijena
@@ -214,9 +216,8 @@
             // 
             // pictureBoxSlika
             // 
-            this.pictureBoxSlika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxSlika.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
-            this.pictureBoxSlika.Location = new System.Drawing.Point(455, 74);
+            this.pictureBoxSlika.Location = new System.Drawing.Point(469, 74);
             this.pictureBoxSlika.Name = "pictureBoxSlika";
             this.pictureBoxSlika.Size = new System.Drawing.Size(220, 220);
             this.pictureBoxSlika.TabIndex = 81;
@@ -232,8 +233,7 @@
             // 
             // txtSlikaName
             // 
-            this.txtSlikaName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSlikaName.Location = new System.Drawing.Point(452, 46);
+            this.txtSlikaName.Location = new System.Drawing.Point(466, 46);
             this.txtSlikaName.Name = "txtSlikaName";
             this.txtSlikaName.ReadOnly = true;
             this.txtSlikaName.Size = new System.Drawing.Size(187, 22);
@@ -251,8 +251,7 @@
             // 
             // label13
             // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.Location = new System.Drawing.Point(384, 49);
+            this.label13.Location = new System.Drawing.Point(398, 49);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 17);
             this.label13.TabIndex = 80;
@@ -301,7 +300,7 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Location = new System.Drawing.Point(-7, 360);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(725, 2);
+            this.label3.Size = new System.Drawing.Size(757, 2);
             this.label3.TabIndex = 87;
             // 
             // label5
@@ -316,10 +315,9 @@
             // 
             // btnDodajSliku
             // 
-            this.btnDodajSliku.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDodajSliku.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnDodajSliku.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDodajSliku.Location = new System.Drawing.Point(645, 45);
+            this.btnDodajSliku.Location = new System.Drawing.Point(659, 45);
             this.btnDodajSliku.Name = "btnDodajSliku";
             this.btnDodajSliku.Size = new System.Drawing.Size(30, 23);
             this.btnDodajSliku.TabIndex = 75;
@@ -329,10 +327,9 @@
             // 
             // label14
             // 
-            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(415, 336);
+            this.label14.Location = new System.Drawing.Point(429, 336);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 17);
             this.label14.TabIndex = 88;
@@ -340,34 +337,33 @@
             // 
             // lblTrenutniStatus
             // 
-            this.lblTrenutniStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTrenutniStatus.AutoSize = true;
-            this.lblTrenutniStatus.Location = new System.Drawing.Point(415, 380);
+            this.lblTrenutniStatus.Location = new System.Drawing.Point(429, 380);
             this.lblTrenutniStatus.Name = "lblTrenutniStatus";
-            this.lblTrenutniStatus.Size = new System.Drawing.Size(116, 17);
+            this.lblTrenutniStatus.Size = new System.Drawing.Size(182, 17);
             this.lblTrenutniStatus.TabIndex = 89;
-            this.lblTrenutniStatus.Text = "Trenutni status: -";
+            this.lblTrenutniStatus.Text = "Trenutni status: Na čekanju";
             // 
-            // label16
+            // lblCmbStatusi
             // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(415, 411);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(108, 17);
-            this.label16.TabIndex = 90;
-            this.label16.Text = "Promijeni status";
+            this.lblCmbStatusi.AutoSize = true;
+            this.lblCmbStatusi.Location = new System.Drawing.Point(429, 411);
+            this.lblCmbStatusi.Name = "lblCmbStatusi";
+            this.lblCmbStatusi.Size = new System.Drawing.Size(108, 17);
+            this.lblCmbStatusi.TabIndex = 90;
+            this.lblCmbStatusi.Text = "Promijeni status";
+            this.lblCmbStatusi.Visible = false;
             // 
             // cmbStatusi
             // 
-            this.cmbStatusi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbStatusi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStatusi.Enabled = false;
             this.cmbStatusi.FormattingEnabled = true;
-            this.cmbStatusi.Location = new System.Drawing.Point(529, 408);
+            this.cmbStatusi.Location = new System.Drawing.Point(543, 408);
             this.cmbStatusi.Name = "cmbStatusi";
             this.cmbStatusi.Size = new System.Drawing.Size(146, 24);
             this.cmbStatusi.TabIndex = 91;
+            this.cmbStatusi.Visible = false;
             // 
             // lblVecDodanZaposlenik
             // 
@@ -414,7 +410,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(415, 470);
+            this.label18.Location = new System.Drawing.Point(290, 470);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(56, 17);
             this.label18.TabIndex = 100;
@@ -427,7 +423,7 @@
             this.label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label19.Location = new System.Drawing.Point(-7, 494);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(725, 2);
+            this.label19.Size = new System.Drawing.Size(757, 2);
             this.label19.TabIndex = 99;
             // 
             // label20
@@ -459,22 +455,20 @@
             this.btnDodajZaposlenika.UseVisualStyleBackColor = true;
             this.btnDodajZaposlenika.Click += new System.EventHandler(this.btnDodajZaposlenika_Click);
             // 
-            // label21
+            // lblEditVlasnici
             // 
-            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label21.Location = new System.Drawing.Point(403, 508);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(165, 17);
-            this.label21.TabIndex = 106;
-            this.label21.Text = "Vlasnici restorana";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblEditVlasnici.Location = new System.Drawing.Point(443, 505);
+            this.lblEditVlasnici.Name = "lblEditVlasnici";
+            this.lblEditVlasnici.Size = new System.Drawing.Size(186, 17);
+            this.lblEditVlasnici.TabIndex = 106;
+            this.lblEditVlasnici.Text = "Vlasnici restorana";
             // 
             // lblVecDodanVlasnik
             // 
             this.lblVecDodanVlasnik.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblVecDodanVlasnik.AutoSize = true;
             this.lblVecDodanVlasnik.BackColor = System.Drawing.SystemColors.Info;
-            this.lblVecDodanVlasnik.Location = new System.Drawing.Point(624, 774);
+            this.lblVecDodanVlasnik.Location = new System.Drawing.Point(192, 247);
             this.lblVecDodanVlasnik.Name = "lblVecDodanVlasnik";
             this.lblVecDodanVlasnik.Size = new System.Drawing.Size(51, 17);
             this.lblVecDodanVlasnik.TabIndex = 105;
@@ -484,7 +478,7 @@
             // btnDodajVlasnika
             // 
             this.btnDodajVlasnika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDodajVlasnika.Location = new System.Drawing.Point(594, 746);
+            this.btnDodajVlasnika.Location = new System.Drawing.Point(162, 219);
             this.btnDodajVlasnika.Name = "btnDodajVlasnika";
             this.btnDodajVlasnika.Size = new System.Drawing.Size(81, 23);
             this.btnDodajVlasnika.TabIndex = 104;
@@ -498,20 +492,20 @@
             this.cmbVlasnici.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVlasnici.Enabled = false;
             this.cmbVlasnici.FormattingEnabled = true;
-            this.cmbVlasnici.Location = new System.Drawing.Point(506, 716);
+            this.cmbVlasnici.Location = new System.Drawing.Point(74, 189);
             this.cmbVlasnici.Name = "cmbVlasnici";
             this.cmbVlasnici.Size = new System.Drawing.Size(169, 24);
             this.cmbVlasnici.TabIndex = 103;
             // 
             // btnUkloniVlasnika
             // 
-            this.btnUkloniVlasnika.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUkloniVlasnika.Location = new System.Drawing.Point(600, 505);
+            this.btnUkloniVlasnika.Location = new System.Drawing.Point(635, 502);
             this.btnUkloniVlasnika.Name = "btnUkloniVlasnika";
             this.btnUkloniVlasnika.Size = new System.Drawing.Size(75, 23);
             this.btnUkloniVlasnika.TabIndex = 102;
             this.btnUkloniVlasnika.Text = "Ukloni";
             this.btnUkloniVlasnika.UseVisualStyleBackColor = true;
+            this.btnUkloniVlasnika.Visible = false;
             this.btnUkloniVlasnika.Click += new System.EventHandler(this.btnUkloniVlasnika_Click);
             // 
             // listBoxVlasnici
@@ -519,15 +513,14 @@
             this.listBoxVlasnici.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxVlasnici.FormattingEnabled = true;
             this.listBoxVlasnici.ItemHeight = 16;
-            this.listBoxVlasnici.Location = new System.Drawing.Point(449, 530);
+            this.listBoxVlasnici.Location = new System.Drawing.Point(17, 3);
             this.listBoxVlasnici.Name = "listBoxVlasnici";
             this.listBoxVlasnici.Size = new System.Drawing.Size(226, 180);
             this.listBoxVlasnici.TabIndex = 101;
             // 
             // btnSacuvaj
             // 
-            this.btnSacuvaj.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSacuvaj.Location = new System.Drawing.Point(594, 817);
+            this.btnSacuvaj.Location = new System.Drawing.Point(629, 817);
             this.btnSacuvaj.Name = "btnSacuvaj";
             this.btnSacuvaj.Size = new System.Drawing.Size(81, 23);
             this.btnSacuvaj.TabIndex = 107;
@@ -541,21 +534,18 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.pnlEditVlasnici);
+            this.panel1.Controls.Add(this.btnUkloniVlasnika);
             this.panel1.Controls.Add(this.imgLoader);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnSacuvaj);
+            this.panel1.Controls.Add(this.lblEditVlasnici);
             this.panel1.Controls.Add(this.txtNaziv);
-            this.panel1.Controls.Add(this.label21);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.lblVecDodanVlasnik);
             this.panel1.Controls.Add(this.txtOpis);
-            this.panel1.Controls.Add(this.btnDodajVlasnika);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.cmbVlasnici);
             this.panel1.Controls.Add(this.txtEmail);
-            this.panel1.Controls.Add(this.btnUkloniVlasnika);
             this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.listBoxVlasnici);
             this.panel1.Controls.Add(this.txtWebUrl);
             this.panel1.Controls.Add(this.label18);
             this.panel1.Controls.Add(this.label9);
@@ -576,7 +566,7 @@
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.cmbStatusi);
             this.panel1.Controls.Add(this.btnDodajSliku);
-            this.panel1.Controls.Add(this.label16);
+            this.panel1.Controls.Add(this.lblCmbStatusi);
             this.panel1.Controls.Add(this.lblTrenutniStatus);
             this.panel1.Controls.Add(this.txtSlikaName);
             this.panel1.Controls.Add(this.label14);
@@ -592,6 +582,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(765, 678);
             this.panel1.TabIndex = 108;
+            // 
+            // pnlEditVlasnici
+            // 
+            this.pnlEditVlasnici.Controls.Add(this.listBoxVlasnici);
+            this.pnlEditVlasnici.Controls.Add(this.cmbVlasnici);
+            this.pnlEditVlasnici.Controls.Add(this.btnDodajVlasnika);
+            this.pnlEditVlasnici.Controls.Add(this.lblVecDodanVlasnik);
+            this.pnlEditVlasnici.Location = new System.Drawing.Point(470, 527);
+            this.pnlEditVlasnici.Name = "pnlEditVlasnici";
+            this.pnlEditVlasnici.Size = new System.Drawing.Size(246, 264);
+            this.pnlEditVlasnici.TabIndex = 109;
+            this.pnlEditVlasnici.Visible = false;
             // 
             // imgLoader
             // 
@@ -623,6 +625,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSlika)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.pnlEditVlasnici.ResumeLayout(false);
+            this.pnlEditVlasnici.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).EndInit();
             this.ResumeLayout(false);
 
@@ -660,7 +664,7 @@
         private System.Windows.Forms.Label lblTrenutniStatus;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cmbStatusi;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lblCmbStatusi;
         private System.Windows.Forms.Label lblVecDodanZaposlenik;
         private System.Windows.Forms.ComboBox cmbZaposlenici;
         private System.Windows.Forms.Button btnUkloniZaposlenika;
@@ -669,7 +673,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label lblEditVlasnici;
         private System.Windows.Forms.Label lblVecDodanVlasnik;
         private System.Windows.Forms.Button btnDodajVlasnika;
         private System.Windows.Forms.ComboBox cmbVlasnici;
@@ -680,5 +684,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox imgLoader;
         private System.Windows.Forms.OpenFileDialog fileDialog;
+        private System.Windows.Forms.Panel pnlEditVlasnici;
     }
 }

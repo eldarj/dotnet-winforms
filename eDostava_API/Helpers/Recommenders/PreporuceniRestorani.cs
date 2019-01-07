@@ -61,7 +61,7 @@ namespace eDostava_API.Helpers.Recommenders
             }
             catch (Exception e)
             {
-                // dbg
+                // dbg trace
             }
 
             return Preporuceni;

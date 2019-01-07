@@ -84,23 +84,25 @@ namespace eRestoraniUI.NarudzbeForms
         {
             if (statusChanged)
             {
-
                 narudzba.NarudzbaStatusID = ((NarudzbeStatusi_Result)cmbStatus.SelectedItem).NarudzbaStatusID;
                 // narudzba.StatusPromijenioZaposlenikID = Global.PrijavljeniKorisnik.KorisnikID;
 
                 HttpResponseMessage response = servisNarudzbe.PutResponse(narudzba.NarudzbaID, narudzba);
                 if (response.IsSuccessStatusCode)
                 {
-                    MessageBox.Show(ValidationMessages.uspjesno_napravljene_izmjene_body,
-                        ValidationMessages.uspjesno_napravljene_izmjene_title);
+                    MessageBox.Show(Messages.uspjesno_napravljene_izmjene_body,
+                        Messages.uspjeh_save_title);
 
                     DialogResult = DialogResult.OK;
                     Close();
                 } else
                 {
-                    MessageBox.Show(ValidationMessages.GreskaPokusajPonovo,
-                        ValidationMessages.greska_msg_title);
+                    MessageBox.Show(Messages.greska_msg_pokusaj_ponovo,
+                        Messages.greska_msg_title);
                 }
+            } else
+            {
+                this.Close();
             }
         }
 

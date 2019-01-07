@@ -34,8 +34,17 @@ namespace eRestoraniUI
         }
 
         #region Binders
-        private async void RestoraniList_Load(object sender, EventArgs e)
+        private void RestoraniList_Load(object sender, EventArgs e)
         {
+            // Check user rights
+            if (UserAccessControlHelper.AdminRights || UserAccessControlHelper.VlasnikRights)
+            {
+                noviRestoranToolStripMenuItem.Visible = true;
+                btnUredi.Visible = true;
+                btnIzbrisi.Visible = true;
+            }
+
+            // Bind data
             LoadData();
             BindStatusiCmb();
         }
@@ -60,7 +69,7 @@ namespace eRestoraniUI
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
 
-            restorani = await Global.GetKorisnikRestorani();
+            restorani = await Global.LoadApiKorisnikRestorani();
             if (restorani != null)
             {
                 dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(restorani);
@@ -74,6 +83,8 @@ namespace eRestoraniUI
                 btnIzbrisi.Enabled = true;
                 btnUredi.Enabled = true;
                 btnVise.Enabled = true;
+
+                lblUkupno.Text = String.Format(Messages.ukupno_type_number, "restorana", dgvBindingList.Count);
 
                 if (recheckPretraga)
                     pretragaByString();
@@ -104,7 +115,7 @@ namespace eRestoraniUI
             dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(filtered);
             dgvBindingSource.DataSource = dgvBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "restorana", dgvBindingList.Count);
             pretragaByString();
 
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
@@ -134,8 +145,8 @@ namespace eRestoraniUI
             var r = (Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem;
             if (r != null)
             {
-                var potvrdi = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, "restoran " + r.Naziv),
-                    String.Format(ValidationMessages.izbrisi_stavku_potvrda_title, "restoran"),
+                var potvrdi = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, "restoran " + r.Naziv),
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "restoran"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrdi == DialogResult.Yes)
@@ -143,19 +154,19 @@ namespace eRestoraniUI
                     HttpResponseMessage response = await servis.DeleteResponse(r.RestoranID);
                     if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show(String.Format(ValidationMessages.uspjesno_izbrisan_obj, "restoran " + r.Naziv,
-                            ValidationMessages.uspjesno_izbrisan_title));
+                        MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "restoran " + r.Naziv,
+                            Messages.uspjeh_delete_title));
                         LoadData(recheckPretraga: true);
                     }
                     else
                     {
-                        MessageBox.Show(ValidationMessages.GreskaPokusajPonovo);
+                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
                     }
                 }
             }
             else
             {
-                MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "restoran");
+                MessageBox.Show(Messages.morate_odabrati_msg_obj, "restoran");
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
@@ -171,8 +182,8 @@ namespace eRestoraniUI
             }
             else
             {
-                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "restoran"),
-                    ValidationMessages.morate_prvo_izabrati_title,
+                MessageBox.Show(String.Format(Messages.morate_odabrati_msg_obj, "restoran"),
+                    Messages.morate_odabrati_title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -193,8 +204,8 @@ namespace eRestoraniUI
             }
             else
             {
-                MessageBox.Show(String.Format(ValidationMessages.morate_prvo_izaberite_obj, "restoran"),
-                    ValidationMessages.morate_prvo_izabrati_title,
+                MessageBox.Show(String.Format(Messages.morate_odabrati_msg_obj, "restoran"),
+                    Messages.morate_odabrati_title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
@@ -211,7 +222,7 @@ namespace eRestoraniUI
             dgvBindingList = new BindingList<Restorani_Result>(temp);
             dgvBindingSource.DataSource = dgvBindingList;
 
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
+            lblUkupno.Text = String.Format(Messages.ukupno_type_number, "restorana", dgvBindingList.Count);
         }
     }
 }
