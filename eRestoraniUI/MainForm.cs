@@ -25,6 +25,8 @@ namespace eRestoraniUI
         private static NarudzbeList narudzbeForm;
         #pragma warning restore 0649
 
+        private List<Narudzbe_Result> narudzbeNaCekanju = new List<Narudzbe_Result>();
+
         public MainForm()
         {
             InitializeComponent();
@@ -36,10 +38,17 @@ namespace eRestoraniUI
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
-            HttpResponseMessage response = await new WebApiHelper("narudzbe").GetResponse(new Dictionary<string, int> { { "status", 1 } });
-            if (response.IsSuccessStatusCode)
+            if (UserAccessControlHelper.HasVlasnikAccess || UserAccessControlHelper.HasZaposlenikAcess)
             {
-                List<Narudzbe_Result> narudzbeNaCekanju = response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result;
+                List<Restorani> restorani = await Global.GetKorisnikRestorani();
+                foreach (var r in restorani)
+                {
+                    HttpResponseMessage response = await new WebApiHelper("narudzbe")
+                        .GetResponse(new Dictionary<string, int> { { "restoran", r.RestoranID }, { "status", 1 } });
+                    if (response.IsSuccessStatusCode)
+                        narudzbeNaCekanju.AddRange(response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result);
+                }
+
                 int brn = narudzbeNaCekanju.Count;
                 if (brn > 0)
                 {
