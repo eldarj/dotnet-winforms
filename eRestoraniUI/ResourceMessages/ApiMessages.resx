@@ -117,103 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="email_format_error" xml:space="preserve">
-    <value>Email je u pogrešnom formatu</value>
+  <data name="delexc_503" xml:space="preserve">
+    <value>Prije promjene provjerite podatke koji ovise o ovoj!</value>
   </data>
-  <data name="email_required_error" xml:space="preserve">
-    <value>Polje Email ne smije biti prazno</value>
+  <data name="sqlexception_547" xml:space="preserve">
+    <value>Pokušajte prvo izbrisati zapise koji ovise o ovom!</value>
   </data>
-  <data name="naziv_obavezno_polje" xml:space="preserve">
-    <value>Polje Naziv ne smije biti prazno</value>
+  <data name="sqlexception_547_blok" xml:space="preserve">
+    <value>Nemoguće izbrisati blok jer postoje restorani s istim!</value>
   </data>
-  <data name="greska_msg_obj_body" xml:space="preserve">
-    <value>Došlo je do greške, molimo pokušajte ponovo ili izaberite postojeći {0}.</value>
+  <data name="sqlexception_547_grad" xml:space="preserve">
+    <value>Morate prvo izbrisati sve blokove koji pripadaju ovom gradu!</value>
   </data>
-  <data name="greska_msg_pokusaj_ponovo" xml:space="preserve">
-    <value>Došlo je do greške, pokušajte ponovo.</value>
-  </data>
-  <data name="greska_msg_title" xml:space="preserve">
-    <value>Greška</value>
-  </data>
-  <data name="ukupno_type_number" xml:space="preserve">
-    <value>Ukupno {0}: {1}</value>
-  </data>
-  <data name="izbrisi_obj_potvrda" xml:space="preserve">
-    <value>Jeste li sigurni da želite izbrisati {0}?</value>
-  </data>
-  <data name="izbrisi_obj_potvrda_title" xml:space="preserve">
-    <value>Izbriši {0}</value>
-  </data>
-  <data name="login_user_invalid_credentials" xml:space="preserve">
-    <value>Unijeli ste pogrešno korisničko ime ili lozinku</value>
-  </data>
-  <data name="login_user_invalid_length" xml:space="preserve">
-    <value>Polje username ili password ne smiju biti kraći od 4 karaktera!</value>
-  </data>
-  <data name="morate_odabrati_msg_obj" xml:space="preserve">
-    <value>Morate odabrati {0}!</value>
-  </data>
-  <data name="morate_odabrati_title" xml:space="preserve">
-    <value>Odaberite zapis</value>
-  </data>
-  <data name="narudzbe_narucioca" xml:space="preserve">
-    <value>Narudžbe naručioca: {0}</value>
-  </data>
-  <data name="narudzbe_restorana" xml:space="preserve">
-    <value>Narudžbe restorana: {0}</value>
-  </data>
-  <data name="obj_ne_postoji_kreiraj_novi_msg" xml:space="preserve">
-    <value>Uneseni {0} ne postoji u bazi podataka, želite kreirati novi pod nazivom "{1}"?</value>
-  </data>
-  <data name="obj_ne_postoji_kreiraj_novi_title" xml:space="preserve">
-    <value>Novi tip {0}</value>
-  </data>
-  <data name="polje_type_error" xml:space="preserve">
-    <value>Polje {0} smije sadržati samo {1}!</value>
-  </data>
-  <data name="polje_type_length_error" xml:space="preserve">
-    <value>Polje {0} smije sadržati samo {1} i ne smije biti kraće od {2}, ili duže od {3} karaktera!</value>
-  </data>
-  <data name="trenutni_status_restoran" xml:space="preserve">
-    <value>Trenutni status restorana {0}</value>
-  </data>
-  <data name="trenutni_status" xml:space="preserve">
-    <value>Trenutni status: {0}</value>
-  </data>
-  <data name="ukupno_general" xml:space="preserve">
-    <value>Ukupno {0}</value>
-  </data>
-  <data name="ukupno_sta_koliko" xml:space="preserve">
-    <value>Ukupno {0}: {1}</value>
-  </data>
-  <data name="uloge_izmjene_napomene_def_restoran" xml:space="preserve">
-    <value>Za korisnika "{0}", nakon prebacivanja u grupu "{1}", moraćete definisati restoran!</value>
-  </data>
-  <data name="uloge_izmjene_pregled" xml:space="preserve">
-    <value>Korisnik "{0}" prebačen u ulogu/grupu "{1}"</value>
-  </data>
-  <data name="uredi_restoran_obj" xml:space="preserve">
-    <value>Uredi restoran - {0}</value>
-  </data>
-  <data name="uspjeh_title" xml:space="preserve">
-    <value>Uspjeh</value>
-  </data>
-  <data name="uspjeh_delete_obj" xml:space="preserve">
-    <value>Uspješno ste izbrisali {0}!</value>
-  </data>
-  <data name="uspjeh_delete_title" xml:space="preserve">
-    <value>Zapis izbrisan</value>
-  </data>
-  <data name="uspjeh_save_obj" xml:space="preserve">
-    <value>Uspješno ste snimili {0}!</value>
-  </data>
-  <data name="uspjesno_napravljene_izmjene_body" xml:space="preserve">
-    <value>Uspješno ste sačuvali izmjene!</value>
-  </data>
-  <data name="uspjeh_save_title" xml:space="preserve">
-    <value>Uspjeh</value>
-  </data>
-  <data name="slika_out_of_mem" xml:space="preserve">
-    <value>Slika je prevelika za upload, molimo izaberite neku manju!</value>
+  <data name="sqlexception_547_restoran" xml:space="preserve">
+    <value>Nemoguće izbrisati restoran jer postoje korisnički računi i drugi podaci koji ovise o njemu!</value>
   </data>
 </root>

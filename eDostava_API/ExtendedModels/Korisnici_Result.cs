@@ -8,6 +8,8 @@ namespace eDostava_API.Models
 {
     public partial class Korisnici_Result
     {
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
         public string AdresaFull { get; set; }
 
         public override bool Equals(object obj)

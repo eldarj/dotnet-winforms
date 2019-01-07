@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eRestoraniUI.ResourceMessages;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -92,6 +93,11 @@ namespace eRestoraniUI.Utils
         #region Messages
         public static void MessageOnApiError(string msg)
         {
+            if (!String.IsNullOrEmpty(ApiMessages.ResourceManager.GetString(msg)))
+                msg = ApiMessages.ResourceManager.GetString(msg);
+            else
+                msg = Messages.greska_msg_pokusaj_ponovo;
+
             MessageBox.Show(msg, ResourceMessages.Messages.greska_msg_title,
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Error);

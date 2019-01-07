@@ -190,10 +190,10 @@ namespace eRestoraniUI.HranaUI
                     int croppedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageWidth"]);
                     int croppedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["croppedImageHeight"]);
 
-                    int xPosition = (hranaStavka.GetSlikaImage().Width - croppedImageWidth) / 2;
-                    int yPosition = (hranaStavka.GetSlikaImage().Height - croppedImageHeight) / 2;
+                    int xPosition = (mainImage.Width - croppedImageWidth) / 2;
+                    int yPosition = (mainImage.Height - croppedImageHeight) / 2;
 
-                    croppedImage = UIHelper.CropImage(hranaStavka.GetSlikaImage(),
+                    croppedImage = UIHelper.CropImage(mainImage,
                         new Rectangle(xPosition, yPosition, croppedImageWidth, croppedImageHeight));
                 }
 
@@ -214,7 +214,14 @@ namespace eRestoraniUI.HranaUI
                 checkCropImage.Enabled = false; // po defaultu isključi crop opciju (kasnije ćemo uključiti ako je moguće uraditi crop)
                 lblCropDisabled.Visible = true;
 
-                mainImage = Image.FromFile(fileDialog.FileName);
+                try
+                {
+                    mainImage = Image.FromFile(fileDialog.FileName);
+                } catch(OutOfMemoryException memex) {
+                    MessageBox.Show(Messages.slika_out_of_mem, Messages.greska_msg_title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 croppedImage = null;
 
                 int resizedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImageWidth"]);
@@ -347,7 +354,7 @@ namespace eRestoraniUI.HranaUI
         private void cmbTipoviKuhinje_Validating(object sender, CancelEventArgs e)
         {
             string error = "Tip kuhinje ne postoji!";
-            if (!Regex.IsMatch(cmbTipoviKuhinje.Text, @"^(?=.*[a-zA-Z])[a-zA-Z\ ]{4,20}$"))
+            if (!Regex.IsMatch(cmbTipoviKuhinje.Text, @"^[\p{L}\ ]{4,20}$"))
             {
                 error = String.Format(Messages.polje_type_length_error,
                     "tip kuhinje", "slova", 4, 20);
@@ -376,7 +383,6 @@ namespace eRestoraniUI.HranaUI
                         cmbTipoviKuhinje.SelectedItem = novitip;
 
                         formErrorProvider.SetError(cmbTipoviKuhinje, "");
-
                         return;
                     }
                     else

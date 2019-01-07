@@ -24,7 +24,20 @@ namespace eDostava_API.Helpers
             return new HttpResponseException(m);
         }
 
-        public static string HandleEception(EntityException e)
+        public static string HandleException(SqlException e, string additional = null)
+        {
+            switch (e.Number)
+            {
+                case 547:
+                    return additional != null ? 
+                        "sqlexception_" + e.Number + "_" + additional :
+                        "sqlexception_" + e.Number;
+                default:
+                    return e.Message + " (" + e.Number + ")";
+            }
+        }
+
+        public static string HandleException(EntityException e)
         {
             SqlException error = e.InnerException as SqlException;
 
@@ -55,5 +68,6 @@ namespace eDostava_API.Helpers
 
             return newMessage;
         }
+
     }
 }

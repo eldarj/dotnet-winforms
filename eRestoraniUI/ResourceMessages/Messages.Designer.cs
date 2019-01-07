@@ -223,6 +223,15 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slika je prevelika za upload, molimo izaberite neku manju!.
+        /// </summary>
+        internal static string slika_out_of_mem {
+            get {
+                return ResourceManager.GetString("slika_out_of_mem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trenutni status: {0}.
         /// </summary>
         internal static string trenutni_status {

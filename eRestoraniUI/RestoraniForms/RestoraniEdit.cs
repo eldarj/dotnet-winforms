@@ -271,8 +271,6 @@ namespace eRestoraniUI.RestoraniUI
             {
                 var resp = responseStatuses.Where(s => !s.IsSuccessStatusCode).FirstOrDefault();
                 string msg = resp.ReasonPhrase;
-                if (!String.IsNullOrEmpty(Messages.ResourceManager.GetString(msg)))
-                    msg = Messages.ResourceManager.GetString(msg);
 
                 UIHelper.MessageOnApiError(msg);
             } else

@@ -117,7 +117,7 @@ namespace eRestoraniUI.LokacijeForms
                     }
                     else
                     {
-                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
+                        UIHelper.MessageOnApiError(response.ReasonPhrase);
                     }
                 }
             } else

@@ -12,6 +12,8 @@ using eDostava_API.Helpers;
 using System.Threading.Tasks;
 using System.Threading;
 using eDostava_API.Helpers.Recommenders;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 
 namespace eDostava_API.Controllers
 {
@@ -57,6 +59,12 @@ namespace eDostava_API.Controllers
             }
             catch (Exception e)
             {
+                if (e is DbUpdateException)
+                {
+                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleException(e.GetBaseException() as SqlException, "restoran"),
+                        HttpStatusCode.Conflict);
+                }
+
                 throw new InvalidOperationException();
             }
         }
@@ -76,7 +84,7 @@ namespace eDostava_API.Controllers
             {
                 if (e is EntityException)
                 {
-                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleEception(e as EntityException),
+                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleException(e as EntityException),
                         HttpStatusCode.Conflict);
                 }
 

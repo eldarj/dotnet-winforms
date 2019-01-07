@@ -133,7 +133,7 @@ namespace eRestoraniUI.LokacijeForms
             if (grad != null)
             {
                 var potvrda = MessageBox.Show(String.Format(Messages.izbrisi_obj_potvrda, grad.Naziv),
-                    Messages.izbrisi_obj_potvrda_title,
+                    String.Format(Messages.izbrisi_obj_potvrda_title, "grad"),
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
                 if (potvrda == DialogResult.Yes)
@@ -147,7 +147,7 @@ namespace eRestoraniUI.LokacijeForms
                         BindGradoviGrid(recheckPretraga: true);
                     } else
                     {
-                        MessageBox.Show(Messages.greska_msg_pokusaj_ponovo);
+                        UIHelper.MessageOnApiError(response.ReasonPhrase);
                     }
                 }
             } else

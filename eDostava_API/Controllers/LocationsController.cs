@@ -2,7 +2,11 @@
 using eDostava_API.Helpers.BaseClasses;
 using eDostava_API.Models;
 using System;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -114,8 +118,14 @@ namespace eDostava_API.Controllers
 
                 return Ok("Uspješno ste izbrisali blok!");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                if (ex is DbUpdateException)
+                {
+                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleException(ex.GetBaseException() as SqlException, "blok"),
+                        HttpStatusCode.Conflict);
+                }
+
                 throw new InvalidOperationException();
             }
         }
@@ -215,14 +225,25 @@ namespace eDostava_API.Controllers
         public async Task<IHttpActionResult> DeleteGrad([FromUri] int id)
         {
             Gradovi g = await db.Gradovi.FindAsync(id);
-            if (g != null)
+            if (g == null)
+                return BadRequest("Grad ne postoji u bazi podataka!");
+
+            try
             {
                 db.Gradovi.Remove(g);
                 await db.SaveChangesAsync();
-
-                return Ok("Uspješno ste izbrisali grad!");
             }
-            return BadRequest("Grad ne postoji u bazi podataka!");
+            catch (Exception ex)
+            {
+                if (ex is DbUpdateException)
+                {
+                    throw ExceptionHandler.CreateHttpResponseException(ExceptionHandler.HandleException(ex.GetBaseException() as SqlException, "grad"),
+                        HttpStatusCode.Conflict);
+                }
+
+                throw new InvalidOperationException();
+            }
+            return Ok("Uspješno ste izbrisali grad!");
         }
         #endregion
 
