@@ -130,6 +130,7 @@ namespace eRestoraniUI.NarudzbeForms
 
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
+            if (dgvNarudzbe.CurrentRow == null) return;
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
             Narudzbe_Result obj = (Narudzbe_Result)dgvNarudzbe.CurrentRow.DataBoundItem;
             if (obj != null)

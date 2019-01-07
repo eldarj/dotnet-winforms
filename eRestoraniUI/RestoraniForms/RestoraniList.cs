@@ -115,6 +115,7 @@ namespace eRestoraniUI
         }
         private void btnUrediRestoran_Click(object sender, EventArgs e)
         {
+            if (dgvRestorani.CurrentRow == null) return;
             RestoraniEdit f = new RestoraniEdit((Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem);
             if (f.ShowDialog() == DialogResult.OK)
                 LoadData(true);
@@ -128,8 +129,8 @@ namespace eRestoraniUI
 
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
+            if (dgvRestorani.CurrentRow == null) return;
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
-
             var r = (Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem;
             if (r != null)
             {
