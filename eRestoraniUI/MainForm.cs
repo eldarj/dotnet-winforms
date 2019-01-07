@@ -30,10 +30,8 @@ namespace eRestoraniUI
             InitializeComponent();
             Global.Mdi = this;
 
-            //restoraniToolStripMenuItem_Click(null, null); // na init pokaži formu restorana
-
+            restoraniToolStripMenuItem_Click(null, null); // na init pokaži formu restorana
             this.Text = String.Format(this.Text, Global.PrijavljeniKorisnik.Username);
-            //this.Text = String.Format(this.Text, "eldarjahijagic");
         }
 
         private async void MainForm_Load(object sender, EventArgs e)

@@ -106,6 +106,15 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Polje username ili password ne smiju biti kraći od 4 karaktera!.
+        /// </summary>
+        internal static string login_user_invalid {
+            get {
+                return ResourceManager.GetString("login_user_invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Narudžbe naručioca: {0}.
         /// </summary>
         internal static string narudzbe_narucioca {

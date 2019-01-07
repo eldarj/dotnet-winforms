@@ -28,12 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKorisnickoIme = new System.Windows.Forms.TextBox();
             this.txtLozinka = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnOdustani = new System.Windows.Forms.Button();
+            this.imgLoader = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -60,6 +63,7 @@
             this.txtKorisnickoIme.Name = "txtKorisnickoIme";
             this.txtKorisnickoIme.Size = new System.Drawing.Size(233, 22);
             this.txtKorisnickoIme.TabIndex = 2;
+            this.txtKorisnickoIme.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKorisnickoIme_KeyDown);
             // 
             // txtLozinka
             // 
@@ -67,6 +71,8 @@
             this.txtLozinka.Name = "txtLozinka";
             this.txtLozinka.Size = new System.Drawing.Size(233, 22);
             this.txtLozinka.TabIndex = 3;
+            this.txtLozinka.TextChanged += new System.EventHandler(this.txtLozinka_TextChanged);
+            this.txtLozinka.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtLozinka_KeyDown);
             // 
             // btnLogin
             // 
@@ -88,12 +94,24 @@
             this.btnOdustani.UseVisualStyleBackColor = true;
             this.btnOdustani.Click += new System.EventHandler(this.btnOdustani_Click);
             // 
+            // imgLoader
+            // 
+            this.imgLoader.Image = ((System.Drawing.Image)(resources.GetObject("imgLoader.Image")));
+            this.imgLoader.Location = new System.Drawing.Point(161, 82);
+            this.imgLoader.Name = "imgLoader";
+            this.imgLoader.Size = new System.Drawing.Size(31, 30);
+            this.imgLoader.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgLoader.TabIndex = 79;
+            this.imgLoader.TabStop = false;
+            this.imgLoader.Visible = false;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(238)))), ((int)(((byte)(242)))));
             this.ClientSize = new System.Drawing.Size(379, 133);
+            this.Controls.Add(this.imgLoader);
             this.Controls.Add(this.btnOdustani);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtLozinka);
@@ -107,6 +125,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            ((System.ComponentModel.ISupportInitialize)(this.imgLoader)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,5 +139,6 @@
         private System.Windows.Forms.TextBox txtLozinka;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnOdustani;
+        private System.Windows.Forms.PictureBox imgLoader;
     }
 }

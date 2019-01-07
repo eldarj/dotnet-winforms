@@ -347,7 +347,7 @@ namespace eRestoraniUI.HranaUI
                     else
                     {
                         MessageBox.Show(String.Format(ValidationMessages.GreskaKreiranObj, "tip kuhinje"), 
-                            ValidationMessages.GreskaKreiranTitle, 
+                            ValidationMessages.greska_msg_title, 
                             MessageBoxButtons.OK);
                     }
                 }

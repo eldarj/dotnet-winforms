@@ -99,7 +99,7 @@ namespace eRestoraniUI.NarudzbeForms
                 } else
                 {
                     MessageBox.Show(ValidationMessages.GreskaPokusajPonovo,
-                        ValidationMessages.GreskaKreiranTitle);
+                        ValidationMessages.greska_msg_title);
                 }
             }
         }

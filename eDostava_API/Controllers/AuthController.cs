@@ -40,7 +40,8 @@ namespace eDostava_API.Controllers
             {
                 return BadRequest("Pogrešan username ili password");
             }
-            return Ok(Korisnici_Result.GetKorisnikResultInstance(user));
+            Korisnici_Result r = Korisnici_Result.GetKorisnikResultInstance(user);
+            return Ok(r);
         }
 
         // api/auth/register

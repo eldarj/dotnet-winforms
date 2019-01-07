@@ -120,7 +120,7 @@
   <data name="GreskaKreiranObj" xml:space="preserve">
     <value>Došlo je do greške, molimo pokušajte ponovo ili izaberite postojeći {0}.</value>
   </data>
-  <data name="GreskaKreiranTitle" xml:space="preserve">
+  <data name="greska_msg_title" xml:space="preserve">
     <value>Greška</value>
   </data>
   <data name="GreskaPokusajPonovo" xml:space="preserve">

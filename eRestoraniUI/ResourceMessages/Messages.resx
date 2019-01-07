@@ -132,6 +132,9 @@
   <data name="login_user_fail" xml:space="preserve">
     <value>Unijeli ste pogrešno korisničko ime ili lozinku</value>
   </data>
+  <data name="login_user_invalid" xml:space="preserve">
+    <value>Polje username ili password ne smiju biti kraći od 4 karaktera!</value>
+  </data>
   <data name="narudzbe_narucioca" xml:space="preserve">
     <value>Narudžbe naručioca: {0}</value>
   </data>

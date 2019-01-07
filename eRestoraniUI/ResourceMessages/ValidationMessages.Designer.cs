@@ -61,20 +61,20 @@ namespace eRestoraniUI.ResourceMessages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Greška.
+        /// </summary>
+        internal static string greska_msg_title {
+            get {
+                return ResourceManager.GetString("greska_msg_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Došlo je do greške, molimo pokušajte ponovo ili izaberite postojeći {0}..
         /// </summary>
         internal static string GreskaKreiranObj {
             get {
                 return ResourceManager.GetString("GreskaKreiranObj", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Greška.
-        /// </summary>
-        internal static string GreskaKreiranTitle {
-            get {
-                return ResourceManager.GetString("GreskaKreiranTitle", resourceCulture);
             }
         }
         

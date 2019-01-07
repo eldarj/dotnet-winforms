@@ -16,7 +16,7 @@ namespace eRestoraniUI
 {
     public partial class LoginForm : Form
     {
-        private WebApiHelper servis = new WebApiHelper("http://localhost:58299", "auth");
+        private WebApiHelper servis = new WebApiHelper();
 
         public LoginForm()
         {
@@ -29,54 +29,81 @@ namespace eRestoraniUI
             this.Close();
         }
 
-        private void Prijava(object sender, EventArgs e)
+        private async void Prijava(object sender, EventArgs e)
         {
-            // validate input
-            if (txtKorisnickoIme.Text.Length < 1 || txtLozinka.Text.Length < 1)
+            imgLoader.Visible = true;
+            if (txtKorisnickoIme.Text.Length < 4 || txtLozinka.Text.Length < 4)
             {
-                MessageBox.Show("Unesite polja!",
-                "Upozorenje",
+                MessageBox.Show(Messages.login_user_invalid, "Upozorenje",
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
+                MessageBoxIcon.Error);
+                imgLoader.Visible = false;
                 return;
             }
 
-            HttpResponseMessage response = servis.GetResponse(txtKorisnickoIme.Text).Result;
-
-            // check for any api issues
-            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                UIHelper.MessageOnApiError(response);
-                return;
-
-            } else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            HttpResponseMessage response = await servis.GetResponse("auth/" + txtKorisnickoIme.Text);
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 CredentialsInvalid();
+                imgLoader.Visible = false;
                 return;
 
-            } else if (response.IsSuccessStatusCode)
+            }
+            else if (response.IsSuccessStatusCode)
             {
-                Korisnik k = response.Content.ReadAsAsync<Korisnik>().Result;
-                if (k.LozinkaHash == UIHelper.GenerateHash(txtLozinka.Text, k.LozinkaSalt))
+                string salt = response.Content.ReadAsAsync<string>().Result;
+                string hash = UIHelper.GenerateHash(txtLozinka.Text, salt);
+                Korisnik k = new Korisnik
                 {
-                    DialogResult = DialogResult.OK;
-                    Global.PrijavljeniKorisnik = k;
-                } else
+                    Username = txtKorisnickoIme.Text,
+                    LozinkaSalt = salt,
+                    LozinkaHash = hash
+                };
+
+                HttpResponseMessage responseLogin = await servis.PostResponse("auth", k);
+                if (responseLogin.IsSuccessStatusCode)
                 {
-                    CredentialsInvalid();
+                    k = responseLogin.Content.ReadAsAsync<Korisnik>().Result;
+                    if (UserAccessControlHelper.Roles.Select(pair => pair.Key).Contains(k.UlogaKorisnikaID))
+                    {
+                        Global.PrijavljeniKorisnik = k;
+
+                        DialogResult = DialogResult.OK;
+                        imgLoader.Visible = false;
+                        return;
+                    }
                 }
+
+
+                CredentialsInvalid();
+                imgLoader.Visible = false;
                 return;
             }
-
             UIHelper.MessageGeneralGreska();
         }
 
         private static void CredentialsInvalid()
         {
-            MessageBox.Show(Messages.login_user_fail,
-                "Upozorenje",
+            MessageBox.Show(Messages.login_user_fail, ValidationMessages.greska_msg_title,
                 MessageBoxButtons.OK,
-                MessageBoxIcon.Warning);
+                MessageBoxIcon.Error);
+        }
+
+        private void txtKorisnickoIme_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Prijava(null, null);
+        }
+
+        private void txtLozinka_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                Prijava(null, null);
+        }
+
+        private void txtLozinka_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

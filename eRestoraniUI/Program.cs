@@ -17,12 +17,11 @@ namespace eRestoraniUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            //LoginForm login = new LoginForm();
-            //if (login.ShowDialog() == DialogResult.OK)
-            //{
-            //    Application.Run(new MainForm());
-            //}
-            Application.Run(new MainForm());
+            LoginForm login = new LoginForm();
+            if (login.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new MainForm());
+            }
         }
     }
 }

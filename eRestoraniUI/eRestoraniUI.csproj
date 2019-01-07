@@ -184,6 +184,7 @@
     <Compile Include="Utils\PanelValidator.cs" />
     <Compile Include="Utils\BindingListHelper.cs" />
     <Compile Include="Utils\UIHelper.cs" />
+    <Compile Include="Utils\UserAccessControlHelper.cs" />
     <Compile Include="Utils\WebApiHelper.cs" />
     <Compile Include="ResourceMessages\ValidationMessages.Designer.cs">
       <AutoGen>True</AutoGen>
