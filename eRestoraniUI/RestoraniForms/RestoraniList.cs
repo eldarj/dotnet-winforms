@@ -18,6 +18,7 @@ namespace eRestoraniUI
     public partial class RestoraniList : Form
     {
         private WebApiHelper servis = new WebApiHelper("http://localhost:58299", "restorani");
+        private List<Restorani_Result> restorani = new List<Restorani_Result>();
 
         // Stack; handle the loading spinner image
         private Stack<bool> loaderImgStack = new Stack<bool>();
@@ -32,7 +33,8 @@ namespace eRestoraniUI
             dgvRestorani.AutoGenerateColumns = false;
         }
 
-        private void RestoraniList_Load(object sender, EventArgs e)
+        #region Binders
+        private async void RestoraniList_Load(object sender, EventArgs e)
         {
             LoadData();
             BindStatusiCmb();
@@ -54,15 +56,14 @@ namespace eRestoraniUI
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
-
         public async void LoadData(bool recheckPretraga = false)
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
 
-            HttpResponseMessage response = await servis.GetResponse();
-            if (response.IsSuccessStatusCode)
+            restorani = await Global.GetKorisnikRestorani();
+            if (restorani != null)
             {
-                dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(response.Content.ReadAsAsync<List<Restorani_Result>>().Result);
+                dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(restorani);
                 dgvBindingSource.DataSource = dgvBindingList;
 
                 dgvRestorani.DataSource = dgvBindingSource;
@@ -75,32 +76,15 @@ namespace eRestoraniUI
                 btnVise.Enabled = true;
 
                 if (recheckPretraga)
-                {
                     pretragaByString();
-                }
             }
-
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
 
-        private void pretragaByString()
-        {
-            List<Restorani_Result> temp = dgvOriginalBindingList
-                .Where(r => (r.Sifra + " " + r.Naziv + " " + r.Email + " " + r.WebUrl + " " + " " + r.AdresaFull
-                    + r.Telefon + " " + r.MinimalnaCijenaNarudzbe + " " + r.StatusNaziv).Contains(txtRestoranFilter.Text))
-                .ToList();
+        #endregion
 
-            dgvBindingList = new BindingList<Restorani_Result>(temp);
-            dgvBindingSource.DataSource = dgvBindingList;
-
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
-        }
-
-        private void txtRestoranFilter_TextChanged(object sender, EventArgs e)
-        {
-            pretragaByString();
-        }
-        private async void cmbStatusi_SelectedIndexChanged(object sender, EventArgs e)
+        #region UIEventHandlers
+        private void cmbStatusi_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedValue;
             try
@@ -113,42 +97,40 @@ namespace eRestoraniUI
             }
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
 
-            HttpResponseMessage response = selectedValue == 0 ?
-                await GetRestoraniFromApi() :
-                await GetRestoraniFromApi(status: selectedValue);
-            if (response.IsSuccessStatusCode)
-            {
-                dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(response.Content.ReadAsAsync<List<Restorani_Result>>().Result);
-                dgvBindingSource.DataSource = dgvBindingList;
+            var filtered = selectedValue == 0 ?
+                restorani :
+                restorani.Where(r => r.RestoranStatusID == selectedValue).ToList();
 
-                lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
-                pretragaByString();
-            }
+            dgvBindingList = dgvOriginalBindingList = new BindingList<Restorani_Result>(filtered);
+            dgvBindingSource.DataSource = dgvBindingList;
+
+            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
+            pretragaByString();
+
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
-
+        private void txtRestoranFilter_TextChanged(object sender, EventArgs e)
+        {
+            pretragaByString();
+        }
         private void btnUrediRestoran_Click(object sender, EventArgs e)
         {
             RestoraniEdit f = new RestoraniEdit((Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem);
             if (f.ShowDialog() == DialogResult.OK)
-            {
                 LoadData(true);
-            }
         }
         private void btnNoviRestoran_Click(object sender, EventArgs e)
         {
             RestoraniEdit f = new RestoraniEdit();
             if (f.ShowDialog() == DialogResult.OK)
-            {
                 LoadData(true);
-            }
         }
 
         private async void btnIzbrisi_Click(object sender, EventArgs e)
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
 
-            var r = (Restorani_Result) dgvRestorani.CurrentRow.DataBoundItem;
+            var r = (Restorani_Result)dgvRestorani.CurrentRow.DataBoundItem;
             if (r != null)
             {
                 var potvrdi = MessageBox.Show(String.Format(ValidationMessages.izbrisi_stavku_potvrda, "restoran " + r.Naziv),
@@ -174,7 +156,6 @@ namespace eRestoraniUI
             {
                 MessageBox.Show(ValidationMessages.morate_prvo_izaberite_obj, "restoran");
             }
-
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
 
@@ -217,14 +198,19 @@ namespace eRestoraniUI
                     MessageBoxIcon.Information);
             }
         }
+        #endregion
 
-        private async Task<HttpResponseMessage> GetRestoraniFromApi(int status = 0)
+        private void pretragaByString()
         {
-            Dictionary<string, int> queryParams = status != 0 ?
-                new Dictionary<string, int>() { { "status", status } } :
-                new Dictionary<string, int>();
+            List<Restorani_Result> temp = dgvOriginalBindingList
+                .Where(r => (r.Sifra + " " + r.Naziv + " " + r.Email + " " + r.WebUrl + " " + " " + r.AdresaFull
+                    + r.Telefon + " " + r.MinimalnaCijenaNarudzbe + " " + r.StatusNaziv).Contains(txtRestoranFilter.Text))
+                .ToList();
 
-            return await servis.GetResponse(queryParams);
+            dgvBindingList = new BindingList<Restorani_Result>(temp);
+            dgvBindingSource.DataSource = dgvBindingList;
+
+            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "restorana", dgvBindingList.Count);
         }
     }
 }

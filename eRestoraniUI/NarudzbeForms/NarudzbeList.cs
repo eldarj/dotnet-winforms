@@ -27,6 +27,8 @@ namespace eRestoraniUI.NarudzbeForms
         private Restorani_Result predefinedRestoran;
         private Narucioci_Result predefinedNarucilac;
 
+        private bool IsGridEmpty => dgvBindingList.Count == 0;
+
         public NarudzbeList()
         {
             InitializeComponent();
@@ -41,23 +43,19 @@ namespace eRestoraniUI.NarudzbeForms
             dgvNarudzbe.AutoGenerateColumns = false;
         }
 
+        #region Binders
         private void NarudzbeList_Load(object sender, System.EventArgs e)
         {
             if (predefinedRestoran != null)
-            {
                 this.Text = String.Format(Messages.narudzbe_restorana, predefinedRestoran.Naziv);
-            } else if(predefinedNarucilac != null)
-            {
+            else if (predefinedNarucilac != null)
                 this.Text = String.Format(Messages.narudzbe_narucioca, predefinedNarucilac.ImePrezime);
-            } else
-            {
+            else
                 this.Text = "Sve narudžbe";
-            }
 
             BindMainGrid();
             BindStatusiCmb();
         }
-
         private async void BindStatusiCmb()
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
@@ -75,7 +73,6 @@ namespace eRestoraniUI.NarudzbeForms
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
-
         private async void BindMainGrid(bool recheckPretraga = false)
         {
             UIHelper.LoaderImgStackDisplay(ref imgLoader, ref loaderImgStack);
@@ -89,10 +86,10 @@ namespace eRestoraniUI.NarudzbeForms
                 dgvNarudzbe.Columns[2].DefaultCellStyle.Format = "dd.MM.yyyy hh:mm";
 
                 //enable controls
-                txtPretraga.Enabled = true;
-                btnIzbrisi.Enabled = true;
-                btnDetaljiNarudzbe.Enabled = true;
-                btnIzvjestajiList.Enabled = true;
+                txtPretraga.Enabled = !IsGridEmpty;
+                btnIzbrisi.Enabled = !IsGridEmpty;
+                btnDetaljiNarudzbe.Enabled = !IsGridEmpty;
+                btnIzvjestajiList.Enabled = !IsGridEmpty;
 
                 if (recheckPretraga)
                 {
@@ -101,41 +98,9 @@ namespace eRestoraniUI.NarudzbeForms
             }
             UIHelper.LoaderImgStackHide(ref imgLoader, ref loaderImgStack);
         }
+        #endregion
 
-        private void txtPretraga_TextChanged(object sender, EventArgs e)
-        {
-            pretragaByString();
-        }
-
-        private void pretragaByString()
-        {
-            List<Narudzbe_Result> temp = null;
-            if (Regex.IsMatch(txtPretraga.Text, @"^(<|>)[\d]{1,}$")) // special filter za broj narudžbi
-            {
-                int filterBroj = Convert.ToInt32(txtPretraga.Text.Substring(1, txtPretraga.Text.Length - 1));
-                if (txtPretraga.Text[0] == '<')
-                {
-                    temp = dgvOriginalBindingList.Where(k => k.UkupnaCijena <= filterBroj).ToList();
-                }
-                else if (txtPretraga.Text[0] == '>')
-                {
-                    temp = dgvOriginalBindingList.Where(k => k.UkupnaCijena >= filterBroj).ToList();
-                }
-            }
-            else // obični text filter
-            {
-                temp = dgvOriginalBindingList
-                .Where(k => (k.Sifra + " " + k.Narucilac + " " + k.StatusNarudzbe + " " + k.DatumVrijeme.ToString("dd.MM.yyyy") + " "
-                    + k.AdresaFull + " " + k.StatusPromijenioZaposlenik).Contains(txtPretraga.Text))
-                .ToList();
-            }
-
-            dgvBindingList = new BindingList<Narudzbe_Result>(temp);
-            dgvBindingSource.DataSource = dgvBindingList;
-
-            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narudžba", dgvBindingList.Count);
-        }
-
+        #region UIHandlers
         private async void cmbStatusi_SelectedIndexChanged(object sender, EventArgs e)
         {
             int selectedValue;
@@ -151,7 +116,7 @@ namespace eRestoraniUI.NarudzbeForms
 
             HttpResponseMessage response = selectedValue == 0 ?
                 await GetNarudzbeFromApi() :
-                await GetNarudzbeFromApi(status:selectedValue);
+                await GetNarudzbeFromApi(status: selectedValue);
             if (response.IsSuccessStatusCode)
             {
                 dgvBindingList = dgvOriginalBindingList = dgvOriginalForReporting = new BindingList<Narudzbe_Result>(response.Content.ReadAsAsync<List<Narudzbe_Result>>().Result);
@@ -197,11 +162,63 @@ namespace eRestoraniUI.NarudzbeForms
 
         private void btnDetaljiNarudzbe_Click(object sender, EventArgs e)
         {
-            NarudzbaDetaljno n = new NarudzbaDetaljno(((Narudzbe_Result)dgvNarudzbe.CurrentRow.DataBoundItem).NarudzbaID);
+            if (dgvNarudzbe.CurrentRow == null) return;
+            NarudzbaDetaljno n = new NarudzbaDetaljno(((Narudzbe_Result)dgvNarudzbe.CurrentRow?.DataBoundItem).NarudzbaID);
             if (n.ShowDialog() == DialogResult.OK)
             {
                 BindMainGrid(true);
             }
+        }
+        private void trenutnoPrikazaneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string s = ((NarudzbeStatusi_Result)cmbStatusi.SelectedItem).Naziv;
+
+            ReportViewForm f = new ReportViewForm();
+            f.narudzbePoGradovima = dgvBindingList.ToList();
+            f.statusiNarudzbi = s;
+            f.Show();
+        }
+
+        private void narudžbePoGradovimaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReportViewForm f = new ReportViewForm();
+            f.narudzbePoGradovima = dgvOriginalForReporting.ToList();
+            f.Show();
+        }
+        #endregion
+
+        private void txtPretraga_TextChanged(object sender, EventArgs e)
+        {
+            pretragaByString();
+        }
+
+        private void pretragaByString()
+        {
+            List<Narudzbe_Result> temp = null;
+            if (Regex.IsMatch(txtPretraga.Text, @"^(<|>)[\d]{1,}$")) // special filter za broj narudžbi
+            {
+                int filterBroj = Convert.ToInt32(txtPretraga.Text.Substring(1, txtPretraga.Text.Length - 1));
+                if (txtPretraga.Text[0] == '<')
+                {
+                    temp = dgvOriginalBindingList.Where(k => k.UkupnaCijena <= filterBroj).ToList();
+                }
+                else if (txtPretraga.Text[0] == '>')
+                {
+                    temp = dgvOriginalBindingList.Where(k => k.UkupnaCijena >= filterBroj).ToList();
+                }
+            }
+            else // obični text filter
+            {
+                temp = dgvOriginalBindingList
+                .Where(k => (k.Sifra + " " + k.Narucilac + " " + k.StatusNarudzbe + " " + k.DatumVrijeme.ToString("dd.MM.yyyy") + " "
+                    + k.AdresaFull + " " + k.StatusPromijenioZaposlenik).Contains(txtPretraga.Text))
+                .ToList();
+            }
+
+            dgvBindingList = new BindingList<Narudzbe_Result>(temp);
+            dgvBindingSource.DataSource = dgvBindingList;
+
+            lblUkupno.Text = String.Format(Messages.grid_ukupno_stavki, "narudžba", dgvBindingList.Count);
         }
 
         private async Task<HttpResponseMessage> GetNarudzbeFromApi(int status = 0)
@@ -222,21 +239,6 @@ namespace eRestoraniUI.NarudzbeForms
 
             return await servisNarudzbe.GetResponse(queryParams);
         }
-        private void trenutnoPrikazaneToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string s = ((NarudzbeStatusi_Result) cmbStatusi.SelectedItem).Naziv;
 
-            ReportViewForm f = new ReportViewForm();
-            f.narudzbePoGradovima = dgvBindingList.ToList();
-            f.statusiNarudzbi = s;
-            f.Show();
-        }
-
-        private void narudžbePoGradovimaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ReportViewForm f = new ReportViewForm();
-            f.narudzbePoGradovima = dgvOriginalForReporting.ToList();
-            f.Show();
-        }
     }
 }
