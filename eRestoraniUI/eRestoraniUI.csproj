@@ -186,11 +186,6 @@
     <Compile Include="Utils\UIHelper.cs" />
     <Compile Include="Utils\UserAccessControlHelper.cs" />
     <Compile Include="Utils\WebApiHelper.cs" />
-    <Compile Include="ResourceMessages\ValidationMessages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ValidationMessages.resx</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="KorisniciForms\KorisniciList.resx">
       <DependentUpon>KorisniciList.cs</DependentUpon>
     </EmbeddedResource>
@@ -254,10 +249,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ResourceMessages\ValidationMessages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ValidationMessages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\eDostava_API.Models.Hrana_Result.datasource" />
     <None Include="Properties\DataSources\eDostava_API.Models.NarudzbeStatusi_Result.datasource" />
