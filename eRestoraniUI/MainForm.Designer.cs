@@ -144,18 +144,19 @@
             this.lokacijeToolStripMenuItem.Name = "lokacijeToolStripMenuItem";
             this.lokacijeToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.lokacijeToolStripMenuItem.Text = "Lokacije";
+            this.lokacijeToolStripMenuItem.Visible = false;
             // 
             // blokoviToolStripMenuItem
             // 
             this.blokoviToolStripMenuItem.Name = "blokoviToolStripMenuItem";
-            this.blokoviToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.blokoviToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.blokoviToolStripMenuItem.Text = "Blokovi";
             this.blokoviToolStripMenuItem.Click += new System.EventHandler(this.blokoviToolStripMenuItem_Click);
             // 
             // gradoviToolStripMenuItem
             // 
             this.gradoviToolStripMenuItem.Name = "gradoviToolStripMenuItem";
-            this.gradoviToolStripMenuItem.Size = new System.Drawing.Size(136, 26);
+            this.gradoviToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
             this.gradoviToolStripMenuItem.Text = "Gradovi";
             this.gradoviToolStripMenuItem.Click += new System.EventHandler(this.gradoviToolStripMenuItem_Click);
             // 

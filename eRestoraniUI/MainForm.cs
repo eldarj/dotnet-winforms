@@ -38,6 +38,11 @@ namespace eRestoraniUI
 
         private async void MainForm_Load(object sender, EventArgs e)
         {
+            if (UserAccessControlHelper.HasAdminAccess)
+            {
+                lokacijeToolStripMenuItem.Visible = true;
+            }
+
             if (UserAccessControlHelper.HasVlasnikAccess || UserAccessControlHelper.HasZaposlenikAcess)
             {
                 List<Restorani> restorani = await Global.GetKorisnikRestorani();
