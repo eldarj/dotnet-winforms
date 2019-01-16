@@ -203,7 +203,7 @@
             this.lblDivider.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblDivider.Location = new System.Drawing.Point(-7, 33);
             this.lblDivider.Name = "lblDivider";
-            this.lblDivider.Size = new System.Drawing.Size(757, 2);
+            this.lblDivider.Size = new System.Drawing.Size(736, 2);
             this.lblDivider.TabIndex = 35;
             // 
             // txtMaskMinCijena
@@ -300,7 +300,7 @@
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label3.Location = new System.Drawing.Point(-7, 360);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(757, 2);
+            this.label3.Size = new System.Drawing.Size(736, 2);
             this.label3.TabIndex = 87;
             // 
             // label5
@@ -410,7 +410,7 @@
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(290, 470);
+            this.label18.Location = new System.Drawing.Point(269, 470);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(56, 17);
             this.label18.TabIndex = 100;
@@ -423,7 +423,7 @@
             this.label19.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.label19.Location = new System.Drawing.Point(-7, 494);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(757, 2);
+            this.label19.Size = new System.Drawing.Size(736, 2);
             this.label19.TabIndex = 99;
             // 
             // label20
@@ -520,6 +520,7 @@
             // 
             // btnSacuvaj
             // 
+            this.btnSacuvaj.Enabled = false;
             this.btnSacuvaj.Location = new System.Drawing.Point(629, 817);
             this.btnSacuvaj.Name = "btnSacuvaj";
             this.btnSacuvaj.Size = new System.Drawing.Size(81, 23);
@@ -609,6 +610,7 @@
             // fileDialog
             // 
             this.fileDialog.FileName = "fileDialogSlika";
+            this.fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
             // 
             // RestoraniEdit
             // 

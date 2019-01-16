@@ -36,6 +36,8 @@ namespace eDostava_API.Models
         }
         #endregion
 
+        public int KorisnikID { get; set; }
+
         public override bool Equals(object obj)
         {
             Restorani_Result _obj = obj as Restorani_Result;

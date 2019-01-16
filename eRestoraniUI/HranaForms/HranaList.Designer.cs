@@ -93,6 +93,7 @@
             // fileDialog
             // 
             this.fileDialog.FileName = "fileDialogSlika";
+            this.fileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
             // 
             // panel1
             // 

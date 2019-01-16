@@ -157,6 +157,7 @@ namespace eRestoraniUI.KorisniciForms
                     {
                         MessageBox.Show(String.Format(Messages.uspjeh_delete_obj, "zaposlenik " + k.ImePrezime),
                             Messages.uspjeh_delete_title);
+                        splitContainer1.Panel1Collapsed = true;
                         BindMainGrid(recheckPretraga: true);
                     }
                     else

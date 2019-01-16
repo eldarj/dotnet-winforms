@@ -62,15 +62,13 @@ namespace eRestoraniUI.RestoraniUI
             }
 
             BindCmbZaposleniciVlasnici();
+            await BindCmbStatusiBlokovi();
 
-            if (restoranModel == null)
-            {
-                BindCmbStatusiBlokovi();
-            } else
-            {
-                await BindCmbStatusiBlokovi();
+            if (restoranModel != null)
                 FillFormOnEdit();
-            }
+
+            // enable save button tek kad učitamo sve podatke
+            btnSacuvaj.Enabled = true;
         }
 
         private async void FillFormOnEdit()
@@ -197,8 +195,16 @@ namespace eRestoraniUI.RestoraniUI
             {
                 txtSlikaName.Text = fileDialog.FileName;
 
-                Image originalImage = Image.FromFile(fileDialog.FileName);
-                restoranModel.SetSlikaImage(originalImage);
+                Image originalImage;
+                try
+                {
+                   originalImage = Image.FromFile(fileDialog.FileName);
+                }
+                catch (OutOfMemoryException memex)
+                {
+                    MessageBox.Show(Messages.slika_out_of_mem, Messages.greska_msg_title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 int resizedImageWidth = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImageWidth"]);
                 int resizedImageHeight = Convert.ToInt32(ConfigurationManager.AppSettings["resizedImageHeight"]);
@@ -208,12 +214,15 @@ namespace eRestoraniUI.RestoraniUI
                 {
                     Image ResizedImage = UIHelper.ResizeImage(originalImage, new Size(resizedImageWidth, resizedImageHeight));
 
-                    restoranModel.SetSlikaImage(ResizedImage); // bind model
+                    if (restoranModel != null)
+                        restoranModel.SetSlikaImage(ResizedImage); // bind model
                     pictureBoxSlika.Image = ResizedImage; // bind picture in form
                 }
                 // ELSE ORIGINAL: ako je originalna manja od resize veličine, odmah stavi original
                 else
                 {
+                    if (restoranModel != null)
+                        restoranModel.SetSlikaImage(originalImage); // bind model
                     pictureBoxSlika.Image = originalImage;
                 }
             }
@@ -224,35 +233,36 @@ namespace eRestoraniUI.RestoraniUI
             if (!this.ValidateChildren())
                 return;
 
-            bool isPutRequest = false;
-            Restorani restoran = new Restorani();
-
-            if (restoranModel != null)
+            bool isPutRequest = true;
+            if (restoranModel == null)
             {
-                restoran = Restorani_Result.GetRestoraniInstance(restoranModel);
-                isPutRequest = true;
+                restoranModel = new Restorani_Result();
+                isPutRequest = false;
             }
 
-            restoran.Naziv = txtNaziv.Text;
-            restoran.Opis = txtOpis.Text;
-            restoran.Email = txtEmail.Text;
-            restoran.WebUrl = txtWebUrl.Text;
-            restoran.Telefon = UIHelper.ExtractPoneNumber(txtMaskTelefon.Text);
-            restoran.MinimalnaCijenaNarudzbe = (decimal)Convert.ToDouble(UIHelper.ExtractDecimalCijena(txtMaskMinCijena.Text));
+            restoranModel.Naziv = txtNaziv.Text;
+            restoranModel.Opis = txtOpis.Text;
+            restoranModel.Email = txtEmail.Text;
+            restoranModel.WebUrl = txtWebUrl.Text;
+            restoranModel.Adresa = txtAdresa.Text;
+            restoranModel.BlokID = Convert.ToInt32(cmbBlokoviGradovi.SelectedValue);
+            restoranModel.Telefon = UIHelper.ExtractPoneNumber(txtMaskTelefon.Text);
+            restoranModel.MinimalnaCijenaNarudzbe = (decimal)Convert.ToDouble(UIHelper.ExtractDecimalCijena(txtMaskMinCijena.Text));
 
-            restoran.Adresa = txtAdresa.Text;
-            restoran.BlokID = Convert.ToInt32(cmbBlokoviGradovi.SelectedValue);
-            if (Global.PrijavljeniKorisnik != null && restoran.RestoranStatusID != Convert.ToInt32(cmbStatusi.SelectedValue))
+            restoranModel.SetSlikaImage(pictureBoxSlika.Image); 
+
+            // provjeri je li status promijenjen, ako jeste zapamti i status i id korisnika koji je to uradio
+            if (Global.PrijavljeniKorisnik != null && restoranModel.RestoranStatusID != Convert.ToInt32(cmbStatusi.SelectedValue))
             {
-                restoran.KorisnikID = Global.PrijavljeniKorisnik.KorisnikID;
-                restoran.RestoranStatusID = Convert.ToInt32(cmbStatusi.SelectedValue);
+                restoranModel.KorisnikID = Global.PrijavljeniKorisnik.KorisnikID;
+                restoranModel.RestoranStatusID = Convert.ToInt32(cmbStatusi.SelectedValue);
             }
 
             List<HttpResponseMessage> responseStatuses = new List<HttpResponseMessage>();
 
             HttpResponseMessage rMain = isPutRequest ? 
-                servisRestorani.PutResponse(restoran.RestoranID, restoran) : 
-                servisRestorani.PostResponse(restoran);
+                servisRestorani.PutResponse(restoranModel.RestoranID, restoranModel) : 
+                servisRestorani.PostResponse(restoranModel);
             responseStatuses.Add(rMain);
 
             if (zaposleniciRestoranaBox != null)
